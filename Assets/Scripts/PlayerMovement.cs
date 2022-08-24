@@ -1,6 +1,5 @@
 
 using UnityEngine;
-using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMovement : MonoBehaviour
@@ -21,6 +20,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Animator animator;
 
     private Rigidbody2D rigidBody;
+    private bool isLadder = false;
 
 
     private void Awake()
@@ -41,7 +41,7 @@ public class PlayerMovement : MonoBehaviour
     }  
 
 
-    public void Move(float direction, bool isJumpButtonPresed)
+    public void Move(float horizontalDirection, float verticalDirection, bool isJumpButtonPresed)
     {
         if (isJumpButtonPresed)
         {
@@ -54,13 +54,18 @@ public class PlayerMovement : MonoBehaviour
 
         }
 
-        if (direction != 0)
+        if (horizontalDirection != 0)
         {
             animator.SetBool("isWalk", true);
-            HorizontalMovement(direction);
+            HorizontalMovement(horizontalDirection);
         } else
         {
             animator.SetBool("isWalk", false);
+        }
+
+        if (verticalDirection != 0)
+        {
+            VerticalMovemrnt(verticalDirection);
         }
     }
 
@@ -73,9 +78,42 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void HorizontalMovement(float direction)
+    private void HorizontalMovement(float horizontalDirection)
     {
-        rigidBody.velocity = new Vector2(direction * spped, rigidBody.velocity.y);
+        rigidBody.velocity = new Vector2(horizontalDirection * spped, rigidBody.velocity.y);
     }
 
+    private void VerticalMovemrnt(float verticalDirection)
+    {
+        if (isLadder)
+        {
+            rigidBody.velocity = new Vector2(rigidBody.velocity.x, verticalDirection * spped);
+        }
+        
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+
+        Debug.Log("Происходит коллизия");
+        if (collision.CompareTag("Ladder"))
+        {
+            Debug.Log("Происходит коллизия");
+            isLadder = true;
+        }
+        else
+        {
+            
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Debug.Log("Произошла коллизия коллизия");
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        isLadder = false;
+    }
 }
