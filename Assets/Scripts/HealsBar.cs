@@ -5,22 +5,30 @@ using UnityEngine.UI;
 
 public class HealsBar : MonoBehaviour
 {
-    [SerializeField] private Slider slider;
-    [SerializeField] private Vector3 offset;
+    [SerializeField] private Canvas canvasHealthBar;
+    [SerializeField] private Image healthBarImage;
 
 
-    private void Update()
+    private void Start()
     {
-        slider.transform.position = Camera.main.WorldToScreenPoint(transform.parent.position + offset);
+
+        canvasHealthBar.gameObject.SetActive(false);
+        healthBarImage.fillAmount = 1;
+
     }
 
-
-    public void SetHealthValue(int currentHealth, int maxHealth)
+    public void SetHealthValue(float currentHealth, float maxHealth)
     {
-        slider.gameObject.SetActive(currentHealth < maxHealth);
+       
+        canvasHealthBar.gameObject.SetActive(currentHealth < maxHealth);
 
-        slider.value = currentHealth;
-        slider.maxValue = maxHealth; 
+        healthBarImage.fillAmount = currentHealth / 100;
+
+        if (healthBarImage.fillAmount <= 0)
+        {
+            canvasHealthBar.gameObject.SetActive(false);
+        }
+        
     }
 
 }

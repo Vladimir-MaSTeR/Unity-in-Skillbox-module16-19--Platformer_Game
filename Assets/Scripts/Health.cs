@@ -16,14 +16,18 @@ public class Health : MonoBehaviour
     {
         currentHealth = maxHealth;
         isAlive = true;
-        healsBar.gameObject.SetActive(false);
     }
 
     public void TakeDamage(float damage)
     {
         currentHealth -= damage;
-        healsBar.SetHealthValue((int)currentHealth, (int)maxHealth);
+        healsBar.SetHealthValue(currentHealth, maxHealth);
         ChekIsAlive();
+    }
+
+    public bool CheckIsAlive()
+    {
+        return isAlive;
     }
 
     private void ChekIsAlive()

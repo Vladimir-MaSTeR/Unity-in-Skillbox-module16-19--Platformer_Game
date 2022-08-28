@@ -18,27 +18,59 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Transform groundColliderTransform;
     [SerializeField] private LayerMask groundLayerMask;
     [SerializeField] private Animator animator;
+    [SerializeField] private Health healthScript;
+    [SerializeField] private CheckEndAnim checkEndAnim;
+    [SerializeField] private GameObject deathPanel;
+
+
 
     private Rigidbody2D rigidBody;
     private bool isLadder = false;
+    private bool checkIsAlivePlayer;
 
 
     private void Awake()
     {
+        Time.timeScale = 1;
         rigidBody = GetComponent<Rigidbody2D>();
+        checkIsAlivePlayer = healthScript.CheckIsAlive();
+        deathPanel.SetActive(false);
+
     }
 
     private void FixedUpdate() // Стараться все обновления физики делать в этом методе.
     {
 
-        //Для корректной работы с тайлами в 2д.
-        //Мы рисуем круг, который чуть больше нашего колайдера для ног у персонажа
-        // и проверяем столкнулся ли этот коллайде с колайдером земле
-        // используем слои, всю землю положили на свой слой ground и работаем с этим слоем через LayerMask
-        Vector3 overlapCirclePosition = groundColliderTransform.position;
-        isGrounded = Physics2D.OverlapCircle(overlapCirclePosition, jumpOffset, groundLayerMask);
-        Debug.Log(isGrounded);
+        checkIsAlivePlayer = healthScript.CheckIsAlive();
+
+        if (!checkIsAlivePlayer)
+        {
+            animator.SetBool("isAlive", false);
+            CheckEndAnimDeath();
+        } else
+        {
+            animator.SetBool("isAlive", true);
+
+            //Для корректной работы с тайлами в 2д.
+            //Мы рисуем круг, который чуть больше нашего колайдера для ног у персонажа
+            // и проверяем столкнулся ли этот коллайде с колайдером земле
+            // используем слои, всю землю положили на свой слой ground и работаем с этим слоем через LayerMask
+            Vector3 overlapCirclePosition = groundColliderTransform.position;
+            isGrounded = Physics2D.OverlapCircle(overlapCirclePosition, jumpOffset, groundLayerMask);
+        }
+
+
+
     }  
+
+    private void CheckEndAnimDeath()
+    {
+        if (checkEndAnim.GetEndAnim() == true)
+        {
+            Time.timeScale = 0;
+            deathPanel.SetActive(true);
+        }
+    }
 
 
     public void Move(float horizontalDirection, float verticalDirection, bool isJumpButtonPresed)

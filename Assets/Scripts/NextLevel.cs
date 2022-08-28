@@ -12,7 +12,7 @@ public class NextLevel : MonoBehaviour
     {
         Debug.Log("вы вошли в зону тригера");
 
-        if (collision.CompareTag("Player"))
+        if (collision.CompareTag("Damagebl"))
         {
             Debug.Log("Игрок вошел в зону тригера");
 
