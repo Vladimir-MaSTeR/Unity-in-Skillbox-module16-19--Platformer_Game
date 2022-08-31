@@ -21,6 +21,7 @@ public class PlayerInput : MonoBehaviour
         float horizontalDirection = Input.GetAxisRaw(GlobalConstants.HORIZONTAL_AXIS); //GetAxisRaw - возвращает 0 если движения нет, -1 или 1 если движение есть
         float verticalDirection = Input.GetAxis(GlobalConstants.VERTICAL_AXIS); 
         bool isJumpButtonPresed = Input.GetButtonDown(GlobalConstants.JUMP);
+        bool isFire1ButtonPresed = Input.GetButtonDown(GlobalConstants.FIRE_1);
 
 
         if (Input.GetButtonDown(GlobalConstants.FIRE_2))
@@ -28,6 +29,6 @@ public class PlayerInput : MonoBehaviour
             shooter.Shoot(horizontalDirection);
         }
 
-        playerMovement.Move(horizontalDirection, verticalDirection, isJumpButtonPresed);
+        playerMovement.Move(horizontalDirection, verticalDirection, isJumpButtonPresed, isFire1ButtonPresed);
     }
 }

@@ -8,14 +8,12 @@ public class DamageDealler : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Damagebl"))
+        if (collision.CompareTag("Enemy"))
         {
             collision.gameObject.GetComponent<Health>().TakeDamage(damage);
-            Debug.Log("Нанесён Урон");
-            
+            Debug.Log("Монстру нанесён урон метательным оружием");
+             Destroy(gameObject);
+
         }
-
-       // Destroy(gameObject);
-
     }
 }

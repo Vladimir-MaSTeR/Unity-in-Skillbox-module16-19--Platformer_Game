@@ -11,6 +11,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float jumpForce = 6;
     [SerializeField] private bool isGrounded = false;
 
+    [Header("Weapons on Player")]
+    //[SerializeField] private GameObject weapons;
+
     [Header("Radius collider")]
     [SerializeField] private float jumpOffset;
 
@@ -35,7 +38,6 @@ public class PlayerMovement : MonoBehaviour
         rigidBody = GetComponent<Rigidbody2D>();
         checkIsAlivePlayer = healthScript.CheckIsAlive();
         deathPanel.SetActive(false);
-
     }
 
     private void FixedUpdate() // Стараться все обновления физики делать в этом методе.
@@ -73,8 +75,16 @@ public class PlayerMovement : MonoBehaviour
     }
 
 
-    public void Move(float horizontalDirection, float verticalDirection, bool isJumpButtonPresed)
+    public void Move(float horizontalDirection, float verticalDirection, bool isJumpButtonPresed, bool isFire1ButtonPresed)
     {
+        if (isFire1ButtonPresed)
+        {
+            animator.SetBool("isAttack", true);
+        } else
+        {
+            animator.SetBool("isAttack", false);
+        }
+
         if (isJumpButtonPresed)
         {
             Jump();
@@ -112,7 +122,21 @@ public class PlayerMovement : MonoBehaviour
 
     private void HorizontalMovement(float horizontalDirection)
     {
-        rigidBody.velocity = new Vector2(horizontalDirection * spped, rigidBody.velocity.y);
+        float positionX = rigidBody.transform.position.x;
+
+        if (horizontalDirection >= 0)
+        {
+            rigidBody.transform.rotation = new Quaternion(0, 0, 0, Quaternion.identity.w);
+            rigidBody.velocity = new Vector2(horizontalDirection * spped, rigidBody.velocity.y);
+            
+            
+        } else
+        {
+            rigidBody.transform.rotation = new Quaternion(0, 180, 0, Quaternion.identity.w);
+            rigidBody.velocity = new Vector2(horizontalDirection * spped, rigidBody.velocity.y);
+        
+        }
+            
     }
 
     private void VerticalMovemrnt(float verticalDirection)
