@@ -25,6 +25,30 @@ public class Health : MonoBehaviour
         ChekIsAlive();
     }
 
+    public void CurePlayer(float cure)
+    {
+        currentHealth += cure;
+
+        if (currentHealth > maxHealth)
+        {
+            currentHealth = maxHealth;
+        }
+
+        healsBar.SetHealthValue(currentHealth, maxHealth);
+        ChekIsAlive();
+
+    }
+
+    public float GetCurrentHealth()
+    {
+        return currentHealth;
+    }
+
+    public float GetMaxHealth()
+    {
+        return maxHealth;
+    }
+
     public bool CheckIsAlive()
     {
         return isAlive;

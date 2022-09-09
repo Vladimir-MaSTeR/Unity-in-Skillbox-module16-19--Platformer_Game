@@ -1,5 +1,6 @@
 
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMovement : MonoBehaviour
@@ -23,13 +24,27 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Animator animator;
     [SerializeField] private Health healthScript;
     [SerializeField] private CheckEndAnim checkEndAnim;
+
+    [Header("Управление Канвасами")]
     [SerializeField] private GameObject deathPanel;
+    [SerializeField] private Canvas dialogCanvas;
+    [SerializeField] private Text dialogText;
+    [SerializeField] private float timeVisionDialogTextMax = 3;
+
+    [SerializeField] private GameObject magPanel; // если эта панель активна значит мы в магазине и не дожны двигаться.
+
+
 
 
 
     private Rigidbody2D rigidBody;
     private bool isLadder = false;
     private bool checkIsAlivePlayer;
+
+    private bool checkDialogTriger = false;
+    private float currentTimeVisionDialogText;
+
+    private bool currentActiveMagPanel;
 
 
     private void Awake()
@@ -38,6 +53,10 @@ public class PlayerMovement : MonoBehaviour
         rigidBody = GetComponent<Rigidbody2D>();
         checkIsAlivePlayer = healthScript.CheckIsAlive();
         deathPanel.SetActive(false);
+        dialogCanvas.gameObject.SetActive(false);
+        currentTimeVisionDialogText = timeVisionDialogTextMax;
+
+        currentActiveMagPanel = magPanel.activeSelf;
     }
 
     private void FixedUpdate() // Стараться все обновления физики делать в этом методе.
@@ -61,9 +80,14 @@ public class PlayerMovement : MonoBehaviour
             isGrounded = Physics2D.OverlapCircle(overlapCirclePosition, jumpOffset, groundLayerMask);
         }
 
+        dialogTimer();
 
+    }
 
-    }  
+    private void Update()
+    {
+        currentActiveMagPanel = magPanel.activeSelf;
+    }
 
     private void CheckEndAnimDeath()
     {
@@ -77,37 +101,44 @@ public class PlayerMovement : MonoBehaviour
 
     public void Move(float horizontalDirection, float verticalDirection, bool isJumpButtonPresed, bool isFire1ButtonPresed)
     {
-        if (isFire1ButtonPresed)
+        if (!currentActiveMagPanel)
         {
-            animator.SetBool("isAttack", true);
-        } else
-        {
-            animator.SetBool("isAttack", false);
-        }
 
-        if (isJumpButtonPresed)
-        {
-            Jump();
-            animator.SetBool("isJump", true);
-           
-        } else
-        {
-            animator.SetBool("isJump", false);
+            if (isFire1ButtonPresed)
+            {
+                animator.SetBool("isAttack", true);
+            }
+            else
+            {
+                animator.SetBool("isAttack", false);
+            }
 
-        }
+            if (isJumpButtonPresed)
+            {
+                Jump();
+                animator.SetBool("isJump", true);
 
-        if (horizontalDirection != 0)
-        {
-            animator.SetBool("isWalk", true);
-            HorizontalMovement(horizontalDirection);
-        } else
-        {
-            animator.SetBool("isWalk", false);
-        }
+            }
+            else
+            {
+                animator.SetBool("isJump", false);
 
-        if (verticalDirection != 0)
-        {
-            VerticalMovemrnt(verticalDirection);
+            }
+
+            if (horizontalDirection != 0)
+            {
+                animator.SetBool("isWalk", true);
+                HorizontalMovement(horizontalDirection);
+            }
+            else
+            {
+                animator.SetBool("isWalk", false);
+            }
+
+            if (verticalDirection != 0)
+            {
+                VerticalMovemrnt(verticalDirection);
+            }
         }
     }
 
@@ -126,13 +157,17 @@ public class PlayerMovement : MonoBehaviour
 
         if (horizontalDirection >= 0)
         {
-            rigidBody.transform.rotation = new Quaternion(0, 0, 0, Quaternion.identity.w);
+             rigidBody.transform.rotation = new Quaternion(0, 0, 0, Quaternion.identity.w);
+            dialogText.rectTransform.localRotation = Quaternion.Euler(0, 0, 0);
             rigidBody.velocity = new Vector2(horizontalDirection * spped, rigidBody.velocity.y);
             
             
         } else
         {
-            rigidBody.transform.rotation = new Quaternion(0, 180, 0, Quaternion.identity.w);
+             rigidBody.transform.rotation = new Quaternion(0, 180, 0, Quaternion.identity.w); 
+            //dialogText.transform.rotation = new Quaternion(0, 180, 0, Quaternion.identity.w);
+           // dialogText.rectTransform.rotation = new Quaternion(0, 180, 0, Quaternion.identity.w);
+            dialogText.rectTransform.localRotation = Quaternion.Euler(0, 180, 0);
             rigidBody.velocity = new Vector2(horizontalDirection * spped, rigidBody.velocity.y);
         
         }
@@ -151,25 +186,44 @@ public class PlayerMovement : MonoBehaviour
     private void OnTriggerStay2D(Collider2D collision)
     {
 
-        Debug.Log("Происходит коллизия");
         if (collision.CompareTag("Ladder"))
         {
-            Debug.Log("Происходит коллизия");
+            Debug.Log("Лестница");
             isLadder = true;
-        }
-        else
-        {
-            
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Произошла коллизия коллизия");
+        if (collision.CompareTag("DialogTriger"))
+        {
+            checkDialogTriger = true;
+            dialogCanvas.gameObject.SetActive(true);
+            dialogText.text = collision.GetComponent<DialogTrigerController>().getCurrentDialogText();
+        }
     }
+
+    private void dialogTimer()
+    {
+        if (checkDialogTriger == true)
+        {
+            currentTimeVisionDialogText -= Time.deltaTime;
+        }
+
+        if (currentTimeVisionDialogText <= 0)
+        {
+            dialogCanvas.gameObject.SetActive(false);
+            checkDialogTriger = false;
+            currentTimeVisionDialogText = timeVisionDialogTextMax;
+        }
+    }
+
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        isLadder = false;
+        if (collision.CompareTag("Ladder"))
+        {
+            isLadder = false;
+        }
     }
 }

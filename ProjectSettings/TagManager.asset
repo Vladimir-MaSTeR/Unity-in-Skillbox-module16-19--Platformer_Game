@@ -9,6 +9,10 @@ TagManager:
   - Enemy
   - Damagebl
   - EnemyTriger
+  - EnemyStoper
+  - Apple
+  - Cure
+  - DialogTriger
   layers:
   - Default
   - TransparentFX

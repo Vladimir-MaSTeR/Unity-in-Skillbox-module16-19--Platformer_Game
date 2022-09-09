@@ -1,0 +1,26 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class CureController : MonoBehaviour
+{
+    [SerializeField] private float cure = 30;
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            float currentHealth = collision.gameObject.GetComponent<Health>().GetCurrentHealth();
+            float MaxHealth = collision.gameObject.GetComponent<Health>().GetMaxHealth();
+
+            if (currentHealth < MaxHealth)
+            {
+                collision.gameObject.GetComponent<Health>().CurePlayer(cure);
+                Debug.Log("Играку подобрал лекарство");
+
+                Destroy(gameObject);
+            }
+        }
+
+    }
+}
