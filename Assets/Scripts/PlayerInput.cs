@@ -1,18 +1,28 @@
 
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(PlayerMovement))]
 [RequireComponent(typeof(Shooter))]
 public class PlayerInput : MonoBehaviour
 {  // Класс отвечает за считывание нажатия кнопок.
 
+
+    [SerializeField] private GameManager gameManagerScript;
+
     private PlayerMovement playerMovement;
     private Shooter shooter;
+    
 
     private void Awake()
     {
         playerMovement = GetComponent<PlayerMovement>();
-        shooter = GetComponent<Shooter>();
+        shooter = GetComponent<Shooter>();      
+    }
+
+    private void Start()
+    {
+        gameManagerScript.SetCurrentvalueSpearOnPlayerText(shooter.GetCurrentValueBuletInPlayer());
     }
 
 
@@ -27,6 +37,10 @@ public class PlayerInput : MonoBehaviour
         if (Input.GetButtonDown(GlobalConstants.FIRE_2))
         {
             shooter.Shoot(horizontalDirection);
+            shooter.SetCurrentValueBuletInPlayer(shooter.GetCurrentValueBuletInPlayer() - 1);
+
+            gameManagerScript.SetCurrentvalueSpearOnPlayerText(shooter.GetCurrentValueBuletInPlayer());
+
         }
 
         playerMovement.Move(horizontalDirection, verticalDirection, isJumpButtonPresed, isFire1ButtonPresed);

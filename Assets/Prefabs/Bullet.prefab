@@ -92,6 +92,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 4
+  gameManagerScript: {fileID: 0}
 --- !u!1001 &6406151937571285369
 PrefabInstance:
   m_ObjectHideFlags: 0
