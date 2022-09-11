@@ -1,41 +1,35 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class DamageDealler : MonoBehaviour
 {
-    [SerializeField] private float damage = 35;
-   // [SerializeField] private GameManager gameManagerScript;
+    [SerializeField] private int damage = 35;
+    //[SerializeField] private GameManager gameManagerScript;
 
-    private float currentDamage;
+    private int currentDamage;
 
-    private void Start()
-    {
-        currentDamage = damage;
-        //gameManagerScript.SetCurrentDamageSpearText((int)currentDamage);
-    }
+    //работа с событиями
+    public static Func<int> onSpearDamage;
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Enemy"))
         {
-           // currentDamage = gameManagerScript.GetCurrentDamageSpearText();
+            currentDamage = (int)(onSpearDamage?.Invoke());
 
             collision.gameObject.GetComponent<Health>().TakeDamage(currentDamage);
-            Debug.Log("Монстру нанесён урон метательным оружием");
+            Debug.Log( $"Монстру нанесён урон метательным оружием на {currentDamage} урона");
              Destroy(gameObject);
 
         }
     }
 
 
-    public float GetCurrentDamage()
+    public int GetStartDamage()
     {
-        return this.currentDamage;
-    }
-
-    public void SetCurrentDamage(float damage)
-    {
-        this.currentDamage = damage;
+        return this.damage;
     }
 }

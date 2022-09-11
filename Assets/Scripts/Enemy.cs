@@ -6,6 +6,8 @@ public class Enemy : MonoBehaviour
 {
 
     [SerializeField] private GameObject enemy;
+    [SerializeField] private GameObject coin;
+    [SerializeField] private Transform pointInstantiateCoin;
     [SerializeField] private float speed;
     [SerializeField] private float timeToRevert;
     [SerializeField] private SpriteRenderer spriteRenderer;
@@ -69,6 +71,7 @@ public class Enemy : MonoBehaviour
     {
         if (checkEndAnim.GetEndAnim() == true)
         {
+            Instantiate(coin, pointInstantiateCoin.position, Quaternion.identity);
             enemy.SetActive(false);
         }
     }

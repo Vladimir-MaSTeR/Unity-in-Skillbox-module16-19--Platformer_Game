@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1906792592
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1906792593}
+  m_Layer: 8
+  m_Name: Point
+  m_TagString: Untagged
+  m_Icon: {fileID: -5397416234189338067, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1906792593
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1906792592}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.051, y: 0.071, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1512759299716258169}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1512759297853021203
 GameObject:
   m_ObjectHideFlags: 0
@@ -15,7 +46,7 @@ GameObject:
   - component: {fileID: 1512759297853021195}
   - component: {fileID: 1512759297853021204}
   - component: {fileID: 1512759297853021192}
-  - component: {fileID: 1341716022}
+  - component: {fileID: 1341716030}
   m_Layer: 8
   m_Name: SneilEnemy
   m_TagString: Enemy
@@ -128,8 +159,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemy: {fileID: 1512759297853021203}
-  speed: 0
-  timeToRevert: 3
+  coin: {fileID: 667113084637305637, guid: 8203ab57b99a7e94c85725b11787abff, type: 3}
+  pointInstantiateCoin: {fileID: 1906792593}
+  speed: 1
+  timeToRevert: 2
   spriteRenderer: {fileID: 1512759299716258175}
   animator: {fileID: 1512759299716258168}
   healthScript: {fileID: 1512759297853021194}
@@ -148,8 +181,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 10
---- !u!70 &1341716022
-CapsuleCollider2D:
+--- !u!58 &1341716030
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -161,9 +194,9 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.0027690888, y: 0.10035892}
-  m_Size: {x: 0.35048905, y: 0.40108234}
-  m_Direction: 0
+  m_Offset: {x: -0.0065403, y: -0.03810704}
+  serializedVersion: 2
+  m_Radius: 0.04423623
 --- !u!1 &1512759298092945644
 GameObject:
   m_ObjectHideFlags: 0
@@ -448,7 +481,8 @@ Transform:
   m_LocalPosition: {x: -0.023, y: 0.043, z: 0}
   m_LocalScale: {x: 1.2564, y: 1.1188, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1906792593}
   m_Father: {fileID: 1512759297853021207}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
