@@ -21,6 +21,9 @@ public class GameManager : MonoBehaviour
 
     [Header("Клипы")]
     [SerializeField] private AudioClip coinClip;
+    [SerializeField] private AudioClip spearDamageClip;
+    [SerializeField] private AudioClip buyMagTruyClip;
+    [SerializeField] private AudioClip buyMagfalseClip;
 
 
 
@@ -53,14 +56,75 @@ public class GameManager : MonoBehaviour
     private void OnEnable()
     {
         DamageDealler.onSpearDamage += GetCurrentDamageSpearText;
+        DamageDealler.onCollisionWithEnemy += PlaySpearDamageClip;
         Coin.onCoin += PlusValueCurrentCoin;
+
+        MagController.onEventClickSwordImageButton += buyInShopSwordDamage;
+        MagController.onEventSpearDamageImageButton += buyInShopSpearDamage;
+        MagController.onEventSpearImageButton += buyInShopSpear;
     }
 
     private void OnDisable()
     {
         DamageDealler.onSpearDamage -= GetCurrentDamageSpearText;
+        DamageDealler.onCollisionWithEnemy -= PlaySpearDamageClip;
         Coin.onCoin -= PlusValueCurrentCoin;
 
+        MagController.onEventClickSwordImageButton -= buyInShopSwordDamage;
+        MagController.onEventSpearDamageImageButton -= buyInShopSpearDamage;
+        MagController.onEventSpearImageButton -= buyInShopSpear;
+
+
+
+
+    }
+
+    public void buyInShopSpear()
+    {
+        if (currentvalueSpearOnPlayerText < 100 && currentCoin >= 10)
+        {
+            currentvalueSpearOnPlayerText += 5;
+            currentCoin -= 10;
+            source.PlayOneShot(buyMagTruyClip);
+        } else
+        {
+            source.PlayOneShot(buyMagfalseClip);
+        }
+    }
+
+    public void buyInShopSpearDamage()
+    {
+        if (currentDamageSpearText < 100 && currentCoin >= 50)
+        {
+            currentDamageSpearText += 10;
+            currentCoin -= 50;
+            source.PlayOneShot(buyMagTruyClip);
+        } else
+        {
+            source.PlayOneShot(buyMagfalseClip);
+        }
+
+    }
+
+    public void buyInShopSwordDamage() 
+    {
+        if (currentDamageSwordText < 100 && currentCoin >= 30)
+        {
+            currentDamageSwordText += 10;
+            currentCoin -= 30;
+            source.PlayOneShot(buyMagTruyClip);
+        }
+        else
+        {
+            source.PlayOneShot(buyMagfalseClip);
+        }
+    }
+
+   
+
+    public void PlaySpearDamageClip()
+    {
+        source.PlayOneShot(spearDamageClip);
     }
 
     public int GetCurrentCoin()

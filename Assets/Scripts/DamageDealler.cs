@@ -12,6 +12,7 @@ public class DamageDealler : MonoBehaviour
 
     //работа с событиями
     public static Func<int> onSpearDamage;
+    public static Action onCollisionWithEnemy;
 
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -19,6 +20,7 @@ public class DamageDealler : MonoBehaviour
         if (collision.CompareTag("Enemy"))
         {
             currentDamage = (int)(onSpearDamage?.Invoke());
+            onCollisionWithEnemy?.Invoke();
 
             collision.gameObject.GetComponent<Health>().TakeDamage(currentDamage);
             Debug.Log( $"Монстру нанесён урон метательным оружием на {currentDamage} урона");

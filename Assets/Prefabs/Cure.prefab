@@ -158,6 +158,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cure: 30
+  audioSource: {fileID: 0}
+  clip: {fileID: 8300000, guid: 8f7e19a9e1d1e714aa9c1b7bda22a2bc, type: 3}
 --- !u!1 &595670954057623275
 GameObject:
   m_ObjectHideFlags: 0

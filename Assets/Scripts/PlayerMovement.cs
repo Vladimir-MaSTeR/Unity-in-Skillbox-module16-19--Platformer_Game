@@ -24,6 +24,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Animator animator;
     [SerializeField] private Health healthScript;
     [SerializeField] private CheckEndAnim checkEndAnim;
+    [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private GameObject animObject;
 
     [Header("Управление Канвасами")]
     [SerializeField] private GameObject deathPanel;
@@ -32,6 +34,11 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float timeVisionDialogTextMax = 3;
 
     [SerializeField] private GameObject magPanel; // если эта панель активна значит мы в магазине и не дожны двигаться.
+
+    [Header("Управление звуками")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip   fire1Clip;
+    [SerializeField] private AudioClip   jumpClip;
 
 
 
@@ -99,14 +106,20 @@ public class PlayerMovement : MonoBehaviour
     }
 
 
-    public void Move(float horizontalDirection, float verticalDirection, bool isJumpButtonPresed, bool isFire1ButtonPresed)
+    public void Move(float horizontalDirection, float verticalDirection, bool isJumpButtonPresed, bool isFire1ButtonPresed, bool isFire2ButtonPresed)
     {
+
+        if (isFire2ButtonPresed)
+        {
+            audioSource.PlayOneShot(fire1Clip);
+        }
         if (!currentActiveMagPanel)
         {
 
             if (isFire1ButtonPresed)
             {
                 animator.SetBool("isAttack", true);
+                audioSource.PlayOneShot(fire1Clip);
             }
             else
             {
@@ -146,6 +159,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (isGrounded)
         {
+            audioSource.PlayOneShot(jumpClip);
             rigidBody.velocity = new Vector2(rigidBody.velocity.x, jumpForce);
             
         }
@@ -157,17 +171,19 @@ public class PlayerMovement : MonoBehaviour
 
         if (horizontalDirection >= 0)
         {
-             rigidBody.transform.rotation = new Quaternion(0, 0, 0, Quaternion.identity.w);
-            dialogText.rectTransform.localRotation = Quaternion.Euler(0, 0, 0);
+            animObject.transform.rotation = new Quaternion(0, 0, 0, Quaternion.identity.w);
+            //gameObject.transform.rotation = new Quaternion(0, 0, 0, Quaternion.identity.w);
+            //spriteRenderer.flipX = false;
+            //dialogText.rectTransform.localRotation = Quaternion.Euler(0, 0, 0);
             rigidBody.velocity = new Vector2(horizontalDirection * spped, rigidBody.velocity.y);
             
             
         } else
         {
-             rigidBody.transform.rotation = new Quaternion(0, 180, 0, Quaternion.identity.w); 
-            //dialogText.transform.rotation = new Quaternion(0, 180, 0, Quaternion.identity.w);
-           // dialogText.rectTransform.rotation = new Quaternion(0, 180, 0, Quaternion.identity.w);
-            dialogText.rectTransform.localRotation = Quaternion.Euler(0, 180, 0);
+            animObject.transform.rotation = new Quaternion(0, 180, 0, Quaternion.identity.w);
+           // gameObject.transform.rotation = new Quaternion(0, 180, 0, Quaternion.identity.w);
+            //spriteRenderer.flipX = true;
+            //dialogText.rectTransform.localRotation = Quaternion.Euler(0, 180, 0);
             rigidBody.velocity = new Vector2(horizontalDirection * spped, rigidBody.velocity.y);
         
         }

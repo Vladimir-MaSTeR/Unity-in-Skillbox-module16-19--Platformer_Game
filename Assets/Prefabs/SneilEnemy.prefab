@@ -159,7 +159,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemy: {fileID: 1512759297853021203}
-  coin: {fileID: 667113084637305637, guid: 8203ab57b99a7e94c85725b11787abff, type: 3}
+  coin: {fileID: 5168215349088761825, guid: 103da52984b8ba34e8433b85dbd39280, type: 3}
   pointInstantiateCoin: {fileID: 1906792593}
   speed: 1
   timeToRevert: 2
@@ -181,6 +181,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 10
+  audioSource: {fileID: 0}
+  clip: {fileID: 8300000, guid: 79dbcbdfaeee7b34c98051d2863ab90e, type: 3}
 --- !u!58 &1341716030
 CircleCollider2D:
   m_ObjectHideFlags: 0

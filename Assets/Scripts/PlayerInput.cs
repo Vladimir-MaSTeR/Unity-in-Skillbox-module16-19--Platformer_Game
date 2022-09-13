@@ -32,6 +32,7 @@ public class PlayerInput : MonoBehaviour
         float verticalDirection = Input.GetAxis(GlobalConstants.VERTICAL_AXIS); 
         bool isJumpButtonPresed = Input.GetButtonDown(GlobalConstants.JUMP);
         bool isFire1ButtonPresed = Input.GetButtonDown(GlobalConstants.FIRE_1);
+        bool isFire2ButtonPresed = Input.GetButtonDown(GlobalConstants.FIRE_2);
 
 
         if (Input.GetButtonDown(GlobalConstants.FIRE_2))
@@ -43,6 +44,6 @@ public class PlayerInput : MonoBehaviour
 
         }
 
-        playerMovement.Move(horizontalDirection, verticalDirection, isJumpButtonPresed, isFire1ButtonPresed);
+        playerMovement.Move(horizontalDirection, verticalDirection, isJumpButtonPresed, isFire1ButtonPresed, isFire2ButtonPresed);
     }
 }

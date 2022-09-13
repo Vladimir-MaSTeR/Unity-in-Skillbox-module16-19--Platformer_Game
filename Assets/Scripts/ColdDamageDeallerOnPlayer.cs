@@ -7,6 +7,9 @@ public class ColdDamageDeallerOnPlayer : MonoBehaviour
     [SerializeField] private float damage = 30;
     [SerializeField] private GameManager gameManagerScript;
 
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip clip;
+
     private float currentDamage;
 
     private void Start()
@@ -21,8 +24,9 @@ public class ColdDamageDeallerOnPlayer : MonoBehaviour
         {
             currentDamage = gameManagerScript.GetCurrentDamageSwordText();
 
-            collision.gameObject.GetComponent<Health>().TakeDamage(damage);
-            Debug.Log("Монстру нанесён урон холодным");
+            audioSource.PlayOneShot(clip);
+            collision.gameObject.GetComponent<Health>().TakeDamage(currentDamage);
+            Debug.Log($"Монстру нанесён урон холодным на {currentDamage} урона");
         }
     }
 
