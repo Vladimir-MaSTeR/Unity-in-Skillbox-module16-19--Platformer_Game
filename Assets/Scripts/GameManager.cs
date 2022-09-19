@@ -14,7 +14,9 @@ public class GameManager : MonoBehaviour
 
     [Header("Стартавые параметры")]
     [SerializeField] private int StartCoin = 200;
-    [SerializeField] private int startSpearDamage = 4;
+    [SerializeField] private int startSpearDamage = 5;
+    [SerializeField] private int startvalueSpearDamage = 30;
+    [SerializeField] private int startSwordDamage = 4;
 
     [Header("Звук")]
     [SerializeField] private AudioSource source;
@@ -35,14 +37,16 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        currentDamageSwordText = startSwordDamage;
         currentDamageSpearText = startSpearDamage;
+        currentvalueSpearOnPlayerText = startvalueSpearDamage;
         currentCoin = StartCoin;
     }
 
     private void Update()
     {
 
-
+        LoadGame();
         damageSwordText.text = currentDamageSwordText.ToString();
         damageSpearText.text = currentDamageSpearText.ToString();
         valueSpearOnPlayerText.text = currentvalueSpearOnPlayerText.ToString();
@@ -58,6 +62,7 @@ public class GameManager : MonoBehaviour
         DamageDealler.onSpearDamage += GetCurrentDamageSpearText;
         DamageDealler.onCollisionWithEnemy += PlaySpearDamageClip;
         Coin.onCoin += PlusValueCurrentCoin;
+        MainCanvasController.onClickRestartButton += SaveGame;
 
         MagController.onEventClickSwordImageButton += buyInShopSwordDamage;
         MagController.onEventSpearDamageImageButton += buyInShopSpearDamage;
@@ -69,6 +74,8 @@ public class GameManager : MonoBehaviour
         DamageDealler.onSpearDamage -= GetCurrentDamageSpearText;
         DamageDealler.onCollisionWithEnemy -= PlaySpearDamageClip;
         Coin.onCoin -= PlusValueCurrentCoin;
+        MainCanvasController.onClickRestartButton -= SaveGame;
+
 
         MagController.onEventClickSwordImageButton -= buyInShopSwordDamage;
         MagController.onEventSpearDamageImageButton -= buyInShopSpearDamage;
@@ -121,7 +128,6 @@ public class GameManager : MonoBehaviour
     }
 
    
-
     public void PlaySpearDamageClip()
     {
         source.PlayOneShot(spearDamageClip);
@@ -147,7 +153,6 @@ public class GameManager : MonoBehaviour
     {
         valueCoinText.text = currentCoin.ToString();
     }
-
 
     public int GetCurrentDamageSwordText()
     {
@@ -178,4 +183,39 @@ public class GameManager : MonoBehaviour
     {
         this.currentvalueSpearOnPlayerText = value;
     }
+
+
+    private void SaveGame()
+    {
+        PlayerPrefs.SetInt("DamageSword", currentDamageSwordText);
+        PlayerPrefs.SetInt("DamageSpear", currentDamageSpearText);
+        PlayerPrefs.SetInt("valueSpear", currentvalueSpearOnPlayerText);
+        PlayerPrefs.SetInt("coin", currentCoin);
+        PlayerPrefs.Save();
+    }
+
+    private void LoadGame()
+    {
+        if (PlayerPrefs.HasKey("DamageSword"))
+        {
+            currentDamageSwordText = PlayerPrefs.GetInt("DamageSword");
+        }
+
+        if (PlayerPrefs.HasKey("DamageSpear"))
+        {
+            currentDamageSpearText = PlayerPrefs.GetInt("DamageSpear");
+        }
+
+        if (PlayerPrefs.HasKey("valueSpear"))
+        {
+            currentvalueSpearOnPlayerText = PlayerPrefs.GetInt("valueSpear");
+        }
+
+        if (PlayerPrefs.HasKey("coin"))
+        {
+            currentCoin = PlayerPrefs.GetInt("coin");
+        }
+    }
+
+
 }

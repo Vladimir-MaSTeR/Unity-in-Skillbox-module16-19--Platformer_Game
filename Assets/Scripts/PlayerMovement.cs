@@ -113,6 +113,7 @@ public class PlayerMovement : MonoBehaviour
         {
             audioSource.PlayOneShot(fire1Clip);
         }
+
         if (!currentActiveMagPanel)
         {
 

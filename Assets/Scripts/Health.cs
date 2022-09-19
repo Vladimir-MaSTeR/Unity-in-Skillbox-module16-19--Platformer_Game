@@ -18,6 +18,16 @@ public class Health : MonoBehaviour
         isAlive = true;
     }
 
+    private void OnEnable()
+    {
+        DeathTriger.deathPlayer += PlayerIsDeath;
+    }
+
+    private void OnDisable()
+    {
+        DeathTriger.deathPlayer -= PlayerIsDeath;
+    }
+
     public void TakeDamage(float damage)
     {
         currentHealth -= damage;
@@ -63,5 +73,10 @@ public class Health : MonoBehaviour
         {
             isAlive = false;
         }
+    }
+
+    private void PlayerIsDeath(bool value)
+    {
+        isAlive = !value;
     }
 }

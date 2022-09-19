@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -24,6 +22,9 @@ public class MainCanvasController : MonoBehaviour
                                                   HistoryText.FIVE, HistoryText.SIX, HistoryText.SEVEN, HistoryText.EIGHT, HistoryText.NINE, HistoryText.TEN};
     private int indexHistoryText = 0;
     private int imagesIndex = 0;
+
+    //------- EVENTS -----------
+    public static Action onClickRestartButton;
 
     private void Start()
     {
@@ -100,6 +101,12 @@ public class MainCanvasController : MonoBehaviour
     //-------------------------------------
     public void OnClickRestartScene()
     {
+        onClickRestartButton?.Invoke();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void OnClickExitGameToMainMenu()
+    {
+        SceneManager.LoadScene(0);
     }
 }
