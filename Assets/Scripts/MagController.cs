@@ -67,6 +67,8 @@ public class MagController : MonoBehaviour
     public void onCleckExitMagButton()
     {
         magPanel.SetActive(false);
+        smithy.SetActive(false);
+        smithyButton.interactable = true;
         audioSource.PlayOneShot(dorClip);
     }
 

@@ -512,7 +512,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 105e58fb0d09cce4fbec548c1eb29432, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 5
   gameManagerScript: {fileID: 0}
   audioSource: {fileID: 0}
   clip: {fileID: 8300000, guid: fc2d5e591586f984781f01fb0703f524, type: 3}
@@ -912,10 +911,11 @@ MonoBehaviour:
   healthScript: {fileID: 4704580309957651263}
   checkEndAnim: {fileID: 9193012423977107473}
   spriteRenderer: {fileID: 3129435919947191333}
+  animObject: {fileID: 3129435919947191328}
   deathPanel: {fileID: 0}
   dialogCanvas: {fileID: 2060869021}
   dialogText: {fileID: 1773844347}
-  timeVisionDialogTextMax: 3
+  timeVisionDialogTextMax: 4
   magPanel: {fileID: 0}
   audioSource: {fileID: 0}
   fire1Clip: {fileID: 8300000, guid: 458e620a05ba3e24bae6049474d87965, type: 3}
@@ -949,7 +949,6 @@ MonoBehaviour:
   bullet: {fileID: 3890886417220569566, guid: 15df16b7d1eb17a4db2d649326c31288, type: 3}
   pointInstantiate: {fileID: 4704580309223938246}
   fireSpeed: 20
-  valueBulet: 10
 --- !u!114 &4704580309957651262
 MonoBehaviour:
   m_ObjectHideFlags: 0

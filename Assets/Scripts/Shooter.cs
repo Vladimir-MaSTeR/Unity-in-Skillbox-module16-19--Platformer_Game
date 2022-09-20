@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,14 +8,18 @@ public class Shooter : MonoBehaviour
     [SerializeField] private GameObject bullet;
     [SerializeField] private Transform pointInstantiate;
     [SerializeField] private float fireSpeed = 15;
-    [SerializeField] private int valueBulet = 10;
+    //[SerializeField] private int valueBulet = 10;
+
+
+    //------EVENTS---------
+    public static Func<int> onSpearValue;
 
 
     private int currentValueBuletInPlayer;
 
     private void Start()
     {
-        currentValueBuletInPlayer = valueBulet;
+        currentValueBuletInPlayer = (int)(onSpearValue?.Invoke());
     }
 
     public void Shoot(float derection)

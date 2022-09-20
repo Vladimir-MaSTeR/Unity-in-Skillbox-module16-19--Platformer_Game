@@ -25,6 +25,7 @@ public class MainCanvasController : MonoBehaviour
 
     //------- EVENTS -----------
     public static Action onClickRestartButton;
+    public static Action onClickStartGameButton;
 
     private void Start()
     {
@@ -94,6 +95,7 @@ public class MainCanvasController : MonoBehaviour
 
         if (indexHistoryText == 11)
         {
+            onClickStartGameButton?.Invoke();
             SceneManager.LoadScene(1);
         }
     }
@@ -102,11 +104,12 @@ public class MainCanvasController : MonoBehaviour
     public void OnClickRestartScene()
     {
         onClickRestartButton?.Invoke();
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void OnClickExitGameToMainMenu()
     {
+        PlayerPrefs.DeleteKey("PlayerPositionX");
+        PlayerPrefs.DeleteKey("PlayerPositionY");
         SceneManager.LoadScene(0);
     }
 }

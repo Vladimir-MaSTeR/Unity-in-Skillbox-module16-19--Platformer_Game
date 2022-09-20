@@ -64,6 +64,14 @@ public class PlayerMovement : MonoBehaviour
         currentTimeVisionDialogText = timeVisionDialogTextMax;
 
         currentActiveMagPanel = magPanel.activeSelf;
+
+        if (PlayerPrefs.HasKey("PlayerPositionX") && PlayerPrefs.HasKey("PlayerPositionY"))
+        {
+            float x = PlayerPrefs.GetFloat("PlayerPositionX");
+            float y = PlayerPrefs.GetFloat("PlayerPositionY");
+
+            transform.position = new Vector2(x, y);
+        }
     }
 
     private void FixedUpdate() // Стараться все обновления физики делать в этом методе.
