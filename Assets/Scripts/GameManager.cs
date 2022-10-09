@@ -34,6 +34,10 @@ public class GameManager : MonoBehaviour
 
 
 
+    private float resPositionAfterEndRoundX = 55.22f;
+    private float resPositionAfterEndRoundY = -3.68f;
+
+
     private int currentDamageSwordText;
     private int currentDamageSpearText;
     private int currentvalueSpearOnPlayerText;
@@ -97,6 +101,7 @@ public class GameManager : MonoBehaviour
         ColdDamageDeallerOnPlayer.onSwordDamage += GetCurrentDamageSwordText;
         SavePointController.onTapSavePoint += SaveGameAndPlayer;
         MainCanvasController.onClicLoadLastSave += ResstartLevelAndStats;
+        FinishStage.onfinishStage += EndRound;
 
         MagController.onEventClickSwordImageButton += buyInShopSwordDamage;
         MagController.onEventSpearDamageImageButton += buyInShopSpearDamage;
@@ -115,6 +120,8 @@ public class GameManager : MonoBehaviour
         ColdDamageDeallerOnPlayer.onSwordDamage -= GetCurrentDamageSwordText;
         SavePointController.onTapSavePoint -= SaveGameAndPlayer;
         MainCanvasController.onClicLoadLastSave -= ResstartLevelAndStats;
+        FinishStage.onfinishStage -= EndRound;
+
 
         MagController.onEventClickSwordImageButton -= buyInShopSwordDamage;
         MagController.onEventSpearDamageImageButton -= buyInShopSpearDamage;
@@ -221,6 +228,24 @@ public class GameManager : MonoBehaviour
     public void SetCurrentvalueSpearOnPlayerText(int value)
     {
         this.currentvalueSpearOnPlayerText = value;
+    }
+
+    private void EndRound()
+    {
+        float xPosPlayer = resPositionAfterEndRoundX;
+        float yPosPlayer = resPositionAfterEndRoundY;
+
+        PlayerPrefs.SetFloat("PlayerPositionX", xPosPlayer);
+        Debug.Log($"Сохранена позиция изрока по x = {xPosPlayer}");
+
+        PlayerPrefs.SetFloat("PlayerPositionY", yPosPlayer);
+        Debug.Log($"Сохранена позиция изрока по y = {yPosPlayer}");
+
+        PlayerPrefs.Save();
+
+        SaveGame();
+
+        SceneManager.LoadScene(1);
     }
 
 

@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1906792593}
-  m_Layer: 8
+  m_Layer: 13
   m_Name: Point
   m_TagString: Untagged
   m_Icon: {fileID: -5397416234189338067, guid: 0000000000000000d000000000000000, type: 0}
@@ -48,7 +48,7 @@ GameObject:
   - component: {fileID: 1512759297853021192}
   - component: {fileID: 1341716030}
   - component: {fileID: 3446448309480392718}
-  m_Layer: 8
+  m_Layer: 13
   m_Name: SneilEnemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -307,7 +307,7 @@ GameObject:
   - component: {fileID: 1512759298092945635}
   - component: {fileID: 1512759298092945633}
   - component: {fileID: 1512759298092945634}
-  m_Layer: 8
+  m_Layer: 13
   m_Name: HalsBarImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -383,7 +383,7 @@ GameObject:
   - component: {fileID: 1512759298199848396}
   - component: {fileID: 1512759298199848386}
   - component: {fileID: 1512759298199848387}
-  m_Layer: 8
+  m_Layer: 13
   m_Name: BackGraundImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -461,7 +461,7 @@ GameObject:
   - component: {fileID: 1512759298550172730}
   - component: {fileID: 1512759298550172731}
   - component: {fileID: 1512759298550173636}
-  m_Layer: 8
+  m_Layer: 13
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -562,7 +562,7 @@ GameObject:
   - component: {fileID: 1512759299716258175}
   - component: {fileID: 1512759299716258168}
   - component: {fileID: 1512759299716258174}
-  m_Layer: 8
+  m_Layer: 13
   m_Name: anim
   m_TagString: Enemy
   m_Icon: {fileID: 0}
