@@ -42,10 +42,11 @@ public class GameManager : MonoBehaviour
 
     private int startGameOneTap; // переменная отвечающая за то, что игра запускается в первый раз или нет. (0 = в первый раз. 1 = повторно и нужно подтянуть сохранения)
 
- 
 
+   
     private void Start()
     {
+        
         if (PlayerPrefs.HasKey("startGameTap"))
         {
             startGameOneTap = PlayerPrefs.GetInt("startGameTap");
@@ -58,6 +59,8 @@ public class GameManager : MonoBehaviour
                 PlayerPrefs.DeleteKey("PlayerPositionY");
             }
         }
+        
+       
 
         Debug.Log($"Значение пременной startGameOneTap = {startGameOneTap}");
         if (startGameOneTap == 0)
@@ -93,6 +96,7 @@ public class GameManager : MonoBehaviour
         Shooter.onSpearValue += GetCurrentvalueSpearOnPlayerText;
         ColdDamageDeallerOnPlayer.onSwordDamage += GetCurrentDamageSwordText;
         SavePointController.onTapSavePoint += SaveGameAndPlayer;
+        MainCanvasController.onClicLoadLastSave += ResstartLevelAndStats;
 
         MagController.onEventClickSwordImageButton += buyInShopSwordDamage;
         MagController.onEventSpearDamageImageButton += buyInShopSpearDamage;
@@ -110,6 +114,7 @@ public class GameManager : MonoBehaviour
         Shooter.onSpearValue -= GetCurrentvalueSpearOnPlayerText;
         ColdDamageDeallerOnPlayer.onSwordDamage -= GetCurrentDamageSwordText;
         SavePointController.onTapSavePoint -= SaveGameAndPlayer;
+        MainCanvasController.onClicLoadLastSave -= ResstartLevelAndStats;
 
         MagController.onEventClickSwordImageButton -= buyInShopSwordDamage;
         MagController.onEventSpearDamageImageButton -= buyInShopSpearDamage;
@@ -262,6 +267,33 @@ public class GameManager : MonoBehaviour
     private void ResstartLevel()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    private void ResstartLevelAndStats()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        LoadGame();
+       // LoadGamePlayerPosition();
+    }
+
+    private void LoadGamePlayerPosition()
+    {
+        float xPosPlayer = playerPosition.position.x;
+        float yPosPlayer = playerPosition.position.y;
+
+        if (PlayerPrefs.HasKey("PlayerPositionX"))
+        {
+            xPosPlayer = PlayerPrefs.GetInt("PlayerPositionX");
+            Debug.Log($"загрузил PlayerPositionX = {xPosPlayer}");
+        }
+
+        if (PlayerPrefs.HasKey("PlayerPositionY"))
+        {
+            yPosPlayer = PlayerPrefs.GetInt("PlayerPositionY");
+            Debug.Log($"загрузил PlayerPositionY = {yPosPlayer}");
+        }
+
+        playerPosition.position = new Vector2(xPosPlayer, yPosPlayer);
     }
 
     private void LoadGame()

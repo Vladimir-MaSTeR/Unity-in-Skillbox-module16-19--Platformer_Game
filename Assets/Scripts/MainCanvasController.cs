@@ -17,6 +17,9 @@ public class MainCanvasController : MonoBehaviour
     [SerializeField] private Text textHistory;
     [SerializeField] private Text buttonText;
 
+    [Header("Панель игры")]
+    [SerializeField] private GameObject pausePanel;
+
 
     private String[] historyText = new String[] { HistoryText.ZERO, HistoryText.ONE, HistoryText.TWO, HistoryText.THREE, HistoryText.FOUR,
                                                   HistoryText.FIVE, HistoryText.SIX, HistoryText.SEVEN, HistoryText.EIGHT, HistoryText.NINE, HistoryText.TEN};
@@ -26,13 +29,15 @@ public class MainCanvasController : MonoBehaviour
     //------- EVENTS -----------
     public static Action onClickRestartButton;
     public static Action onClickStartGameButton;
+    public static Action onClicLoadLastSave;
 
     private void Start()
     {
-        mainCanvas.gameObject.SetActive(true);
+        mainCanvas?.gameObject.SetActive(true);
         historyCanvas.gameObject.SetActive(false);
         autorPanel.SetActive(false);
         mainPanel.SetActive(true);
+        pausePanel.SetActive(false);
     }
 
     //-------Main Canvas Methods-----------
@@ -110,6 +115,25 @@ public class MainCanvasController : MonoBehaviour
     {
         PlayerPrefs.DeleteKey("PlayerPositionX");
         PlayerPrefs.DeleteKey("PlayerPositionY");
+        Time.timeScale = 1;
         SceneManager.LoadScene(0);
     }
+
+    public void onClickPauseStart()
+    {
+        Time.timeScale = 0;
+        pausePanel.SetActive(true);
+    }
+
+    public void onClickPauseEnd()
+    {
+        Time.timeScale = 1;
+        pausePanel.SetActive(false);
+    }
+
+    public void OnClicLoadLastSave()
+    {
+        onClicLoadLastSave?.Invoke();
+    }
+
 }

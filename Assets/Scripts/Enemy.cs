@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -27,6 +28,11 @@ public class Enemy : MonoBehaviour
 
     private float currentState;
     private float currentTimeRevert;
+
+
+
+    public static Action onDeathEnemy;
+
 
 
     private void Start()
@@ -72,6 +78,7 @@ public class Enemy : MonoBehaviour
         if (checkEndAnim.GetEndAnim() == true)
         {
             Instantiate(coin, pointInstantiateCoin.position, Quaternion.identity);
+            onDeathEnemy?.Invoke();
             enemy.SetActive(false);
         }
     }

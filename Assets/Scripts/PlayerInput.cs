@@ -22,7 +22,7 @@ public class PlayerInput : MonoBehaviour
 
     private void Start()
     {
-        gameManagerScript.SetCurrentvalueSpearOnPlayerText(shooter.GetCurrentValueBuletInPlayer());
+       // gameManagerScript.SetCurrentvalueSpearOnPlayerText(shooter.GetCurrentValueBuletInPlayer());
     }
 
 

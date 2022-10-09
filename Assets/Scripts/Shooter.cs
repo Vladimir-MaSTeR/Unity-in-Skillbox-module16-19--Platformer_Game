@@ -14,16 +14,13 @@ public class Shooter : MonoBehaviour
     //------EVENTS---------
     public static Func<int> onSpearValue;
 
-
     private int currentValueBuletInPlayer;
-
-    private void Start()
-    {
-        currentValueBuletInPlayer = (int)(onSpearValue?.Invoke());
-    }
 
     public void Shoot(float derection)
     {
+        currentValueBuletInPlayer = (int)(onSpearValue?.Invoke());
+        Debug.Log($"Кооличество копий = {currentValueBuletInPlayer}");
+
         if (currentValueBuletInPlayer > 0)
         {
             GameObject currentBullet = Instantiate(bullet, pointInstantiate.position, Quaternion.identity);
