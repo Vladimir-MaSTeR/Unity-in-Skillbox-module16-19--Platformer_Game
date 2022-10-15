@@ -20,6 +20,19 @@ public class SavePointController : MonoBehaviour
         }
     }
 
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player") && Input.GetKeyDown(KeyCode.E))
+        {
+            onTapSavePoint?.Invoke();
+            foreach (var item in needToShowObject)
+            {
+                item.SetActive(true);
+            }
+        }
+    }
+
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.CompareTag("Player") && Input.GetKeyDown(KeyCode.E))
@@ -31,4 +44,6 @@ public class SavePointController : MonoBehaviour
             }
         }
     }
+
+    
 }

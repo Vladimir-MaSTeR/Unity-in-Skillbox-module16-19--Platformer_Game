@@ -25,6 +25,18 @@ public class FonMusicController : MonoBehaviour
             audioSource.clip = audioClips[0];
 
         }
+        else if (currentIndexScene == 2)
+        {
+            audioSource.clip = audioClips[2];
+
+        } else if (currentIndexScene == 3)
+        {
+            audioSource.clip = audioClips[3];
+
+        } else
+        {
+            audioSource.clip = audioClips[1];
+        }
 
         audioSource.Play();
         audioSource.loop = true;

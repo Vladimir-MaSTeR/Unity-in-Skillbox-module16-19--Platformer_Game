@@ -105,7 +105,7 @@ public class MainCanvasController : MonoBehaviour
         }
     }
 
-    //-------------------------------------
+    //-------Pused Methods-------
     public void OnClickRestartScene()
     {
         onClickRestartButton?.Invoke();
@@ -115,6 +115,8 @@ public class MainCanvasController : MonoBehaviour
     {
         PlayerPrefs.DeleteKey("PlayerPositionX");
         PlayerPrefs.DeleteKey("PlayerPositionY");
+        PlayerPrefs.DeleteKey("startHistory");
+
         Time.timeScale = 1;
         SceneManager.LoadScene(0);
     }

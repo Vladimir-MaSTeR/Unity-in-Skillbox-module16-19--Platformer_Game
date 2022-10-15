@@ -37,6 +37,9 @@ public class GameManager : MonoBehaviour
     private float resPositionAfterEndRoundX = 55.22f;
     private float resPositionAfterEndRoundY = -3.68f;
 
+    private float resPositionSneilStartX = -39.88f;
+    private float resPositionSneilStartY = 2.63f;
+
 
     private int currentDamageSwordText;
     private int currentDamageSpearText;
@@ -61,6 +64,7 @@ public class GameManager : MonoBehaviour
             {
                 PlayerPrefs.DeleteKey("PlayerPositionX");
                 PlayerPrefs.DeleteKey("PlayerPositionY");
+                
             }
         }
         
@@ -73,6 +77,12 @@ public class GameManager : MonoBehaviour
             currentDamageSpearText = startSpearDamage;
             currentvalueSpearOnPlayerText = startvalueSpearDamage;
             currentCoin = StartCoin;
+
+            if (PlayerPrefs.HasKey("startHistory"))
+            {
+                PlayerPrefs.DeleteKey("startHistory");
+            }
+
         } else
         {
             LoadGame();
@@ -106,6 +116,7 @@ public class GameManager : MonoBehaviour
         MagController.onEventClickSwordImageButton += buyInShopSwordDamage;
         MagController.onEventSpearDamageImageButton += buyInShopSpearDamage;
         MagController.onEventSpearImageButton += buyInShopSpear;
+        MagController.onEventClickSneilLevelButton += StartSneilCnene;
     }
 
     private void OnDisable()
@@ -126,6 +137,8 @@ public class GameManager : MonoBehaviour
         MagController.onEventClickSwordImageButton -= buyInShopSwordDamage;
         MagController.onEventSpearDamageImageButton -= buyInShopSpearDamage;
         MagController.onEventSpearImageButton -= buyInShopSpear;
+        MagController.onEventClickSneilLevelButton -= StartSneilCnene;
+
 
 
 
@@ -248,6 +261,23 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(1);
     }
 
+    private void StartSneilCnene()
+    {
+        float xPosPlayer = resPositionSneilStartX;
+        float yPosPlayer = resPositionSneilStartY;
+
+        PlayerPrefs.SetFloat("PlayerPositionX", xPosPlayer);
+        Debug.Log($"Сохранена позиция изрока по x = {xPosPlayer}");
+
+        PlayerPrefs.SetFloat("PlayerPositionY", yPosPlayer);
+        Debug.Log($"Сохранена позиция изрока по y = {yPosPlayer}");
+
+        PlayerPrefs.Save();
+
+        SaveGame();
+        SceneManager.LoadScene(2);
+    }
+
 
     private void SaveGame()
     {
@@ -353,6 +383,7 @@ public class GameManager : MonoBehaviour
         startGameOneTap = 0;
         PlayerPrefs.DeleteKey("PlayerPositionX");
         PlayerPrefs.DeleteKey("PlayerPositionY");
+        PlayerPrefs.DeleteKey("startHistory");
     }
 
 }
