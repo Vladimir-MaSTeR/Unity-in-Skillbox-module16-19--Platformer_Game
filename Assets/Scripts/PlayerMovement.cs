@@ -54,6 +54,18 @@ public class PlayerMovement : MonoBehaviour
     private bool currentActiveMagPanel;
 
 
+    private void OnEnable()
+    {
+        DragonLevelController.onEventDragonLEvel += DialogCanvasInDragonStage;
+    }
+
+    private void OnDisable()
+    {
+        DragonLevelController.onEventDragonLEvel -= DialogCanvasInDragonStage;
+
+    }
+
+
     private void Awake()
     {
         Time.timeScale = 1;
@@ -226,6 +238,13 @@ public class PlayerMovement : MonoBehaviour
             dialogCanvas.gameObject.SetActive(true);
             dialogText.text = collision.GetComponent<DialogTrigerController>().getCurrentDialogText();
         }
+    }
+
+    private void DialogCanvasInDragonStage(string str)
+    {
+        checkDialogTriger = true;
+        dialogCanvas.gameObject.SetActive(true);
+        dialogText.text = str;
     }
 
     private void dialogTimer()

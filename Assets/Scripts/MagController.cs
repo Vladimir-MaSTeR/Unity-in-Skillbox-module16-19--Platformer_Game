@@ -72,6 +72,7 @@ public class MagController : MonoBehaviour
     public static Action onEventSpearDamageImageButton;
     public static Action onEventSpearImageButton;
     public static Action onEventClickSneilLevelButton;
+    public static Action onEventClickExitMagButton;
 
 
 
@@ -233,6 +234,8 @@ public class MagController : MonoBehaviour
         {
             indexHistoryText = 0;
         }
+
+        onEventClickExitMagButton?.Invoke();
     }
 
     public void onClickSmithybutton()

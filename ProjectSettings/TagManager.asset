@@ -13,6 +13,7 @@ TagManager:
   - Apple
   - Cure
   - DialogTriger
+  - DialogTrigerDragonLevel
   layers:
   - Default
   - TransparentFX

@@ -10,8 +10,10 @@ public class FinishStage : MonoBehaviour
     public static Action onfinishStage;
     public static Action onfinishStageSneil;
 
+    private int startHistory = 1;
 
-    private void OnTriggerEnter2D(Collider2D collision)
+
+    private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.CompareTag("Player") && Input.GetKeyDown(KeyCode.E))
         {
@@ -21,33 +23,18 @@ public class FinishStage : MonoBehaviour
 
                 if (PlayerPrefs.HasKey("startHistory"))
                 {
-                    PlayerPrefs.SetInt("startHistory", 2);
+                    startHistory = PlayerPrefs.GetInt("startHistory");
+                    Debug.Log($"загрузил переменную startHistory из памяти = {startHistory}");
+
+
+                    PlayerPrefs.SetInt("startHistory", startHistory++);
+                    PlayerPrefs.Save();
                 }
                 else
                 {
-                    PlayerPrefs.SetInt("startHistory", 1);
-                }
-            }
-
-            onfinishStage?.Invoke();
-        }
-    }
-
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player") && Input.GetKey(KeyCode.E))
-        {
-            if (SceneManager.GetActiveScene().buildIndex == 2)
-            {
-                onfinishStageSneil?.Invoke();
-
-                if (PlayerPrefs.HasKey("startHistory"))
-                {
-                    PlayerPrefs.SetInt("startHistory", 2);
-                }
-                else
-                {
-                    PlayerPrefs.SetInt("startHistory", 1);
+                    Debug.Log($"Переменная startHistory не найдена в памяти и будет равна = {startHistory}");
+                    PlayerPrefs.SetInt("startHistory", startHistory);
+                    PlayerPrefs.Save();
                 }
             }
 

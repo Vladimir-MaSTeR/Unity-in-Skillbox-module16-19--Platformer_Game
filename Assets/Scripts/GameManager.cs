@@ -81,6 +81,11 @@ public class GameManager : MonoBehaviour
             if (PlayerPrefs.HasKey("startHistory"))
             {
                 PlayerPrefs.DeleteKey("startHistory");
+                Debug.Log("startHistory удалена");
+            }
+            else
+            {
+                Debug.Log("startHistory  не найдена в сохранениях");
             }
 
         } else
@@ -105,6 +110,7 @@ public class GameManager : MonoBehaviour
         DamageDealler.onCollisionWithEnemy += PlaySpearDamageClip;
         Coin.onCoin += PlusValueCurrentCoin;
         MainCanvasController.onClickRestartButton += SaveGame;
+        MagController.onEventClickExitMagButton += SaveGame;
         MainCanvasController.onClickRestartButton += ResstartLevel;
         MainCanvasController.onClickStartGameButton += CheckTapButtonsStartGameOneTap;
         Shooter.onSpearValue += GetCurrentvalueSpearOnPlayerText;
@@ -125,6 +131,7 @@ public class GameManager : MonoBehaviour
         DamageDealler.onCollisionWithEnemy -= PlaySpearDamageClip;
         Coin.onCoin -= PlusValueCurrentCoin;
         MainCanvasController.onClickRestartButton -= SaveGame;
+        MagController.onEventClickExitMagButton -= SaveGame;
         MainCanvasController.onClickRestartButton -= ResstartLevel;
         MainCanvasController.onClickStartGameButton -= CheckTapButtonsStartGameOneTap;
         Shooter.onSpearValue -= GetCurrentvalueSpearOnPlayerText;
