@@ -27,7 +27,7 @@ public class FinishStage : MonoBehaviour
                     Debug.Log($"загрузил переменную startHistory из памяти = {startHistory}");
 
 
-                    PlayerPrefs.SetInt("startHistory", startHistory++);
+                    PlayerPrefs.SetInt("startHistory", ++startHistory);
                     PlayerPrefs.Save();
                 }
                 else

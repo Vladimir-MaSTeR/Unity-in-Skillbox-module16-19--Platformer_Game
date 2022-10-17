@@ -55,6 +55,7 @@ public class Enemy : MonoBehaviour
 
         CheckEndAnimDeath();
         checkCurentState();
+        CheckPlayerDetected();
 
 
         // checkCurentState();
@@ -88,9 +89,11 @@ public class Enemy : MonoBehaviour
         if (detectedTriger.getPlayerDetected() == true)
         {
             animator.SetBool("detected", true);
+           // currentState = IDLE_STATE;
         } else
         {
             animator.SetBool("detected", false);
+            //currentState = WALC_STATE;
         }
     }
   
