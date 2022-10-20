@@ -6,7 +6,7 @@ using System;
 public class DamageDealler : MonoBehaviour
 {
     [SerializeField] private int damage = 35;
-    //[SerializeField] private GameManager gameManagerScript;
+    [SerializeField] private float delimetrDamageBoss = 30;
 
     private int currentDamage;
 
@@ -25,6 +25,19 @@ public class DamageDealler : MonoBehaviour
             collision.gameObject.GetComponent<Health>().TakeDamage(currentDamage);
             Debug.Log( $"Монстру нанесён урон метательным оружием на {currentDamage} урона");
              Destroy(gameObject);
+
+        }
+
+        if (collision.CompareTag("Boss"))
+        {
+            currentDamage = (int)(onSpearDamage?.Invoke());
+            onCollisionWithEnemy?.Invoke();
+
+            float currentDamageBoss = currentDamage / delimetrDamageBoss;
+
+            collision.gameObject.GetComponent<Health>().TakeDamage(currentDamageBoss);
+            Debug.Log($"Монстру нанесён урон метательным оружием на {currentDamageBoss} урона");
+            Destroy(gameObject);
 
         }
     }

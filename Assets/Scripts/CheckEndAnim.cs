@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,8 @@ using UnityEngine;
 public class CheckEndAnim : MonoBehaviour
 {
     private bool endAmim = false;
+
+    public static Action enemyDeath; 
     
     private void CheckAnim()
     {
@@ -12,6 +15,7 @@ public class CheckEndAnim : MonoBehaviour
 
         endAmim = true;
         Debug.Log("Аниммация смерти закончилась");
+        enemyDeath?.Invoke();
     }
 
     public bool GetEndAnim()

@@ -55,6 +55,10 @@ public class MainCanvasController : MonoBehaviour
 
     public void onClickQuitGameButton()
     {
+        PlayerPrefs.DeleteKey("PlayerPositionX");
+        PlayerPrefs.DeleteKey("PlayerPositionY");
+        PlayerPrefs.DeleteKey("startHistory");
+
         Application.Quit();
     }
 

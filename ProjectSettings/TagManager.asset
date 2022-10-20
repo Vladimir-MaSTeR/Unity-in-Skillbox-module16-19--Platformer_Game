@@ -14,6 +14,7 @@ TagManager:
   - Cure
   - DialogTriger
   - DialogTrigerDragonLevel
+  - Boss
   layers:
   - Default
   - TransparentFX
@@ -29,7 +30,7 @@ TagManager:
   - Bullet
   - Ladder
   - Enemy
-  - 
+  - Boss
   - 
   - 
   - 

@@ -40,6 +40,9 @@ public class GameManager : MonoBehaviour
     private float resPositionSneilStartX = -39.88f;
     private float resPositionSneilStartY = 2.63f;
 
+    private float resPositionBossStartX = -37.94f;
+    private float resPositionBossStartY = -4.68f;
+
 
     private int currentDamageSwordText;
     private int currentDamageSpearText;
@@ -123,6 +126,7 @@ public class GameManager : MonoBehaviour
         MagController.onEventSpearDamageImageButton += buyInShopSpearDamage;
         MagController.onEventSpearImageButton += buyInShopSpear;
         MagController.onEventClickSneilLevelButton += StartSneilCnene;
+        DragonLevelController.onEventStartDragonLevel += StartBossScene;
     }
 
     private void OnDisable()
@@ -145,6 +149,7 @@ public class GameManager : MonoBehaviour
         MagController.onEventSpearDamageImageButton -= buyInShopSpearDamage;
         MagController.onEventSpearImageButton -= buyInShopSpear;
         MagController.onEventClickSneilLevelButton -= StartSneilCnene;
+        DragonLevelController.onEventStartDragonLevel -= StartBossScene;
 
 
 
@@ -284,6 +289,23 @@ public class GameManager : MonoBehaviour
         SaveGame();
         SceneManager.LoadScene(2);
     }
+
+    private void StartBossScene()
+    {
+        float xPosPlayer = resPositionBossStartX;
+        float yPosPlayer = resPositionBossStartY;
+
+        PlayerPrefs.SetFloat("PlayerPositionX", xPosPlayer);
+        Debug.Log($"Сохранена позиция изрока по x = {xPosPlayer}");
+
+        PlayerPrefs.SetFloat("PlayerPositionY", yPosPlayer);
+        Debug.Log($"Сохранена позиция изрока по y = {yPosPlayer}");
+
+        PlayerPrefs.Save();
+
+        SaveGame();
+        SceneManager.LoadScene(3);
+    } 
 
 
     private void SaveGame()

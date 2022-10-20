@@ -6788,8 +6788,8 @@ MonoBehaviour:
   - {fileID: 1374789479}
   enemy: {fileID: 1512759297853021203, guid: 17d8cd19c51ea774bb937355214020b4, type: 3}
   objectVisible: {fileID: 1686384216}
-  valueCreateEnemyOneWave: 1
-  valueCreateEnemyTwoWave: 1
+  valueCreateEnemyOneWave: 4
+  valueCreateEnemyTwoWave: 9
 --- !u!4 &716679944
 Transform:
   m_ObjectHideFlags: 0

@@ -8,6 +8,8 @@ public class ColdDamageDeallerOnPlayer : MonoBehaviour
     //[SerializeField] private float damage = 30;
     [SerializeField] private GameManager gameManagerScript;
 
+    [SerializeField] private float delimetrDamageBoss = 30;
+
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip clip;
 
@@ -30,6 +32,16 @@ public class ColdDamageDeallerOnPlayer : MonoBehaviour
             audioSource.PlayOneShot(clip);
             collision.gameObject.GetComponent<Health>().TakeDamage(currentDamage);
             Debug.Log($"Монстру нанесён урон холодным на {currentDamage} урона");
+        }
+
+        if (collision.CompareTag("Boss"))
+        {
+            currentDamage = (float)(onSwordDamage?.Invoke());
+            float currentDamageBoss = currentDamage / delimetrDamageBoss;
+
+            audioSource.PlayOneShot(clip);
+            collision.gameObject.GetComponent<Health>().TakeDamage(currentDamageBoss);
+            Debug.Log($"Босу нанесён урон холодным на {currentDamageBoss} урона");
         }
     }
 

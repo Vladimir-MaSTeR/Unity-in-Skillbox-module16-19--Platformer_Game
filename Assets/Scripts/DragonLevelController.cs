@@ -28,6 +28,7 @@ public class DragonLevelController : MonoBehaviour
 
     //---EVENT---
     public static Action<String> onEventDragonLEvel;
+    public static Action onEventStartDragonLevel;
 
 
 
@@ -56,7 +57,8 @@ public class DragonLevelController : MonoBehaviour
                 if (endSneilLevel > 0 && currentDamageSword >= requiredDamage || endSneilLevel > 0 && currentDamageSpear >= requiredDamage)
                 {
                     audioSource.PlayOneShot(dorClip);
-                    SceneManager.LoadScene(3);
+                    onEventStartDragonLevel?.Invoke();
+                   // SceneManager.LoadScene(3);
                 }
                 //  audioSource.PlayOneShot(dorClip);
 
@@ -90,7 +92,8 @@ public class DragonLevelController : MonoBehaviour
                 if (endSneilLevel > 0 && currentDamageSword >= requiredDamage || endSneilLevel > 0 && currentDamageSpear >= requiredDamage)
                 {
                     audioSource.PlayOneShot(dorClip);
-                    SceneManager.LoadScene(3);
+                    onEventStartDragonLevel?.Invoke();
+                    //SceneManager.LoadScene(3);
                 }
                 
                 //  audioSource.PlayOneShot(dorClip);
