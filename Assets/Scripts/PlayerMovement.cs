@@ -1,10 +1,8 @@
-
 using UnityEngine;
 using UnityEngine.UI;
-
 [RequireComponent(typeof(Rigidbody2D))]
-public class PlayerMovement : MonoBehaviour
-{ // Этот Класс работает с физикой
+public class PlayerMovement : MonoBehaviour {
+    // Р­С‚РѕС‚ РљР»Р°СЃСЃ СЂР°Р±РѕС‚Р°РµС‚ СЃ С„РёР·РёРєРѕР№
 
 
     [Header("Movement vars")]
@@ -14,7 +12,6 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Weapons on Player")]
     //[SerializeField] private GameObject weapons;
-
     [Header("Radius collider")]
     [SerializeField] private float jumpOffset;
 
@@ -27,21 +24,18 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private GameObject animObject;
 
-    [Header("Управление Канвасами")]
+    [Header("РЈРїСЂР°РІР»РµРЅРёРµ РљР°РЅРІР°СЃР°РјРё")]
     [SerializeField] private GameObject deathPanel;
     [SerializeField] private Canvas dialogCanvas;
     [SerializeField] private Text dialogText;
     [SerializeField] private float timeVisionDialogTextMax = 3;
 
-    [SerializeField] private GameObject magPanel; // если эта панель активна значит мы в магазине и не дожны двигаться.
+    [SerializeField] private GameObject magPanel; // РµСЃР»Рё СЌС‚Р° РїР°РЅРµР»СЊ Р°РєС‚РёРІРЅР° Р·РЅР°С‡РёС‚ РјС‹ РІ РјР°РіР°Р·РёРЅРµ Рё РЅРµ РґРѕР¶РЅС‹ РґРІРёРіР°С‚СЊСЃСЏ.
 
-    [Header("Управление звуками")]
+    [Header("РЈРїСЂР°РІР»РµРЅРёРµ Р·РІСѓРєР°РјРё")]
     [SerializeField] private AudioSource audioSource;
-    [SerializeField] private AudioClip   fire1Clip;
-    [SerializeField] private AudioClip   jumpClip;
-
-
-
+    [SerializeField] private AudioClip fire1Clip;
+    [SerializeField] private AudioClip jumpClip;
 
 
     private Rigidbody2D rigidBody;
@@ -54,20 +48,17 @@ public class PlayerMovement : MonoBehaviour
     private bool currentActiveMagPanel;
 
 
-    private void OnEnable()
-    {
+    private void OnEnable() {
         DragonLevelController.onEventDragonLEvel += DialogCanvasInDragonStage;
     }
 
-    private void OnDisable()
-    {
+    private void OnDisable() {
         DragonLevelController.onEventDragonLEvel -= DialogCanvasInDragonStage;
 
     }
 
 
-    private void Awake()
-    {
+    private void Awake() {
         Time.timeScale = 1;
         rigidBody = GetComponent<Rigidbody2D>();
         checkIsAlivePlayer = healthScript.CheckIsAlive();
@@ -77,8 +68,7 @@ public class PlayerMovement : MonoBehaviour
 
         currentActiveMagPanel = magPanel.activeSelf;
 
-        if (PlayerPrefs.HasKey("PlayerPositionX") && PlayerPrefs.HasKey("PlayerPositionY"))
-        {
+        if(PlayerPrefs.HasKey("PlayerPositionX") && PlayerPrefs.HasKey("PlayerPositionY")) {
             float x = PlayerPrefs.GetFloat("PlayerPositionX");
             float y = PlayerPrefs.GetFloat("PlayerPositionY");
 
@@ -86,23 +76,21 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void FixedUpdate() // Стараться все обновления физики делать в этом методе.
+    private void FixedUpdate() // РЎС‚Р°СЂР°С‚СЊСЃСЏ РІСЃРµ РѕР±РЅРѕРІР»РµРЅРёСЏ С„РёР·РёРєРё РґРµР»Р°С‚СЊ РІ СЌС‚РѕРј РјРµС‚РѕРґРµ.
     {
 
         checkIsAlivePlayer = healthScript.CheckIsAlive();
 
-        if (!checkIsAlivePlayer)
-        {
+        if(!checkIsAlivePlayer) {
             animator.SetBool("isAlive", false);
             CheckEndAnimDeath();
-        } else
-        {
+        } else {
             animator.SetBool("isAlive", true);
 
-            //Для корректной работы с тайлами в 2д.
-            //Мы рисуем круг, который чуть больше нашего колайдера для ног у персонажа
-            // и проверяем столкнулся ли этот коллайде с колайдером земле
-            // используем слои, всю землю положили на свой слой ground и работаем с этим слоем через LayerMask
+            //Р”Р»СЏ РєРѕСЂСЂРµРєС‚РЅРѕР№ СЂР°Р±РѕС‚С‹ СЃ С‚Р°Р№Р»Р°РјРё РІ 2Рґ.
+            //РњС‹ СЂРёСЃСѓРµРј РєСЂСѓРі, РєРѕС‚РѕСЂС‹Р№ С‡СѓС‚СЊ Р±РѕР»СЊС€Рµ РЅР°С€РµРіРѕ РєРѕР»Р°Р№РґРµСЂР° РґР»СЏ РЅРѕРі Сѓ РїРµСЂСЃРѕРЅР°Р¶Р°
+            // Рё РїСЂРѕРІРµСЂСЏРµРј СЃС‚РѕР»РєРЅСѓР»СЃСЏ Р»Рё СЌС‚РѕС‚ РєРѕР»Р»Р°Р№РґРµ СЃ РєРѕР»Р°Р№РґРµСЂРѕРј Р·РµРјР»Рµ
+            // РёСЃРїРѕР»СЊР·СѓРµРј СЃР»РѕРё, РІСЃСЋ Р·РµРјР»СЋ РїРѕР»РѕР¶РёР»Рё РЅР° СЃРІРѕР№ СЃР»РѕР№ ground Рё СЂР°Р±РѕС‚Р°РµРј СЃ СЌС‚РёРј СЃР»РѕРµРј С‡РµСЂРµР· LayerMask
             Vector3 overlapCirclePosition = groundColliderTransform.position;
             isGrounded = Physics2D.OverlapCircle(overlapCirclePosition, jumpOffset, groundLayerMask);
         }
@@ -111,151 +99,120 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
-    private void Update()
-    {
+    private void Update() {
         currentActiveMagPanel = magPanel.activeSelf;
     }
 
-    private void CheckEndAnimDeath()
-    {
-        if (checkEndAnim.GetEndAnim() == true)
-        {
+    private void CheckEndAnimDeath() {
+        if(checkEndAnim.GetEndAnim() == true) {
             Time.timeScale = 0;
             deathPanel.SetActive(true);
         }
     }
 
 
-    public void Move(float horizontalDirection, float verticalDirection, bool isJumpButtonPresed, bool isFire1ButtonPresed, bool isFire2ButtonPresed)
-    {
+    public void Move(float horizontalDirection, float verticalDirection, bool isJumpButtonPresed, bool isFire1ButtonPresed, bool isFire2ButtonPresed) {
 
-        if (isFire2ButtonPresed)
-        {
+        if(isFire2ButtonPresed) {
             audioSource.PlayOneShot(fire1Clip);
         }
 
-        if (!currentActiveMagPanel)
-        {
+        if(!currentActiveMagPanel) {
 
-            if (isFire1ButtonPresed)
-            {
+            if(isFire1ButtonPresed) {
                 animator.SetBool("isAttack", true);
                 audioSource.PlayOneShot(fire1Clip);
-            }
-            else
-            {
+            } else {
                 animator.SetBool("isAttack", false);
             }
 
-            if (isJumpButtonPresed)
-            {
+            if(isJumpButtonPresed) {
                 Jump();
                 animator.SetBool("isJump", true);
 
-            }
-            else
-            {
+            } else {
                 animator.SetBool("isJump", false);
 
             }
 
-            if (horizontalDirection != 0)
-            {
+            if(horizontalDirection != 0) {
                 animator.SetBool("isWalk", true);
                 HorizontalMovement(horizontalDirection);
-            }
-            else
-            {
+            } else {
                 animator.SetBool("isWalk", false);
             }
 
-            if (verticalDirection != 0)
-            {
+            if(verticalDirection != 0) {
                 VerticalMovemrnt(verticalDirection);
             }
         }
     }
 
-    private void Jump()
-    {
-        if (isGrounded)
-        {
+    private void Jump() {
+        if(isGrounded) {
             audioSource.PlayOneShot(jumpClip);
             rigidBody.velocity = new Vector2(rigidBody.velocity.x, jumpForce);
-            
+
         }
     }
 
-    private void HorizontalMovement(float horizontalDirection)
-    {
+    private void HorizontalMovement(float horizontalDirection) {
         float positionX = rigidBody.transform.position.x;
 
-        if (horizontalDirection >= 0)
-        {
+        if(horizontalDirection >= 0) {
             animObject.transform.rotation = new Quaternion(0, 0, 0, Quaternion.identity.w);
             //gameObject.transform.rotation = new Quaternion(0, 0, 0, Quaternion.identity.w);
             //spriteRenderer.flipX = false;
             //dialogText.rectTransform.localRotation = Quaternion.Euler(0, 0, 0);
             rigidBody.velocity = new Vector2(horizontalDirection * spped, rigidBody.velocity.y);
-            
-            
-        } else
-        {
+
+
+        } else {
             animObject.transform.rotation = new Quaternion(0, 180, 0, Quaternion.identity.w);
-           // gameObject.transform.rotation = new Quaternion(0, 180, 0, Quaternion.identity.w);
+            // gameObject.transform.rotation = new Quaternion(0, 180, 0, Quaternion.identity.w);
             //spriteRenderer.flipX = true;
             //dialogText.rectTransform.localRotation = Quaternion.Euler(0, 180, 0);
             rigidBody.velocity = new Vector2(horizontalDirection * spped, rigidBody.velocity.y);
-        
+
         }
-            
+
     }
 
-    private void VerticalMovemrnt(float verticalDirection)
-    {
-        if (isLadder)
-        {
+    private void VerticalMovemrnt(float verticalDirection) {
+        if(isLadder) {
             rigidBody.velocity = new Vector2(rigidBody.velocity.x, verticalDirection * spped);
         }
-        
+
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
-    {
+    private void OnTriggerStay2D(Collider2D collision) {
 
-        if (collision.CompareTag("Ladder"))
-        {
-            Debug.Log("Лестница");
+        if(collision.CompareTag("Ladder")) {
+            Debug.Log("Р›РµСЃС‚РЅРёС†Р°");
             isLadder = true;
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("DialogTriger"))
-        {
+    private void OnTriggerEnter2D(Collider2D collision) {
+        if(collision.CompareTag("DialogTriger")) {
             checkDialogTriger = true;
             dialogCanvas.gameObject.SetActive(true);
             dialogText.text = collision.GetComponent<DialogTrigerController>().getCurrentDialogText();
         }
     }
 
-    private void DialogCanvasInDragonStage(string str)
-    {
+    private void DialogCanvasInDragonStage(string str) {
         checkDialogTriger = true;
         dialogCanvas.gameObject.SetActive(true);
         dialogText.text = str;
     }
 
-    private void dialogTimer()
-    {
-        if (checkDialogTriger == true)
-        {
+    private void dialogTimer() {
+        if(checkDialogTriger == true) {
             currentTimeVisionDialogText -= Time.deltaTime;
         }
 
-        if (currentTimeVisionDialogText <= 0)
-        {
+        if(currentTimeVisionDialogText <= 0) {
             dialogCanvas.gameObject.SetActive(false);
             checkDialogTriger = false;
             currentTimeVisionDialogText = timeVisionDialogTextMax;
@@ -263,10 +220,8 @@ public class PlayerMovement : MonoBehaviour
     }
 
 
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Ladder"))
-        {
+    private void OnTriggerExit2D(Collider2D collision) {
+        if(collision.CompareTag("Ladder")) {
             isLadder = false;
         }
     }

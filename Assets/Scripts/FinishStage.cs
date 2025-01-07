@@ -1,38 +1,28 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+public class FinishStage : MonoBehaviour {
 
-public class FinishStage : MonoBehaviour
-{
-   
     public static Action onfinishStage;
     public static Action onfinishStageSneil;
 
     private int startHistory = 1;
 
 
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player") && Input.GetKey(KeyCode.E))
-        {
-            if (SceneManager.GetActiveScene().buildIndex == 2)
-            {
+    private void OnTriggerStay2D(Collider2D collision) {
+        if(collision.CompareTag("Player") && Input.GetKey(KeyCode.E)) {
+            if(SceneManager.GetActiveScene().buildIndex == 2) {
                 onfinishStageSneil?.Invoke();
 
-                if (PlayerPrefs.HasKey("startHistory"))
-                {
+                if(PlayerPrefs.HasKey("startHistory")) {
                     startHistory = PlayerPrefs.GetInt("startHistory");
-                    Debug.Log($"загрузил переменную startHistory из памяти = {startHistory}");
+                    Debug.Log($"Р·Р°РіСЂСѓР·РёР» РїРµСЂРµРјРµРЅРЅСѓСЋ startHistory РёР· РїР°РјСЏС‚Рё = {startHistory}");
 
 
                     PlayerPrefs.SetInt("startHistory", ++startHistory);
                     PlayerPrefs.Save();
-                }
-                else
-                {
-                    Debug.Log($"Переменная startHistory не найдена в памяти и будет равна = {startHistory}");
+                } else {
+                    Debug.Log($"РџРµСЂРµРјРµРЅРЅР°СЏ startHistory РЅРµ РЅР°Р№РґРµРЅР° РІ РїР°РјСЏС‚Рё Рё Р±СѓРґРµС‚ СЂР°РІРЅР° = {startHistory}");
                     PlayerPrefs.SetInt("startHistory", startHistory);
                     PlayerPrefs.Save();
                 }

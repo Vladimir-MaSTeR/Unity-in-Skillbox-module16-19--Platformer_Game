@@ -1,73 +1,73 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
-using System;
-
-public class MagController : MonoBehaviour
-{
-    [Header("Панели")]
+public class MagController : MonoBehaviour {
+    [Header("РџР°РЅРµР»Рё")]
     [SerializeField] private GameObject magPanel;
-    [SerializeField] private GameObject smithy; // панель кузницы
-    [SerializeField] private GameObject textMagHistoryPanel; // панель с текстом истории в магазине
+    [SerializeField] private GameObject smithy;              // РїР°РЅРµР»СЊ РєСѓР·РЅРёС†С‹
+    [SerializeField] private GameObject textMagHistoryPanel; // РїР°РЅРµР»СЊ СЃ С‚РµРєСЃС‚РѕРј РёСЃС‚РѕСЂРёРё РІ РјР°РіР°Р·РёРЅРµ
 
-    [Header("Кнопки")]
+    [Header("РљРЅРѕРїРєРё")]
     [SerializeField] private Button smithyButton;
     [SerializeField] private Button exitButton;
     [SerializeField] private Button nextTextButton;
     [SerializeField] private Button sneilLevelStartButton;
 
-    [Header("Картинки стрелок для понимания кто говорит")]
+    [Header("РљР°СЂС‚РёРЅРєРё СЃС‚СЂРµР»РѕРє РґР»СЏ РїРѕРЅРёРјР°РЅРёСЏ РєС‚Рѕ РіРѕРІРѕСЂРёС‚")]
     [SerializeField] private GameObject arrowPlayerImage;
     [SerializeField] private GameObject arrowOrsicImage;
 
 
-    [Header("Текст истории")]
+    [Header("РўРµРєСЃС‚ РёСЃС‚РѕСЂРёРё")]
     [SerializeField] private Text textHistory;
 
-    [Header("Звук")]
+    [Header("Р—РІСѓРє")]
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip dorClip;
 
 
-    private String[] noSneilLevelHistoryText = new String[] {
-        HistoryText.ORSIC_MEET_SNEIL_1, HistoryText.PLAYER_MEET_SNEIL_1, 
-        HistoryText.ORSIC_MEET_SNEIL_2, HistoryText.PLAYER_MEET_SNEIL_2, 
-        HistoryText.ORSIC_MEET_SNEIL_3, HistoryText.PLAYER_MEET_SNEIL_3,
-        HistoryText.ORSIC_MEET_SNEIL_4, HistoryText.PLAYER_MEET_SNEIL_4,
-        HistoryText.ORSIC_MEET_SNEIL_5, HistoryText.PLAYER_MEET_SNEIL_5,
-        HistoryText.ORSIC_MEET_SNEIL_6, HistoryText.PLAYER_MEET_SNEIL_6,
-        HistoryText.ORSIC_MEET_SNEIL_7, HistoryText.PLAYER_MEET_SNEIL_7,
-        HistoryText.ORSIC_MEET_SNEIL_8}; // 14 елементов
+    private String[] noSneilLevelHistoryText = new String[]
+    {
+    HistoryText.ORSIC_MEET_SNEIL_1, HistoryText.PLAYER_MEET_SNEIL_1,
+    HistoryText.ORSIC_MEET_SNEIL_2, HistoryText.PLAYER_MEET_SNEIL_2,
+    HistoryText.ORSIC_MEET_SNEIL_3, HistoryText.PLAYER_MEET_SNEIL_3,
+    HistoryText.ORSIC_MEET_SNEIL_4, HistoryText.PLAYER_MEET_SNEIL_4,
+    HistoryText.ORSIC_MEET_SNEIL_5, HistoryText.PLAYER_MEET_SNEIL_5,
+    HistoryText.ORSIC_MEET_SNEIL_6, HistoryText.PLAYER_MEET_SNEIL_6,
+    HistoryText.ORSIC_MEET_SNEIL_7, HistoryText.PLAYER_MEET_SNEIL_7,
+    HistoryText.ORSIC_MEET_SNEIL_8
+    }; // 14 РµР»РµРјРµРЅС‚РѕРІ
 
-    private String[] YesSneilLevelHistoryText = new String[] {
-        HistoryText.PLAYER_MEET_SNEIL_END_1, HistoryText.ORSIC_MEET_SNEIL_END_1,
-        HistoryText.PLAYER_MEET_SNEIL_END_2, HistoryText.ORSIC_MEET_SNEIL_END_2,
-        HistoryText.PLAYER_MEET_SNEIL_END_3, HistoryText.ORSIC_MEET_SNEIL_END_3,
-        HistoryText.PLAYER_MEET_SNEIL_END_4, HistoryText.ORSIC_MEET_SNEIL_END_4,
-        HistoryText.PLAYER_MEET_SNEIL_END_5, HistoryText.ORSIC_MEET_SNEIL_END_5,
-        HistoryText.PLAYER_MEET_SNEIL_END_6, HistoryText.ORSIC_MEET_SNEIL_END_6,
-        HistoryText.PLAYER_MEET_SNEIL_END_7, HistoryText.ORSIC_MEET_SNEIL_END_7,
-        HistoryText.PLAYER_MEET_SNEIL_END_8, HistoryText.ORSIC_MEET_SNEIL_END_8,
-        HistoryText.PLAYER_MEET_SNEIL_END_9, HistoryText.ORSIC_MEET_SNEIL_END_9,
-        HistoryText.PLAYER_MEET_SNEIL_END_10, HistoryText.ORSIC_MEET_SNEIL_END_10,
-        HistoryText.PLAYER_MEET_SNEIL_END_11, HistoryText.ORSIC_MEET_SNEIL_END_11,
-        HistoryText.PLAYER_MEET_SNEIL_END_12, HistoryText.ORSIC_MEET_SNEIL_END_12,
-        HistoryText.PLAYER_MEET_SNEIL_END_13, HistoryText.ORSIC_MEET_SNEIL_END_13,
-        HistoryText.PLAYER_MEET_SNEIL_END_14, HistoryText.ORSIC_MEET_SNEIL_END_14,
-        HistoryText.PLAYER_MEET_SNEIL_END_15, HistoryText.ORSIC_MEET_SNEIL_END_15,
-        HistoryText.PLAYER_MEET_SNEIL_END_16, HistoryText.ORSIC_MEET_SNEIL_END_16,
-        HistoryText.PLAYER_MEET_SNEIL_END_17, HistoryText.ORSIC_MEET_SNEIL_END_17,
-        HistoryText.PLAYER_MEET_SNEIL_END_18, HistoryText.ORSIC_MEET_SNEIL_END_18,
-        HistoryText.PLAYER_MEET_SNEIL_END_19 };
+    private String[] YesSneilLevelHistoryText = new String[]
+    {
+    HistoryText.PLAYER_MEET_SNEIL_END_1, HistoryText.ORSIC_MEET_SNEIL_END_1,
+    HistoryText.PLAYER_MEET_SNEIL_END_2, HistoryText.ORSIC_MEET_SNEIL_END_2,
+    HistoryText.PLAYER_MEET_SNEIL_END_3, HistoryText.ORSIC_MEET_SNEIL_END_3,
+    HistoryText.PLAYER_MEET_SNEIL_END_4, HistoryText.ORSIC_MEET_SNEIL_END_4,
+    HistoryText.PLAYER_MEET_SNEIL_END_5, HistoryText.ORSIC_MEET_SNEIL_END_5,
+    HistoryText.PLAYER_MEET_SNEIL_END_6, HistoryText.ORSIC_MEET_SNEIL_END_6,
+    HistoryText.PLAYER_MEET_SNEIL_END_7, HistoryText.ORSIC_MEET_SNEIL_END_7,
+    HistoryText.PLAYER_MEET_SNEIL_END_8, HistoryText.ORSIC_MEET_SNEIL_END_8,
+    HistoryText.PLAYER_MEET_SNEIL_END_9, HistoryText.ORSIC_MEET_SNEIL_END_9,
+    HistoryText.PLAYER_MEET_SNEIL_END_10, HistoryText.ORSIC_MEET_SNEIL_END_10,
+    HistoryText.PLAYER_MEET_SNEIL_END_11, HistoryText.ORSIC_MEET_SNEIL_END_11,
+    HistoryText.PLAYER_MEET_SNEIL_END_12, HistoryText.ORSIC_MEET_SNEIL_END_12,
+    HistoryText.PLAYER_MEET_SNEIL_END_13, HistoryText.ORSIC_MEET_SNEIL_END_13,
+    HistoryText.PLAYER_MEET_SNEIL_END_14, HistoryText.ORSIC_MEET_SNEIL_END_14,
+    HistoryText.PLAYER_MEET_SNEIL_END_15, HistoryText.ORSIC_MEET_SNEIL_END_15,
+    HistoryText.PLAYER_MEET_SNEIL_END_16, HistoryText.ORSIC_MEET_SNEIL_END_16,
+    HistoryText.PLAYER_MEET_SNEIL_END_17, HistoryText.ORSIC_MEET_SNEIL_END_17,
+    HistoryText.PLAYER_MEET_SNEIL_END_18, HistoryText.ORSIC_MEET_SNEIL_END_18,
+    HistoryText.PLAYER_MEET_SNEIL_END_19
+    };
 
     //private String[] playerSneilHistoryText = new String[] { };
 
-    private int startHistory = 0; // переменна отвечает за текст истории. | 0 = начало игры | 1 = Пройден уровень с улитками ||||
+    private int startHistory = 0; // РїРµСЂРµРјРµРЅРЅР° РѕС‚РІРµС‡Р°РµС‚ Р·Р° С‚РµРєСЃС‚ РёСЃС‚РѕСЂРёРё. | 0 = РЅР°С‡Р°Р»Рѕ РёРіСЂС‹ | 1 = РџСЂРѕР№РґРµРЅ СѓСЂРѕРІРµРЅСЊ СЃ СѓР»РёС‚РєР°РјРё ||||
     private int indexHistoryText = 0;
     //private int indexPlayerSneilHistoryText = 0;
 
-    //События
+    //РЎРѕР±С‹С‚РёСЏ
     public static Action onEventClickSwordImageButton;
     public static Action onEventSpearDamageImageButton;
     public static Action onEventSpearImageButton;
@@ -75,47 +75,24 @@ public class MagController : MonoBehaviour
     public static Action onEventClickExitMagButton;
 
 
-
-    private void Start()
-    {
+    private void Start() {
         magPanel.SetActive(false);
         smithy.SetActive(false);
 
         arrowPlayerImage.SetActive(false);
         arrowOrsicImage.SetActive(false);
 
-      //  CheckStartHistory();
+        //  CheckStartHistory();
     }
 
-    private void Update()
-    {
+    private void Update() {
         historyText();
     }
 
 
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player"))
-        {
-            if (Input.GetKey(KeyCode.E) && magPanel.active == false)
-            {
-                audioSource.PlayOneShot(dorClip);
-                magPanel.SetActive(true);
-
-                CheckStartHistory();
-            }
-           
-            
-        }
-    }
-    
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player"))
-        {
-            if (Input.GetKeyDown(KeyCode.E))
-            {
+    private void OnTriggerStay2D(Collider2D collision) {
+        if(collision.CompareTag("Player")) {
+            if(Input.GetKey(KeyCode.E) && magPanel.active == false) {
                 audioSource.PlayOneShot(dorClip);
                 magPanel.SetActive(true);
 
@@ -126,24 +103,33 @@ public class MagController : MonoBehaviour
         }
     }
 
-    private void CheckStartHistory()
-    {
-        if (PlayerPrefs.HasKey("startHistory"))
-        {
+
+    private void OnTriggerEnter2D(Collider2D collision) {
+        if(collision.CompareTag("Player")) {
+            if(Input.GetKeyDown(KeyCode.E)) {
+                audioSource.PlayOneShot(dorClip);
+                magPanel.SetActive(true);
+
+                CheckStartHistory();
+            }
+
+
+        }
+    }
+
+    private void CheckStartHistory() {
+        if(PlayerPrefs.HasKey("startHistory")) {
             startHistory = PlayerPrefs.GetInt("startHistory");
 
-        } else
-        {
+        } else {
             startHistory = 0;
         }
 
-        Debug.Log($"переменная startHistory = {startHistory}");
+        Debug.Log($"РїРµСЂРµРјРµРЅРЅР°СЏ startHistory = {startHistory}");
     }
 
-    private void historyText ()
-    {
-        if (startHistory == 0 && magPanel.activeSelf == true)
-        {
+    private void historyText() {
+        if(startHistory == 0 && magPanel.activeSelf == true) {
             //smithyButton.interactable = false;
             //sneilLevelStartButton.interactable = false;
 
@@ -155,28 +141,23 @@ public class MagController : MonoBehaviour
 
             textHistory.text = noSneilLevelHistoryText[indexHistoryText];
 
-            if (indexHistoryText % 2 != 0)
-            {
+            if(indexHistoryText % 2 != 0) {
                 arrowPlayerImage.SetActive(true);
                 arrowOrsicImage.SetActive(false);
-            } else
-            {
+            } else {
                 arrowPlayerImage.SetActive(false);
                 arrowOrsicImage.SetActive(true);
             }
 
-            if (indexHistoryText == 14)
-            {
+            if(indexHistoryText == 14) {
                 nextTextButton.gameObject.SetActive(false);
                 sneilLevelStartButton.gameObject.SetActive(true);
                 sneilLevelStartButton.interactable = true;
             }
 
 
+        } else if(startHistory == 1 && magPanel.activeSelf == true) {
 
-        } else if (startHistory == 1 && magPanel.activeSelf == true)
-        {
-           
 
             smithyButton.gameObject.SetActive(false);
             sneilLevelStartButton.gameObject.SetActive(false);
@@ -186,19 +167,15 @@ public class MagController : MonoBehaviour
 
             textHistory.text = YesSneilLevelHistoryText[indexHistoryText];
 
-            if (indexHistoryText % 2 == 0)
-            {
+            if(indexHistoryText % 2 == 0) {
                 arrowPlayerImage.SetActive(true);
                 arrowOrsicImage.SetActive(false);
-            }
-            else
-            {
+            } else {
                 arrowPlayerImage.SetActive(false);
                 arrowOrsicImage.SetActive(true);
             }
 
-            if (indexHistoryText == 36)
-            {
+            if(indexHistoryText == 36) {
                 smithyButton.gameObject.SetActive(true);
 
                 nextTextButton.gameObject.SetActive(false);
@@ -206,8 +183,7 @@ public class MagController : MonoBehaviour
                 sneilLevelStartButton.gameObject.SetActive(true);
             }
 
-        } else
-        {
+        } else {
             smithyButton.gameObject.SetActive(true);
 
             sneilLevelStartButton.gameObject.SetActive(true);
@@ -217,29 +193,25 @@ public class MagController : MonoBehaviour
         }
     }
 
-    public void onClickNextHistoryButton()
-    {
+    public void onClickNextHistoryButton() {
         indexHistoryText++;
     }
 
 
-    public void onCleckExitMagButton()
-    {
+    public void onCleckExitMagButton() {
         magPanel.SetActive(false);
         smithy.SetActive(false);
         smithyButton.interactable = true;
         audioSource.PlayOneShot(dorClip);
 
-        if (startHistory == 0)
-        {
+        if(startHistory == 0) {
             indexHistoryText = 0;
         }
 
         onEventClickExitMagButton?.Invoke();
     }
 
-    public void onClickSmithybutton()
-    {
+    public void onClickSmithybutton() {
         smithy.SetActive(true);
         textMagHistoryPanel.SetActive(false);
 
@@ -248,8 +220,7 @@ public class MagController : MonoBehaviour
         sneilLevelStartButton.interactable = false;
     }
 
-    public void onClickExitSmithybutton()
-    {
+    public void onClickExitSmithybutton() {
         smithy.SetActive(false);
         textMagHistoryPanel.SetActive(true);
 
@@ -258,23 +229,19 @@ public class MagController : MonoBehaviour
         sneilLevelStartButton.interactable = true;
     }
 
-    public void onClickSwordImageButton()
-    {
+    public void onClickSwordImageButton() {
         onEventClickSwordImageButton?.Invoke();
     }
 
-    public void onClickSpearDamageImageButton()
-    {
+    public void onClickSpearDamageImageButton() {
         onEventSpearDamageImageButton?.Invoke();
     }
 
-    public void onClickSpearImageButton()
-    {
+    public void onClickSpearImageButton() {
         onEventSpearImageButton?.Invoke();
     }
 
-    public void onClickSneilLevelButton()
-    {
+    public void onClickSneilLevelButton() {
         onEventClickSneilLevelButton?.Invoke();
         magPanel.SetActive(false);
     }

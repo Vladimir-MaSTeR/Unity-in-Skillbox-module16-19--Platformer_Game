@@ -1,10 +1,6 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-
-public class Enemy : MonoBehaviour
-{
+public class Enemy : MonoBehaviour {
 
     [SerializeField] private GameObject enemy;
     [SerializeField] private GameObject coin;
@@ -30,26 +26,21 @@ public class Enemy : MonoBehaviour
     private float currentTimeRevert;
 
 
-
     public static Action onDeathEnemy;
 
 
-
-    private void Start()
-    {
+    private void Start() {
         rigidBody = GetComponent<Rigidbody2D>();
         checkIsAliveEnemy = healthScript.CheckIsAlive();
-        currentState = WALC_STATE;   
+        currentState = WALC_STATE;
         currentTimeRevert = 0;
     }
 
-    private void Update()
-    {
+    private void Update() {
 
         checkIsAliveEnemy = healthScript.CheckIsAlive();
 
-        if (!checkIsAliveEnemy)
-        {
+        if(!checkIsAliveEnemy) {
             animator.SetBool("isAlive", false);
         }
 
@@ -61,52 +52,42 @@ public class Enemy : MonoBehaviour
         // checkCurentState();
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        Debug.Log("Ïðîèçîøëà êîëèçèÿ Ìîíñòðà");
+    private void OnTriggerEnter2D(Collider2D collision) {
+        Debug.Log("ÐŸÑ€Ð¾Ð¸Ð·Ð¾ÑˆÐ»Ð° ÐºÐ¾Ð»Ð¸Ð·Ð¸Ñ ÐœÐ¾Ð½ÑÑ‚Ñ€Ð°");
 
-        if (collision.CompareTag("EnemyStoper"))
-        {
-            Debug.Log("Ìîíñòð çàäåë òðèãåð äëÿ ðàçâàðîòà");
+        if(collision.CompareTag("EnemyStoper")) {
+            Debug.Log("ÐœÐ¾Ð½ÑÑ‚Ñ€ Ð·Ð°Ð´ÐµÐ» Ñ‚Ñ€Ð¸Ð³ÐµÑ€ Ð´Ð»Ñ Ñ€Ð°Ð·Ð²Ð°Ñ€Ð¾Ñ‚Ð°");
 
             currentState = IDLE_STATE;
         }
     }
 
 
-    private void CheckEndAnimDeath()
-    {
-        if (checkEndAnim.GetEndAnim() == true)
-        {
+    private void CheckEndAnimDeath() {
+        if(checkEndAnim.GetEndAnim() == true) {
             Instantiate(coin, pointInstantiateCoin.position, Quaternion.identity);
             onDeathEnemy?.Invoke();
             enemy.SetActive(false);
         }
     }
 
-   private void CheckPlayerDetected()
-    {
-        if (detectedTriger.getPlayerDetected() == true)
-        {
+    private void CheckPlayerDetected() {
+        if(detectedTriger.getPlayerDetected() == true) {
             animator.SetBool("detected", true);
-           // currentState = IDLE_STATE;
-        } else
-        {
+            // currentState = IDLE_STATE;
+        } else {
             animator.SetBool("detected", false);
             //currentState = WALC_STATE;
         }
     }
-  
-    private void checkCurentState()
-    {
-        if (currentTimeRevert >= timeToRevert)
-        {
+
+    private void checkCurentState() {
+        if(currentTimeRevert >= timeToRevert) {
             currentTimeRevert = 0;
             currentState = REVERT_STATE;
         }
 
-        switch(currentState)
-        {
+        switch (currentState) {
             case IDLE_STATE:
                 currentTimeRevert += Time.deltaTime;
                 break;
@@ -116,11 +97,12 @@ public class Enemy : MonoBehaviour
             case REVERT_STATE:
                 spriteRenderer.flipX = !spriteRenderer.flipX;
                 speed *= -1;
-                currentState = WALC_STATE; ;
+                currentState = WALC_STATE;
+                ;
                 break;
         }
 
-        animator.SetFloat("Velocity", rigidBody.velocity.magnitude); 
+        animator.SetFloat("Velocity", rigidBody.velocity.magnitude);
     }
 
 }

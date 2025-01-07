@@ -1,21 +1,16 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-
-public class DragonLevelController : MonoBehaviour
-{
-    [Header("Звук")]
+public class DragonLevelController : MonoBehaviour {
+    [Header("Р—РІСѓРє")]
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip dorClip;
 
-    [Header("Необходимый урон для входа к боссу")]
+    [Header("РќРµРѕР±С…РѕРґРёРјС‹Р№ СѓСЂРѕРЅ РґР»СЏ РІС…РѕРґР° Рє Р±РѕСЃСЃСѓ")]
     [SerializeField] private int requiredDamage = 80;
 
 
-    private string str1 = "Пока рано. Нужно зайти к Орсику";
-    private string str2 = "Надо подкачаться. Думаю урона больше 80 хватит...";
+    private string str1 = "РџРѕРєР° СЂР°РЅРѕ. РќСѓР¶РЅРѕ Р·Р°Р№С‚Рё Рє РћСЂСЃРёРєСѓ";
+    private string str2 = "РќР°РґРѕ РїРѕРґРєР°С‡Р°С‚СЊСЃСЏ. Р”СѓРјР°СЋ СѓСЂРѕРЅР° Р±РѕР»СЊС€Рµ 80 С…РІР°С‚РёС‚...";
     //private string str1 = "";
 
 
@@ -31,34 +26,25 @@ public class DragonLevelController : MonoBehaviour
     public static Action onEventStartDragonLevel;
 
 
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player"))
-        {
-            if (Input.GetKeyDown(KeyCode.E))
-            {
+    private void OnTriggerEnter2D(Collider2D collision) {
+        if(collision.CompareTag("Player")) {
+            if(Input.GetKeyDown(KeyCode.E)) {
                 LaodDamageAndHistorySave();
                 Debug.Log($"endSneilLevel = {endSneilLevel}");
 
 
-
-                if (endSneilLevel == 0)
-                {
+                if(endSneilLevel == 0) {
                     onEventDragonLEvel?.Invoke(str1);
 
-                }
-                else
-                {
+                } else {
                     onEventDragonLEvel?.Invoke(str2);
                 }
 
 
-                if (endSneilLevel > 0 && currentDamageSword >= requiredDamage || endSneilLevel > 0 && currentDamageSpear >= requiredDamage)
-                {
+                if(endSneilLevel > 0 && currentDamageSword >= requiredDamage || endSneilLevel > 0 && currentDamageSpear >= requiredDamage) {
                     audioSource.PlayOneShot(dorClip);
                     onEventStartDragonLevel?.Invoke();
-                   // SceneManager.LoadScene(3);
+                    // SceneManager.LoadScene(3);
                 }
                 //  audioSource.PlayOneShot(dorClip);
 
@@ -68,34 +54,28 @@ public class DragonLevelController : MonoBehaviour
         }
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player"))
-        {
-            if (Input.GetKey(KeyCode.E))
-            {
+    private void OnTriggerStay2D(Collider2D collision) {
+        if(collision.CompareTag("Player")) {
+            if(Input.GetKey(KeyCode.E)) {
 
                 LaodDamageAndHistorySave();
                 Debug.Log($"endSneilLevel = {endSneilLevel}");
 
 
-                if (endSneilLevel == 0)
-                {
+                if(endSneilLevel == 0) {
                     onEventDragonLEvel?.Invoke(str1);
 
-                } else
-                {
+                } else {
                     onEventDragonLEvel?.Invoke(str2);
                 }
 
 
-                if (endSneilLevel > 0 && currentDamageSword >= requiredDamage || endSneilLevel > 0 && currentDamageSpear >= requiredDamage)
-                {
+                if(endSneilLevel > 0 && currentDamageSword >= requiredDamage || endSneilLevel > 0 && currentDamageSpear >= requiredDamage) {
                     audioSource.PlayOneShot(dorClip);
                     onEventStartDragonLevel?.Invoke();
                     //SceneManager.LoadScene(3);
                 }
-                
+
                 //  audioSource.PlayOneShot(dorClip);
             }
 
@@ -104,31 +84,24 @@ public class DragonLevelController : MonoBehaviour
     }
 
 
-    private void LaodDamageAndHistorySave()
-    {
-        if (PlayerPrefs.HasKey("DamageSword"))
-        {
+    private void LaodDamageAndHistorySave() {
+        if(PlayerPrefs.HasKey("DamageSword")) {
             currentDamageSword = PlayerPrefs.GetInt("DamageSword");
-            Debug.Log($"загрузил DamageSword = {currentDamageSword}");
+            Debug.Log($"Р·Р°РіСЂСѓР·РёР» DamageSword = {currentDamageSword}");
         }
 
-        if (PlayerPrefs.HasKey("DamageSpear"))
-        {
+        if(PlayerPrefs.HasKey("DamageSpear")) {
             currentDamageSpear = PlayerPrefs.GetInt("DamageSpear");
-            Debug.Log($"загрузил DamageSpear = {currentDamageSpear}");
+            Debug.Log($"Р·Р°РіСЂСѓР·РёР» DamageSpear = {currentDamageSpear}");
         }
 
-        if (PlayerPrefs.HasKey("startHistory"))
-        {
+        if(PlayerPrefs.HasKey("startHistory")) {
             endSneilLevel = PlayerPrefs.GetInt("startHistory");
-            Debug.Log($"загрузил startHistory = {endSneilLevel}");
-        }
-        else
-        {
+            Debug.Log($"Р·Р°РіСЂСѓР·РёР» startHistory = {endSneilLevel}");
+        } else {
             endSneilLevel = 0;
         }
-    } 
+    }
 
 
-   
 }

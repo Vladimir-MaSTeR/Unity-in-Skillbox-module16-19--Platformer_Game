@@ -1,37 +1,31 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using System;
 using UnityEngine.SceneManagement;
-
-public class GameManager : MonoBehaviour
-{
-    [Header("Текстовые поля")]
+using UnityEngine.UI;
+public class GameManager : MonoBehaviour {
+    [Header("РўРµРєСЃС‚РѕРІС‹Рµ РїРѕР»СЏ")]
     [SerializeField] private Text damageSwordText;
     [SerializeField] private Text damageSpearText;
     [SerializeField] private Text valueSpearOnPlayerText;
     [SerializeField] private Text valueCoinText;
 
-    [Header("Стартавые параметры")]
+    [Header("РЎС‚Р°СЂС‚Р°РІС‹Рµ РїР°СЂР°РјРµС‚СЂС‹")]
     [SerializeField] private int StartCoin = 200;
     [SerializeField] private int startSpearDamage = 5;
     [SerializeField] private int startvalueSpearDamage = 30;
     [SerializeField] private int startSwordDamage = 4;
 
-    [Header("Ссылка на позицию игрока")]
+    [Header("РЎСЃС‹Р»РєР° РЅР° РїРѕР·РёС†РёСЋ РёРіСЂРѕРєР°")]
     [SerializeField] private Transform playerPosition;
 
-    [Header("Звук")]
+    [Header("Р—РІСѓРє")]
     [SerializeField] private AudioSource source;
 
-    [Header("Клипы")]
+    [Header("РљР»РёРїС‹")]
     [SerializeField] private AudioClip coinClip;
     [SerializeField] private AudioClip spearDamageClip;
     [SerializeField] private AudioClip buyMagTruyClip;
     [SerializeField] private AudioClip buyMagfalseClip;
     [SerializeField] private AudioClip checkPointActivClip;
-
 
 
     private float resPositionAfterEndRoundX = 55.22f;
@@ -50,56 +44,46 @@ public class GameManager : MonoBehaviour
 
     private int currentCoin;
 
-    private int startGameOneTap; // переменная отвечающая за то, что игра запускается в первый раз или нет. (0 = в первый раз. 1 = повторно и нужно подтянуть сохранения)
+    private int
+    startGameOneTap; // РїРµСЂРµРјРµРЅРЅР°СЏ РѕС‚РІРµС‡Р°СЋС‰Р°СЏ Р·Р° С‚Рѕ, С‡С‚Рѕ РёРіСЂР° Р·Р°РїСѓСЃРєР°РµС‚СЃСЏ РІ РїРµСЂРІС‹Р№ СЂР°Р· РёР»Рё РЅРµС‚. (0 = РІ РїРµСЂРІС‹Р№ СЂР°Р·. 1 = РїРѕРІС‚РѕСЂРЅРѕ Рё РЅСѓР¶РЅРѕ РїРѕРґС‚СЏРЅСѓС‚СЊ СЃРѕС…СЂР°РЅРµРЅРёСЏ)
 
 
-   
-    private void Start()
-    {
-        
-        if (PlayerPrefs.HasKey("startGameTap"))
-        {
+    private void Start() {
+
+        if(PlayerPrefs.HasKey("startGameTap")) {
             startGameOneTap = PlayerPrefs.GetInt("startGameTap");
-            Debug.Log($"загрузил startGameTap = {startGameOneTap}");
+            Debug.Log($"Р·Р°РіСЂСѓР·РёР» startGameTap = {startGameOneTap}");
             PlayerPrefs.DeleteKey("startGameTap");
 
-            if (PlayerPrefs.HasKey("PlayerPositionX") && PlayerPrefs.HasKey("PlayerPositionY"))
-            {
+            if(PlayerPrefs.HasKey("PlayerPositionX") && PlayerPrefs.HasKey("PlayerPositionY")) {
                 PlayerPrefs.DeleteKey("PlayerPositionX");
                 PlayerPrefs.DeleteKey("PlayerPositionY");
-                
+
             }
         }
-        
-       
 
-        Debug.Log($"Значение пременной startGameOneTap = {startGameOneTap}");
-        if (startGameOneTap == 0)
-        {
+
+        Debug.Log($"Р—РЅР°С‡РµРЅРёРµ РїСЂРµРјРµРЅРЅРѕР№ startGameOneTap = {startGameOneTap}");
+        if(startGameOneTap == 0) {
             currentDamageSwordText = startSwordDamage;
             currentDamageSpearText = startSpearDamage;
             currentvalueSpearOnPlayerText = startvalueSpearDamage;
             currentCoin = StartCoin;
 
-            if (PlayerPrefs.HasKey("startHistory"))
-            {
+            if(PlayerPrefs.HasKey("startHistory")) {
                 PlayerPrefs.DeleteKey("startHistory");
-                Debug.Log("startHistory удалена");
-            }
-            else
-            {
-                Debug.Log("startHistory  не найдена в сохранениях");
+                Debug.Log("startHistory СѓРґР°Р»РµРЅР°");
+            } else {
+                Debug.Log("startHistory  РЅРµ РЅР°Р№РґРµРЅР° РІ СЃРѕС…СЂР°РЅРµРЅРёСЏС…");
             }
 
-        } else
-        {
+        } else {
             LoadGame();
         }
     }
-        
 
-    private void Update()
-    {       
+
+    private void Update() {
         damageSwordText.text = currentDamageSwordText.ToString();
         damageSpearText.text = currentDamageSpearText.ToString();
         valueSpearOnPlayerText.text = currentvalueSpearOnPlayerText.ToString();
@@ -107,8 +91,7 @@ public class GameManager : MonoBehaviour
     }
 
 
-    private void OnEnable()
-    {
+    private void OnEnable() {
         DamageDealler.onSpearDamage += GetCurrentDamageSpearText;
         DamageDealler.onCollisionWithEnemy += PlaySpearDamageClip;
         Coin.onCoin += PlusValueCurrentCoin;
@@ -129,8 +112,7 @@ public class GameManager : MonoBehaviour
         DragonLevelController.onEventStartDragonLevel += StartBossScene;
     }
 
-    private void OnDisable()
-    {
+    private void OnDisable() {
         DamageDealler.onSpearDamage -= GetCurrentDamageSpearText;
         DamageDealler.onCollisionWithEnemy -= PlaySpearDamageClip;
         Coin.onCoin -= PlusValueCurrentCoin;
@@ -152,119 +134,94 @@ public class GameManager : MonoBehaviour
         DragonLevelController.onEventStartDragonLevel -= StartBossScene;
 
 
-
-
-
     }
 
-    public void buyInShopSpear()
-    {
-        if (currentvalueSpearOnPlayerText < 100 && currentCoin >= 10)
-        {
+    public void buyInShopSpear() {
+        if(currentvalueSpearOnPlayerText < 100 && currentCoin >= 10) {
             currentvalueSpearOnPlayerText += 5;
             currentCoin -= 10;
             source.PlayOneShot(buyMagTruyClip);
-        } else
-        {
+        } else {
             source.PlayOneShot(buyMagfalseClip);
         }
     }
 
-    public void buyInShopSpearDamage()
-    {
-        if (currentDamageSpearText < 100 && currentCoin >= 50)
-        {
+    public void buyInShopSpearDamage() {
+        if(currentDamageSpearText < 100 && currentCoin >= 50) {
             currentDamageSpearText += 10;
             currentCoin -= 50;
             source.PlayOneShot(buyMagTruyClip);
-        } else
-        {
+        } else {
             source.PlayOneShot(buyMagfalseClip);
         }
 
     }
 
-    public void buyInShopSwordDamage() 
-    {
-        if (currentDamageSwordText < 100 && currentCoin >= 30)
-        {
+    public void buyInShopSwordDamage() {
+        if(currentDamageSwordText < 100 && currentCoin >= 30) {
             currentDamageSwordText += 10;
             currentCoin -= 30;
             source.PlayOneShot(buyMagTruyClip);
-        }
-        else
-        {
+        } else {
             source.PlayOneShot(buyMagfalseClip);
         }
     }
 
-   
-    public void PlaySpearDamageClip()
-    {
+
+    public void PlaySpearDamageClip() {
         source.PlayOneShot(spearDamageClip);
     }
 
-    public int GetCurrentCoin()
-    {
+    public int GetCurrentCoin() {
         return this.currentCoin;
     }
 
-    public void SetCurrentCoin(int value)
-    {
+    public void SetCurrentCoin(int value) {
         currentCoin = value;
     }
 
-    public void PlusValueCurrentCoin(int value)
-    {
+    public void PlusValueCurrentCoin(int value) {
         currentCoin += value;
         source.PlayOneShot(coinClip);
     }
 
-    private void UpdateCoinText()
-    {
+    private void UpdateCoinText() {
         valueCoinText.text = currentCoin.ToString();
     }
 
-    public int GetCurrentDamageSwordText()
-    {
+    public int GetCurrentDamageSwordText() {
         return this.currentDamageSwordText;
     }
 
-    public void SetCurrentDamageSwordText(int value)
-    {
+    public void SetCurrentDamageSwordText(int value) {
         this.currentDamageSwordText = value;
     }
 
-    public int GetCurrentDamageSpearText()
-    {
+    public int GetCurrentDamageSpearText() {
         return this.currentDamageSpearText;
     }
 
-    public void SetCurrentDamageSpearText(int value)
-    {
+    public void SetCurrentDamageSpearText(int value) {
         this.currentDamageSpearText = value;
     }
 
-    public int GetCurrentvalueSpearOnPlayerText()
-    {
+    public int GetCurrentvalueSpearOnPlayerText() {
         return this.currentvalueSpearOnPlayerText;
     }
 
-    public void SetCurrentvalueSpearOnPlayerText(int value)
-    {
+    public void SetCurrentvalueSpearOnPlayerText(int value) {
         this.currentvalueSpearOnPlayerText = value;
     }
 
-    private void EndRound()
-    {
+    private void EndRound() {
         float xPosPlayer = resPositionAfterEndRoundX;
         float yPosPlayer = resPositionAfterEndRoundY;
 
         PlayerPrefs.SetFloat("PlayerPositionX", xPosPlayer);
-        Debug.Log($"Сохранена позиция изрока по x = {xPosPlayer}");
+        Debug.Log($"РЎРѕС…СЂР°РЅРµРЅР° РїРѕР·РёС†РёСЏ РёР·СЂРѕРєР° РїРѕ x = {xPosPlayer}");
 
         PlayerPrefs.SetFloat("PlayerPositionY", yPosPlayer);
-        Debug.Log($"Сохранена позиция изрока по y = {yPosPlayer}");
+        Debug.Log($"РЎРѕС…СЂР°РЅРµРЅР° РїРѕР·РёС†РёСЏ РёР·СЂРѕРєР° РїРѕ y = {yPosPlayer}");
 
         PlayerPrefs.Save();
 
@@ -273,16 +230,15 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(1);
     }
 
-    private void StartSneilCnene()
-    {
+    private void StartSneilCnene() {
         float xPosPlayer = resPositionSneilStartX;
         float yPosPlayer = resPositionSneilStartY;
 
         PlayerPrefs.SetFloat("PlayerPositionX", xPosPlayer);
-        Debug.Log($"Сохранена позиция изрока по x = {xPosPlayer}");
+        Debug.Log($"РЎРѕС…СЂР°РЅРµРЅР° РїРѕР·РёС†РёСЏ РёР·СЂРѕРєР° РїРѕ x = {xPosPlayer}");
 
         PlayerPrefs.SetFloat("PlayerPositionY", yPosPlayer);
-        Debug.Log($"Сохранена позиция изрока по y = {yPosPlayer}");
+        Debug.Log($"РЎРѕС…СЂР°РЅРµРЅР° РїРѕР·РёС†РёСЏ РёР·СЂРѕРєР° РїРѕ y = {yPosPlayer}");
 
         PlayerPrefs.Save();
 
@@ -290,57 +246,54 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(2);
     }
 
-    private void StartBossScene()
-    {
+    private void StartBossScene() {
         float xPosPlayer = resPositionBossStartX;
         float yPosPlayer = resPositionBossStartY;
 
         PlayerPrefs.SetFloat("PlayerPositionX", xPosPlayer);
-        Debug.Log($"Сохранена позиция изрока по x = {xPosPlayer}");
+        Debug.Log($"РЎРѕС…СЂР°РЅРµРЅР° РїРѕР·РёС†РёСЏ РёР·СЂРѕРєР° РїРѕ x = {xPosPlayer}");
 
         PlayerPrefs.SetFloat("PlayerPositionY", yPosPlayer);
-        Debug.Log($"Сохранена позиция изрока по y = {yPosPlayer}");
+        Debug.Log($"РЎРѕС…СЂР°РЅРµРЅР° РїРѕР·РёС†РёСЏ РёР·СЂРѕРєР° РїРѕ y = {yPosPlayer}");
 
         PlayerPrefs.Save();
 
         SaveGame();
         SceneManager.LoadScene(3);
-    } 
+    }
 
 
-    private void SaveGame()
-    {
+    private void SaveGame() {
         startGameOneTap = 1;
 
         PlayerPrefs.SetInt("DamageSword", currentDamageSwordText);
-        Debug.Log($"Сохранил DamageSword = {currentDamageSwordText}");
+        Debug.Log($"РЎРѕС…СЂР°РЅРёР» DamageSword = {currentDamageSwordText}");
 
         PlayerPrefs.SetInt("DamageSpear", currentDamageSpearText);
-        Debug.Log($"Сохранил DamageSpear = {currentDamageSpearText}");
+        Debug.Log($"РЎРѕС…СЂР°РЅРёР» DamageSpear = {currentDamageSpearText}");
 
         PlayerPrefs.SetInt("valueSpear", currentvalueSpearOnPlayerText);
-        Debug.Log($"Сохранил valueSpear = {currentvalueSpearOnPlayerText}");
+        Debug.Log($"РЎРѕС…СЂР°РЅРёР» valueSpear = {currentvalueSpearOnPlayerText}");
 
         PlayerPrefs.SetInt("coin", currentCoin);
-        Debug.Log($"Сохранил coin = {currentCoin}");
+        Debug.Log($"РЎРѕС…СЂР°РЅРёР» coin = {currentCoin}");
 
         PlayerPrefs.SetInt("startGameTap", startGameOneTap);
-        Debug.Log($"Сохранил startGameTap = {startGameOneTap}");
+        Debug.Log($"РЎРѕС…СЂР°РЅРёР» startGameTap = {startGameOneTap}");
 
         PlayerPrefs.Save();
     }
 
-    private void SaveGameAndPlayer()
-    {
-        source.PlayOneShot(checkPointActivClip); 
+    private void SaveGameAndPlayer() {
+        source.PlayOneShot(checkPointActivClip);
         float xPosPlayer = playerPosition.position.x;
         float yPosPlayer = playerPosition.position.y;
 
         PlayerPrefs.SetFloat("PlayerPositionX", xPosPlayer);
-        Debug.Log($"Сохранена позиция изрока по x = {xPosPlayer}");
+        Debug.Log($"РЎРѕС…СЂР°РЅРµРЅР° РїРѕР·РёС†РёСЏ РёР·СЂРѕРєР° РїРѕ x = {xPosPlayer}");
 
         PlayerPrefs.SetFloat("PlayerPositionY", yPosPlayer);
-        Debug.Log($"Сохранена позиция изрока по y = {yPosPlayer}");
+        Debug.Log($"РЎРѕС…СЂР°РЅРµРЅР° РїРѕР·РёС†РёСЏ РёР·СЂРѕРєР° РїРѕ y = {yPosPlayer}");
 
         PlayerPrefs.Save();
 
@@ -348,67 +301,56 @@ public class GameManager : MonoBehaviour
 
     }
 
-    private void ResstartLevel()
-    {
+    private void ResstartLevel() {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
-    private void ResstartLevelAndStats()
-    {
+    private void ResstartLevelAndStats() {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         LoadGame();
-       // LoadGamePlayerPosition();
+        // LoadGamePlayerPosition();
     }
 
-    private void LoadGamePlayerPosition()
-    {
+    private void LoadGamePlayerPosition() {
         float xPosPlayer = playerPosition.position.x;
         float yPosPlayer = playerPosition.position.y;
 
-        if (PlayerPrefs.HasKey("PlayerPositionX"))
-        {
+        if(PlayerPrefs.HasKey("PlayerPositionX")) {
             xPosPlayer = PlayerPrefs.GetInt("PlayerPositionX");
-            Debug.Log($"загрузил PlayerPositionX = {xPosPlayer}");
+            Debug.Log($"Р·Р°РіСЂСѓР·РёР» PlayerPositionX = {xPosPlayer}");
         }
 
-        if (PlayerPrefs.HasKey("PlayerPositionY"))
-        {
+        if(PlayerPrefs.HasKey("PlayerPositionY")) {
             yPosPlayer = PlayerPrefs.GetInt("PlayerPositionY");
-            Debug.Log($"загрузил PlayerPositionY = {yPosPlayer}");
+            Debug.Log($"Р·Р°РіСЂСѓР·РёР» PlayerPositionY = {yPosPlayer}");
         }
 
         playerPosition.position = new Vector2(xPosPlayer, yPosPlayer);
     }
 
-    private void LoadGame()
-    {
-        if (PlayerPrefs.HasKey("DamageSword"))
-        {
+    private void LoadGame() {
+        if(PlayerPrefs.HasKey("DamageSword")) {
             currentDamageSwordText = PlayerPrefs.GetInt("DamageSword");
-            Debug.Log($"загрузил DamageSword = {currentDamageSwordText}");
+            Debug.Log($"Р·Р°РіСЂСѓР·РёР» DamageSword = {currentDamageSwordText}");
         }
 
-        if (PlayerPrefs.HasKey("DamageSpear"))
-        {
+        if(PlayerPrefs.HasKey("DamageSpear")) {
             currentDamageSpearText = PlayerPrefs.GetInt("DamageSpear");
-            Debug.Log($"загрузил DamageSpear = {currentDamageSpearText}");
+            Debug.Log($"Р·Р°РіСЂСѓР·РёР» DamageSpear = {currentDamageSpearText}");
         }
 
-        if (PlayerPrefs.HasKey("valueSpear"))
-        {
+        if(PlayerPrefs.HasKey("valueSpear")) {
             currentvalueSpearOnPlayerText = PlayerPrefs.GetInt("valueSpear");
-            Debug.Log($"загрузил valueSpear = {currentvalueSpearOnPlayerText}");
+            Debug.Log($"Р·Р°РіСЂСѓР·РёР» valueSpear = {currentvalueSpearOnPlayerText}");
         }
 
-        if (PlayerPrefs.HasKey("coin"))
-        {
+        if(PlayerPrefs.HasKey("coin")) {
             currentCoin = PlayerPrefs.GetInt("coin");
-            Debug.Log($"загрузил coin = {currentCoin}");
+            Debug.Log($"Р·Р°РіСЂСѓР·РёР» coin = {currentCoin}");
         }
     }
 
-    private void CheckTapButtonsStartGameOneTap()
-    {
+    private void CheckTapButtonsStartGameOneTap() {
         startGameOneTap = 0;
         PlayerPrefs.DeleteKey("PlayerPositionX");
         PlayerPrefs.DeleteKey("PlayerPositionY");

@@ -1,9 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-
-public class Health : MonoBehaviour
-{
+public class Health : MonoBehaviour {
     [SerializeField] private float maxHealth = 100;
     [SerializeField] private HealsBar healsBar;
 
@@ -12,35 +8,29 @@ public class Health : MonoBehaviour
     private bool isAlive;
 
 
-    private void Awake()
-    {
+    private void Awake() {
         currentHealth = maxHealth;
         isAlive = true;
     }
 
-    private void OnEnable()
-    {
+    private void OnEnable() {
         DeathTriger.deathPlayer += PlayerIsDeath;
     }
 
-    private void OnDisable()
-    {
+    private void OnDisable() {
         DeathTriger.deathPlayer -= PlayerIsDeath;
     }
 
-    public void TakeDamage(float damage)
-    {
+    public void TakeDamage(float damage) {
         currentHealth -= damage;
         healsBar.SetHealthValue(currentHealth, maxHealth);
         ChekIsAlive();
     }
 
-    public void CurePlayer(float cure)
-    {
+    public void CurePlayer(float cure) {
         currentHealth += cure;
 
-        if (currentHealth > maxHealth)
-        {
+        if(currentHealth > maxHealth) {
             currentHealth = maxHealth;
         }
 
@@ -49,34 +39,27 @@ public class Health : MonoBehaviour
 
     }
 
-    public float GetCurrentHealth()
-    {
+    public float GetCurrentHealth() {
         return currentHealth;
     }
 
-    public float GetMaxHealth()
-    {
+    public float GetMaxHealth() {
         return maxHealth;
     }
 
-    public bool CheckIsAlive()
-    {
+    public bool CheckIsAlive() {
         return isAlive;
     }
 
-    private void ChekIsAlive()
-    {
-        if (currentHealth > 0)
-        {
+    private void ChekIsAlive() {
+        if(currentHealth > 0) {
             isAlive = true;
-        } else
-        {
+        } else {
             isAlive = false;
         }
     }
 
-    private void PlayerIsDeath(bool value)
-    {
+    private void PlayerIsDeath(bool value) {
         isAlive = !value;
     }
 }

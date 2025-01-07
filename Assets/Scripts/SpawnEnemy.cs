@@ -1,9 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-
-public class SpawnEnemy : MonoBehaviour
-{
+public class SpawnEnemy : MonoBehaviour {
     [SerializeField] private Transform[] respawnPoint;
     [SerializeField] private GameObject enemy;
     [SerializeField] private GameObject objectVisible;
@@ -18,8 +14,7 @@ public class SpawnEnemy : MonoBehaviour
 
 
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
         currentValueEnemyOneWave = 0;
         currentValueEnemyTwoWave = 0;
         numberWave = 0;
@@ -27,68 +22,56 @@ public class SpawnEnemy : MonoBehaviour
     }
 
 
-    private void OnEnable()
-    {
+    private void OnEnable() {
         Enemy.onDeathEnemy += RespawnEnemy;
         EnemyTrigerCont.onStartEnemyTriger += PlusNumberWave;
     }
 
-    private void OnDisable()
-    {
+    private void OnDisable() {
         Enemy.onDeathEnemy -= RespawnEnemy;
         EnemyTrigerCont.onStartEnemyTriger -= PlusNumberWave;
 
     }
 
-    public void RespawnEnemy()
-    {
-        if (numberWave == 0)
-        {
-            if (currentValueEnemyOneWave < valueCreateEnemyOneWave)
-            {
+    public void RespawnEnemy() {
+        if(numberWave == 0) {
+            if(currentValueEnemyOneWave < valueCreateEnemyOneWave) {
                 Instantiate(enemy, respawnPoint[numberWave].position, Quaternion.identity);
                 currentValueEnemyOneWave++;
             }
-            
 
-        }  else
-        {
-           
-            //Debug.Log($"респавн врага на позиции = {numberWaveRandom}");
 
-            if (currentValueEnemyTwoWave < valueCreateEnemyTwoWave)
-            {
+        } else {
+
+            //Debug.Log($"СЂРµСЃРїР°РІРЅ РІСЂР°РіР° РЅР° РїРѕР·РёС†РёРё = {numberWaveRandom}");
+
+            if(currentValueEnemyTwoWave < valueCreateEnemyTwoWave) {
 
                 numberWaveRandom = WaveRandom(numberWaveRandom);
-                Debug.Log($"респавн врага на позиции = {numberWaveRandom}");
+                Debug.Log($"СЂРµСЃРїР°РІРЅ РІСЂР°РіР° РЅР° РїРѕР·РёС†РёРё = {numberWaveRandom}");
 
                 Instantiate(enemy, respawnPoint[numberWaveRandom].position, Quaternion.identity);
                 currentValueEnemyTwoWave++;
             }
 
-            if (currentValueEnemyTwoWave >= valueCreateEnemyTwoWave)
-            {
+            if(currentValueEnemyTwoWave >= valueCreateEnemyTwoWave) {
                 objectVisible.SetActive(false);
             }
         }
     }
 
-    private void PlusNumberWave()
-    {
+    private void PlusNumberWave() {
         numberWave++;
-        Debug.Log($"значение переменной numberWave = {numberWave}");
+        Debug.Log($"Р·РЅР°С‡РµРЅРёРµ РїРµСЂРµРјРµРЅРЅРѕР№ numberWave = {numberWave}");
 
     }
 
-    private int WaveRandom(int value)
-    {
+    private int WaveRandom(int value) {
         int currentValue = 1;
 
-        if (value == 1)
-        {
+        if(value == 1) {
             currentValue = 2;
-        } else
-        {
+        } else {
             currentValue = 1;
         }
 

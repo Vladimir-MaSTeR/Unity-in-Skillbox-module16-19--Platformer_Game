@@ -1,20 +1,15 @@
 using UnityEngine;
-
-public class EndGameCont : MonoBehaviour
-{
+public class EndGameCont : MonoBehaviour {
     [SerializeField] private GameObject _dragon;
     [SerializeField] private GameObject _endGamePanel;
 
 
-    void Start()
-    {
+    void Start() {
         _endGamePanel.SetActive(false);
     }
 
-    void Update()
-    {
-        if (_dragon.activeSelf == false)
-        {
+    void Update() {
+        if(_dragon.activeSelf == false) {
             Time.timeScale = 0;
             _endGamePanel.SetActive(true);
         }

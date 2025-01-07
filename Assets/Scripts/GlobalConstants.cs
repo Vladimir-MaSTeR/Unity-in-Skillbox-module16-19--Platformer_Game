@@ -1,7 +1,4 @@
-using UnityEngine;
-
-public class GlobalConstants
-{
+public class GlobalConstants {
 
     #region Movement
 
@@ -11,6 +8,7 @@ public class GlobalConstants
     public const string FIRE_1 = "Fire1";
     public const string FIRE_2 = "Fire2";
     public const string FIRE_3 = "Fire3";
- 
+
     #endregion
+
 }

@@ -1,20 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-
-public class NextLevel : MonoBehaviour
-{
+public class NextLevel : MonoBehaviour {
     [SerializeField] private Transform cameraPosition;
     [SerializeField] private float cameraPositionX;
 
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        Debug.Log("вы вошли в зону тригера");
+    private void OnTriggerEnter2D(Collider2D collision) {
+        Debug.Log("РІС‹ РІРѕС€Р»Рё РІ Р·РѕРЅСѓ С‚СЂРёРіРµСЂР°");
 
-        if (collision.CompareTag("Damagebl"))
-        {
-            Debug.Log("Игрок вошел в зону тригера");
+        if(collision.CompareTag("Damagebl")) {
+            Debug.Log("РРіСЂРѕРє РІРѕС€РµР» РІ Р·РѕРЅСѓ С‚СЂРёРіРµСЂР°");
 
             cameraPosition.position = new Vector3(cameraPositionX, cameraPosition.position.y, cameraPosition.position.z);
         }

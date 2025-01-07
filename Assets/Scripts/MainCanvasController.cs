@@ -2,27 +2,28 @@ using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-
-public class MainCanvasController : MonoBehaviour
-{
-    [Header("Панели главного меню")]
+public class MainCanvasController : MonoBehaviour {
+    [Header("РџР°РЅРµР»Рё РіР»Р°РІРЅРѕРіРѕ РјРµРЅСЋ")]
     [SerializeField] private Canvas mainCanvas;
     [SerializeField] private GameObject mainPanel;
     [SerializeField] private GameObject autorPanel;
 
-    [Header("Панели меню истории")]
+    [Header("РџР°РЅРµР»Рё РјРµРЅСЋ РёСЃС‚РѕСЂРёРё")]
     [SerializeField] private Canvas historyCanvas;
     [SerializeField] private Image currentImageHistory;
     [SerializeField] private Sprite[] imagesHistory;
     [SerializeField] private Text textHistory;
     [SerializeField] private Text buttonText;
 
-    [Header("Панель игры")]
+    [Header("РџР°РЅРµР»СЊ РёРіСЂС‹")]
     [SerializeField] private GameObject pausePanel;
 
 
-    private String[] historyText = new String[] { HistoryText.ZERO, HistoryText.ONE, HistoryText.TWO, HistoryText.THREE, HistoryText.FOUR,
-                                                  HistoryText.FIVE, HistoryText.SIX, HistoryText.SEVEN, HistoryText.EIGHT, HistoryText.NINE, HistoryText.TEN};
+    private String[] historyText = new String[]
+    {
+    HistoryText.ZERO, HistoryText.ONE, HistoryText.TWO, HistoryText.THREE, HistoryText.FOUR,
+    HistoryText.FIVE, HistoryText.SIX, HistoryText.SEVEN, HistoryText.EIGHT, HistoryText.NINE, HistoryText.TEN
+    };
     private int indexHistoryText = 0;
     private int imagesIndex = 0;
 
@@ -31,8 +32,7 @@ public class MainCanvasController : MonoBehaviour
     public static Action onClickStartGameButton;
     public static Action onClicLoadLastSave;
 
-    private void Start()
-    {
+    private void Start() {
         mainCanvas?.gameObject.SetActive(true);
         historyCanvas.gameObject.SetActive(false);
         autorPanel.SetActive(false);
@@ -41,20 +41,17 @@ public class MainCanvasController : MonoBehaviour
     }
 
     //-------Main Canvas Methods-----------
-    public void onClickAutorButton()
-    {
+    public void onClickAutorButton() {
         autorPanel.SetActive(true);
         mainPanel.SetActive(false);
     }
 
-    public void onClickExitAutorButton()
-    {
+    public void onClickExitAutorButton() {
         autorPanel.SetActive(false);
         mainPanel.SetActive(true);
     }
 
-    public void onClickQuitGameButton()
-    {
+    public void onClickQuitGameButton() {
         PlayerPrefs.DeleteKey("PlayerPositionX");
         PlayerPrefs.DeleteKey("PlayerPositionY");
         PlayerPrefs.DeleteKey("startHistory");
@@ -62,8 +59,7 @@ public class MainCanvasController : MonoBehaviour
         Application.Quit();
     }
 
-    public void onClickStartGame()
-    {
+    public void onClickStartGame() {
         mainCanvas.gameObject.SetActive(false);
         historyCanvas.gameObject.SetActive(true);
 
@@ -75,48 +71,40 @@ public class MainCanvasController : MonoBehaviour
 
     //-------History Canvas Methods-----------
 
-    public void onClickBackMainMenu()
-    {
+    public void onClickBackMainMenu() {
         mainCanvas.gameObject.SetActive(true);
         historyCanvas.gameObject.SetActive(false);
-        // тут ещё нужно будет сбросить текст  и картинку на начало истории. 
+        // С‚СѓС‚ РµС‰С‘ РЅСѓР¶РЅРѕ Р±СѓРґРµС‚ СЃР±СЂРѕСЃРёС‚СЊ С‚РµРєСЃС‚  Рё РєР°СЂС‚РёРЅРєСѓ РЅР° РЅР°С‡Р°Р»Рѕ РёСЃС‚РѕСЂРёРё. 
     }
 
-    public void onClickNextHistory()
-    {
+    public void onClickNextHistory() {
         indexHistoryText++;
 
-        if (indexHistoryText != historyText.Length)
-        {
+        if(indexHistoryText != historyText.Length) {
             textHistory.text = historyText[indexHistoryText];
         }
-       
-        if (indexHistoryText == 2 || indexHistoryText == 3 || indexHistoryText == 5
-            || indexHistoryText == 6 || indexHistoryText == 7 || indexHistoryText == 8)
-        {
+
+        if(indexHistoryText == 2 || indexHistoryText == 3 || indexHistoryText == 5
+           || indexHistoryText == 6 || indexHistoryText == 7 || indexHistoryText == 8) {
             currentImageHistory.sprite = imagesHistory[++imagesIndex];
         }
 
-        if (indexHistoryText == 10)
-        {
-            buttonText.text = "начать игру";
+        if(indexHistoryText == 10) {
+            buttonText.text = "РЅР°С‡Р°С‚СЊ РёРіСЂСѓ";
         }
 
-        if (indexHistoryText == 11)
-        {
+        if(indexHistoryText == 11) {
             onClickStartGameButton?.Invoke();
             SceneManager.LoadScene(1);
         }
     }
 
     //-------Pused Methods-------
-    public void OnClickRestartScene()
-    {
+    public void OnClickRestartScene() {
         onClickRestartButton?.Invoke();
     }
 
-    public void OnClickExitGameToMainMenu()
-    {
+    public void OnClickExitGameToMainMenu() {
         PlayerPrefs.DeleteKey("PlayerPositionX");
         PlayerPrefs.DeleteKey("PlayerPositionY");
         PlayerPrefs.DeleteKey("startHistory");
@@ -125,20 +113,17 @@ public class MainCanvasController : MonoBehaviour
         SceneManager.LoadScene(0);
     }
 
-    public void onClickPauseStart()
-    {
+    public void onClickPauseStart() {
         Time.timeScale = 0;
         pausePanel.SetActive(true);
     }
 
-    public void onClickPauseEnd()
-    {
+    public void onClickPauseEnd() {
         Time.timeScale = 1;
         pausePanel.SetActive(false);
     }
 
-    public void OnClicLoadLastSave()
-    {
+    public void OnClicLoadLastSave() {
         onClicLoadLastSave?.Invoke();
     }
 

@@ -1,10 +1,6 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-
-public class ColdDamageDeallerOnPlayer : MonoBehaviour
-{
+public class ColdDamageDeallerOnPlayer : MonoBehaviour {
     //[SerializeField] private float damage = 30;
     [SerializeField] private GameManager gameManagerScript;
 
@@ -18,41 +14,35 @@ public class ColdDamageDeallerOnPlayer : MonoBehaviour
     //------EVENTS---------
     public static Func<int> onSwordDamage;
 
-    private void Start()
-    {
+    private void Start() {
         currentDamage = (float)(onSwordDamage?.Invoke());
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Enemy"))
-        {
+    private void OnTriggerEnter2D(Collider2D collision) {
+        if(collision.CompareTag("Enemy")) {
             currentDamage = (float)(onSwordDamage?.Invoke());
 
             audioSource.PlayOneShot(clip);
             collision.gameObject.GetComponent<Health>().TakeDamage(currentDamage);
-            Debug.Log($"Монстру нанесён урон холодным на {currentDamage} урона");
+            Debug.Log($"РњРѕРЅСЃС‚СЂСѓ РЅР°РЅРµСЃС‘РЅ СѓСЂРѕРЅ С…РѕР»РѕРґРЅС‹Рј РЅР° {currentDamage} СѓСЂРѕРЅР°");
         }
 
-        if (collision.CompareTag("Boss"))
-        {
+        if(collision.CompareTag("Boss")) {
             currentDamage = (float)(onSwordDamage?.Invoke());
             float currentDamageBoss = currentDamage / delimetrDamageBoss;
 
             audioSource.PlayOneShot(clip);
             collision.gameObject.GetComponent<Health>().TakeDamage(currentDamageBoss);
-            Debug.Log($"Босу нанесён урон холодным на {currentDamageBoss} урона");
+            Debug.Log($"Р‘РѕСЃСѓ РЅР°РЅРµСЃС‘РЅ СѓСЂРѕРЅ С…РѕР»РѕРґРЅС‹Рј РЅР° {currentDamageBoss} СѓСЂРѕРЅР°");
         }
     }
 
 
-    public float GetCurrentDamage()
-    {
+    public float GetCurrentDamage() {
         return this.currentDamage;
     }
 
-    public void SetCurrentDamage(float damage)
-    {
+    public void SetCurrentDamage(float damage) {
         this.currentDamage = damage;
     }
 }

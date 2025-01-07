@@ -1,9 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-
-public class RessEnemiInTime : MonoBehaviour
-{
+public class RessEnemiInTime : MonoBehaviour {
     [SerializeField] private GameObject _enemy;
     [SerializeField] private Transform _ressPointPosition;
     [SerializeField] private float _ressTime = 20;
@@ -12,34 +8,28 @@ public class RessEnemiInTime : MonoBehaviour
     private bool enemyDeath = false;
 
 
-    private void OnEnable()
-    {
+    private void OnEnable() {
         CheckEndAnim.enemyDeath += CheckDeathEnemy;
     }
 
-    private void OnDisable()
-    {
+    private void OnDisable() {
         CheckEndAnim.enemyDeath -= CheckDeathEnemy;
 
     }
 
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
         currentTime = _ressTime;
         enemyDeath = false;
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        if (enemyDeath == true)
-        {
+    void Update() {
+        if(enemyDeath == true) {
             currentTime -= Time.deltaTime;
-        } 
+        }
 
-        if (currentTime <= 0 && enemyDeath == true)
-        {
+        if(currentTime <= 0 && enemyDeath == true) {
             Instantiate(_enemy, _ressPointPosition.position, Quaternion.identity);
             enemyDeath = false;
             currentTime = _ressTime;
@@ -47,8 +37,7 @@ public class RessEnemiInTime : MonoBehaviour
     }
 
 
-    private void CheckDeathEnemy()
-    {
+    private void CheckDeathEnemy() {
         enemyDeath = !enemyDeath;
     }
 }
