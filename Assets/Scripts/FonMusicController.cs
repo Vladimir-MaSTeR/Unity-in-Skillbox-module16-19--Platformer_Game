@@ -14,13 +14,13 @@ public class FonMusicController : MonoBehaviour {
 
 
     private void SelectMainScene() {
-        if(currentIndexScene == 0) {
+        if(currentIndexScene == 1) {
             audioSource.clip = audioClips[0];
 
-        } else if(currentIndexScene == 2) {
+        } else if(currentIndexScene == 3) {
             audioSource.clip = audioClips[2];
 
-        } else if(currentIndexScene == 3) {
+        } else if(currentIndexScene == 4) {
             audioSource.clip = audioClips[3];
 
         } else {

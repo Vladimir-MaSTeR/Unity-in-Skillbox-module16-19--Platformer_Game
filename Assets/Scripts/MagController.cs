@@ -28,37 +28,37 @@ public class MagController : MonoBehaviour {
 
     private String[] noSneilLevelHistoryText = new String[]
     {
-    HistoryText.ORSIC_MEET_SNEIL_1, HistoryText.PLAYER_MEET_SNEIL_1,
-    HistoryText.ORSIC_MEET_SNEIL_2, HistoryText.PLAYER_MEET_SNEIL_2,
-    HistoryText.ORSIC_MEET_SNEIL_3, HistoryText.PLAYER_MEET_SNEIL_3,
-    HistoryText.ORSIC_MEET_SNEIL_4, HistoryText.PLAYER_MEET_SNEIL_4,
-    HistoryText.ORSIC_MEET_SNEIL_5, HistoryText.PLAYER_MEET_SNEIL_5,
-    HistoryText.ORSIC_MEET_SNEIL_6, HistoryText.PLAYER_MEET_SNEIL_6,
-    HistoryText.ORSIC_MEET_SNEIL_7, HistoryText.PLAYER_MEET_SNEIL_7,
-    HistoryText.ORSIC_MEET_SNEIL_8
+    HistoryTextRu.ORSIC_MEET_SNEIL_1_RU, HistoryTextRu.PLAYER_MEET_SNEIL_1_RU,
+    HistoryTextRu.ORSIC_MEET_SNEIL_2_RU, HistoryTextRu.PLAYER_MEET_SNEIL_2_RU,
+    HistoryTextRu.ORSIC_MEET_SNEIL_3_RU, HistoryTextRu.PLAYER_MEET_SNEIL_3_RU,
+    HistoryTextRu.ORSIC_MEET_SNEIL_4_RU, HistoryTextRu.PLAYER_MEET_SNEIL_4_RU,
+    HistoryTextRu.ORSIC_MEET_SNEIL_5_RU, HistoryTextRu.PLAYER_MEET_SNEIL_5_RU,
+    HistoryTextRu.ORSIC_MEET_SNEIL_6_RU, HistoryTextRu.PLAYER_MEET_SNEIL_6_RU,
+    HistoryTextRu.ORSIC_MEET_SNEIL_7_RU, HistoryTextRu.PLAYER_MEET_SNEIL_7_RU,
+    HistoryTextRu.ORSIC_MEET_SNEIL_8_RU
     }; // 14 елементов
 
     private String[] YesSneilLevelHistoryText = new String[]
     {
-    HistoryText.PLAYER_MEET_SNEIL_END_1, HistoryText.ORSIC_MEET_SNEIL_END_1,
-    HistoryText.PLAYER_MEET_SNEIL_END_2, HistoryText.ORSIC_MEET_SNEIL_END_2,
-    HistoryText.PLAYER_MEET_SNEIL_END_3, HistoryText.ORSIC_MEET_SNEIL_END_3,
-    HistoryText.PLAYER_MEET_SNEIL_END_4, HistoryText.ORSIC_MEET_SNEIL_END_4,
-    HistoryText.PLAYER_MEET_SNEIL_END_5, HistoryText.ORSIC_MEET_SNEIL_END_5,
-    HistoryText.PLAYER_MEET_SNEIL_END_6, HistoryText.ORSIC_MEET_SNEIL_END_6,
-    HistoryText.PLAYER_MEET_SNEIL_END_7, HistoryText.ORSIC_MEET_SNEIL_END_7,
-    HistoryText.PLAYER_MEET_SNEIL_END_8, HistoryText.ORSIC_MEET_SNEIL_END_8,
-    HistoryText.PLAYER_MEET_SNEIL_END_9, HistoryText.ORSIC_MEET_SNEIL_END_9,
-    HistoryText.PLAYER_MEET_SNEIL_END_10, HistoryText.ORSIC_MEET_SNEIL_END_10,
-    HistoryText.PLAYER_MEET_SNEIL_END_11, HistoryText.ORSIC_MEET_SNEIL_END_11,
-    HistoryText.PLAYER_MEET_SNEIL_END_12, HistoryText.ORSIC_MEET_SNEIL_END_12,
-    HistoryText.PLAYER_MEET_SNEIL_END_13, HistoryText.ORSIC_MEET_SNEIL_END_13,
-    HistoryText.PLAYER_MEET_SNEIL_END_14, HistoryText.ORSIC_MEET_SNEIL_END_14,
-    HistoryText.PLAYER_MEET_SNEIL_END_15, HistoryText.ORSIC_MEET_SNEIL_END_15,
-    HistoryText.PLAYER_MEET_SNEIL_END_16, HistoryText.ORSIC_MEET_SNEIL_END_16,
-    HistoryText.PLAYER_MEET_SNEIL_END_17, HistoryText.ORSIC_MEET_SNEIL_END_17,
-    HistoryText.PLAYER_MEET_SNEIL_END_18, HistoryText.ORSIC_MEET_SNEIL_END_18,
-    HistoryText.PLAYER_MEET_SNEIL_END_19
+    HistoryTextRu.PLAYER_MEET_SNEIL_END_1_RU, HistoryTextRu.ORSIC_MEET_SNEIL_END_1_RU,
+    HistoryTextRu.PLAYER_MEET_SNEIL_END_2_RU, HistoryTextRu.ORSIC_MEET_SNEIL_END_2_RU,
+    HistoryTextRu.PLAYER_MEET_SNEIL_END_3_RU, HistoryTextRu.ORSIC_MEET_SNEIL_END_3_RU,
+    HistoryTextRu.PLAYER_MEET_SNEIL_END_4_RU, HistoryTextRu.ORSIC_MEET_SNEIL_END_4_RU,
+    HistoryTextRu.PLAYER_MEET_SNEIL_END_5_RU, HistoryTextRu.ORSIC_MEET_SNEIL_END_5_RU,
+    HistoryTextRu.PLAYER_MEET_SNEIL_END_6_RU, HistoryTextRu.ORSIC_MEET_SNEIL_END_6_RU,
+    HistoryTextRu.PLAYER_MEET_SNEIL_END_7_RU, HistoryTextRu.ORSIC_MEET_SNEIL_END_7_RU,
+    HistoryTextRu.PLAYER_MEET_SNEIL_END_8_RU, HistoryTextRu.ORSIC_MEET_SNEIL_END_8_RU,
+    HistoryTextRu.PLAYER_MEET_SNEIL_END_9_RU, HistoryTextRu.ORSIC_MEET_SNEIL_END_9_RU,
+    HistoryTextRu.PLAYER_MEET_SNEIL_END_10_RU, HistoryTextRu.ORSIC_MEET_SNEIL_END_10_RU,
+    HistoryTextRu.PLAYER_MEET_SNEIL_END_11_RU, HistoryTextRu.ORSIC_MEET_SNEIL_END_11_RU,
+    HistoryTextRu.PLAYER_MEET_SNEIL_END_12_RU, HistoryTextRu.ORSIC_MEET_SNEIL_END_12_RU,
+    HistoryTextRu.PLAYER_MEET_SNEIL_END_13_RU, HistoryTextRu.ORSIC_MEET_SNEIL_END_13_RU,
+    HistoryTextRu.PLAYER_MEET_SNEIL_END_14_RU, HistoryTextRu.ORSIC_MEET_SNEIL_END_14_RU,
+    HistoryTextRu.PLAYER_MEET_SNEIL_END_15_RU, HistoryTextRu.ORSIC_MEET_SNEIL_END_15_RU,
+    HistoryTextRu.PLAYER_MEET_SNEIL_END_16_RU, HistoryTextRu.ORSIC_MEET_SNEIL_END_16_RU,
+    HistoryTextRu.PLAYER_MEET_SNEIL_END_17_RU, HistoryTextRu.ORSIC_MEET_SNEIL_END_17_RU,
+    HistoryTextRu.PLAYER_MEET_SNEIL_END_18_RU, HistoryTextRu.ORSIC_MEET_SNEIL_END_18_RU,
+    HistoryTextRu.PLAYER_MEET_SNEIL_END_19_RU
     };
 
     //private String[] playerSneilHistoryText = new String[] { };

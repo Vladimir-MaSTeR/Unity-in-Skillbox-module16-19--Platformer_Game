@@ -39,12 +39,8 @@ public class SpawnEnemy : MonoBehaviour {
                 Instantiate(enemy, respawnPoint[numberWave].position, Quaternion.identity);
                 currentValueEnemyOneWave++;
             }
-
-
         } else {
-
             //Debug.Log($"респавн врага на позиции = {numberWaveRandom}");
-
             if(currentValueEnemyTwoWave < valueCreateEnemyTwoWave) {
 
                 numberWaveRandom = WaveRandom(numberWaveRandom);

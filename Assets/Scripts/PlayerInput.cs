@@ -3,8 +3,6 @@ using UnityEngine;
 [RequireComponent(typeof(Shooter))]
 public class PlayerInput : MonoBehaviour {
     // Класс отвечает за считывание нажатия кнопок.
-
-
     [SerializeField] private GameManager gameManagerScript;
 
     private PlayerMovement playerMovement;

@@ -4,8 +4,6 @@ public class Shooter : MonoBehaviour {
     [SerializeField] private GameObject bullet;
     [SerializeField] private Transform pointInstantiate;
     [SerializeField] private float fireSpeed = 15;
-    //[SerializeField] private int valueBulet = 10;
-
 
     //------EVENTS---------
     public static Func<int> onSpearValue;
