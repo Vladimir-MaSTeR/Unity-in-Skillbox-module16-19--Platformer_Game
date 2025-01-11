@@ -1,4 +1,5 @@
 using System;
+using GamePush;
 using UnityEngine;
 public class DragonLevelController : MonoBehaviour {
     [Header("Звук")]
@@ -8,18 +9,19 @@ public class DragonLevelController : MonoBehaviour {
     [Header("Необходимый урон для входа к боссу")]
     [SerializeField] private int requiredDamage = 80;
 
+    private string str1Ru = "Пока рано. Нужно зайти к Орсику";
+    private string str1Eng = "Not yet. I need to go to Orsik's";
 
-    private string str1 = "Пока рано. Нужно зайти к Орсику";
-    private string str2 = "Надо подкачаться. Думаю урона больше 80 хватит...";
-    //private string str1 = "";
+    private string str2Ru = "Надо подкачаться в подвале Орсика. Думаю урона больше 80 хватит...";
+    private string str2Eng = "We need to pump up in Orsik's basement. I think more than 80 damage is enough...";
 
+    private Language language;
 
     private int endSneilLevel = 0;
     private string currentDialogText = "";
 
     private int currentDamageSword = 0;
     private int currentDamageSpear = 0;
-
 
     //---EVENT---
     public static Action<String> onEventDragonLEvel;
@@ -34,23 +36,25 @@ public class DragonLevelController : MonoBehaviour {
 
 
                 if(endSneilLevel == 0) {
-                    onEventDragonLEvel?.Invoke(str1);
+                    if(Language.Russian == language) {
+                        onEventDragonLEvel?.Invoke(str1Ru);
+                    } else {
+                        onEventDragonLEvel?.Invoke(str1Eng);
+                    }
 
                 } else {
-                    onEventDragonLEvel?.Invoke(str2);
+                    if(Language.Russian == language) {
+                        onEventDragonLEvel?.Invoke(str2Ru);
+                    } else {
+                        onEventDragonLEvel?.Invoke(str2Eng);
+                    }
                 }
-
 
                 if(endSneilLevel > 0 && currentDamageSword >= requiredDamage || endSneilLevel > 0 && currentDamageSpear >= requiredDamage) {
                     audioSource.PlayOneShot(dorClip);
                     onEventStartDragonLevel?.Invoke();
-                    // SceneManager.LoadScene(3);
                 }
-                //  audioSource.PlayOneShot(dorClip);
-
             }
-
-
         }
     }
 
@@ -63,23 +67,25 @@ public class DragonLevelController : MonoBehaviour {
 
 
                 if(endSneilLevel == 0) {
-                    onEventDragonLEvel?.Invoke(str1);
+                    if(Language.Russian == language) {
+                        onEventDragonLEvel?.Invoke(str1Ru);
+                    } else {
+                        onEventDragonLEvel?.Invoke(str1Eng);
+                    }
 
                 } else {
-                    onEventDragonLEvel?.Invoke(str2);
+                    if(Language.Russian == language) {
+                        onEventDragonLEvel?.Invoke(str2Ru);
+                    } else {
+                        onEventDragonLEvel?.Invoke(str2Eng);
+                    }
                 }
-
 
                 if(endSneilLevel > 0 && currentDamageSword >= requiredDamage || endSneilLevel > 0 && currentDamageSpear >= requiredDamage) {
                     audioSource.PlayOneShot(dorClip);
                     onEventStartDragonLevel?.Invoke();
-                    //SceneManager.LoadScene(3);
                 }
-
-                //  audioSource.PlayOneShot(dorClip);
             }
-
-
         }
     }
 
@@ -102,6 +108,4 @@ public class DragonLevelController : MonoBehaviour {
             endSneilLevel = 0;
         }
     }
-
-
 }

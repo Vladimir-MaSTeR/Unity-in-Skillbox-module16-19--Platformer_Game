@@ -3,6 +3,65 @@ namespace Texts {
         
         public const string GAME_NAME_ENG = "A Little Adventure";
         public const string START_GAME_BATTON_ENG = "Start";
+        
+        public const string BACK_MAIN_MENU_BATTON_ENG = "Main menu";
+        public const string NEXT_HISTORY_BATTON_ENG = "Next";
+        public const string START_GAME_HISTORY_BATTON_ENG = "Start game";
+        
+        //Вторая сцена
+        public const string SWORD_DAMAGE_TEXT_ENG = "Sword damage";
+        public const string NUMBER_OF_COPIES_TEXT_ENG = "Number copies";
+        public const string DAMAGE_OF_COPIES_ENG = "Damage copies";
+        public const string COIN_TEXT_ENG = "Coin";
+    
+        public const string PAUSED_BATTON_ENG = "Paused";
+        
+        //Панель паузы
+        public const string PAUSE_MAIN_TEXT_PAUSED_PANEL_ENG = "PAUSED";
+    
+        public const string BACK_GAME_BUTTON_TEXT_PAUSED_PANEL_ENG = "Back in game";
+        public const string LOAD_LAST_SAVE_BUTTON_TEXT_PAUSED_PANEL_ENG = "Load last save";
+        public const string MAIN_MENU_BUTTON_TEXT_PAUSED_PANEL_ENG = "Main menu";
+        
+        //Панель смерьти
+        public const string MAIN_DEATH_PANEL_TEXT_ENG = "The adventure didn't go well";
+        public const string RESTART_BUTTON_DEATH_PANEL_TEXT_ENG = "Download";
+        public const string MAIN_MENU_BUTTON_DEATH_PANEL_TEXT_ENG = "Main menu";
+        
+        //Панель Магазина
+        public const string NEXT_DIALOG_BUTTON_TEXT_MAG_PANEL_ENG = "Next";
+        public const string EXIT_MAG_BUTTON_TEXT_MAG_PANEL_ENG = "Exit";
+        public const string SMITHY_BUTTON_TEXT_MAG_PANEL_ENG = "Smithy";
+        public const string SNEIL_LEVEL_START_BUTTON_TEXT_MAG_PANEL_ENG = "Go down to the basement";
+        
+        public const string SPEAR_IMAGE_BUTTON_SMITHY_TEXT_1_MAG_PANEL_ENG = "Increase the number of copies";
+        public const string SPEAR_IMAGE_BUTTON_SMITHY_TEXT_2_MAG_PANEL_ENG = "+5";
+        public const string SPEAR_IMAGE_BUTTON_SMITHY_TEXT_3_MAG_PANEL_ENG = "10\ncoin";
+    
+        public const string SPEAR_DAMAGE_IMAGE_BUTTON_SMITHY_TEXT_1_MAG_PANEL_ENG = "Improve spears";
+        public const string SPEAR_DAMAGE_IMAGE_BUTTON_SMITHY_TEXT_2_MAG_PANEL_ENG = "+10\nto damage";
+        public const string SPEAR_DAMAGE_IMAGE_BUTTON_SMITHY_TEXT_3_MAG_PANEL_ENG = "50\ncoin";
+    
+        public const string SWORD_IMAGE_BUTTON_SMITHY_TEXT_1_MAG_PANEL_ENG = "Improve sword";
+        public const string SWORD_IMAGE_BUTTON_SMITHY_TEXT_2_MAG_PANEL_ENG = "+10\nto damage";
+        public const string SWORD_IMAGE_BUTTON_SMITHY_TEXT_3_MAG_PANEL_ENG = "30\ncoin";
+
+        public const string EXIT_SMITHY_BUTTON_SMITHY_TEXT_MAG_PANEL_ENG = "To close";
+        
+        // чаша сохранения
+        public const string SAVE_TEXT_ENG = "Save";
+        
+        //финиш в подвале
+        public const string EXIT_TEXT_SNAIL_SCEN_ENG = "Exit";
+        
+        //дверь магазина
+        public const string MAG_DOR_TEXT_ENG = "Open dor";
+        
+        //Финальная панель с текстом после убийства дракона
+        public const string END_GAME_MAIN_TEXT_ENG = "You killed the dragon!!!\n\nThis  \"A Little Adventure\" is over. \n\nThank you for deciding to go this way and not smash something over the author's head.";
+        public const string MAIN_MENU_BUTTON_TEXT_END_GAME_PANEL_ENG = "Main menu";
+        
+
 
         #region Main History text
 

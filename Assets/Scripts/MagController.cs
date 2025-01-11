@@ -1,32 +1,59 @@
 using System;
+using GamePush;
+using Texts;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 public class MagController : MonoBehaviour {
-    [Header("Панели")]
+    [Header("--------- ПАНЕЛИ ---------")]
     [SerializeField] private GameObject magPanel;
     [SerializeField] private GameObject smithy;              // панель кузницы
     [SerializeField] private GameObject textMagHistoryPanel; // панель с текстом истории в магазине
 
-    [Header("Кнопки")]
+    [Header("--------- КНОПКИ ---------")]
     [SerializeField] private Button smithyButton;
     [SerializeField] private Button exitButton;
     [SerializeField] private Button nextTextButton;
     [SerializeField] private Button sneilLevelStartButton;
 
-    [Header("Картинки стрелок для понимания кто говорит")]
+    [Header("--------- КАРТИНКИ СТРЕЛОК ДЛЯ ПОНИМАНИЯ КТО ГОВОРИТ ---------")]
     [SerializeField] private GameObject arrowPlayerImage;
     [SerializeField] private GameObject arrowOrsicImage;
 
 
-    [Header("Текст истории")]
-    [SerializeField] private Text textHistory;
+    [Header("--------- ТЕКСТ ИСТОРИИ ---------")]
+    // [SerializeField] private Text textHistory;
+    [SerializeField] private TextMeshProUGUI textHistory;
+    [SerializeField] private TextMeshProUGUI _nextDialogButtonTextMagPanel;
+    [SerializeField] private TextMeshProUGUI _exitMagButtonTextMagPanel;
+    [SerializeField] private TextMeshProUGUI _smithyButtonTextMagPanel;
+    [SerializeField] private TextMeshProUGUI _sneilLevelStartButtonTextMagPanel;
 
-    [Header("Звук")]
+    [Space(10)]
+    [Header("Текстовые поля, торговли")]
+    [SerializeField] private TextMeshProUGUI _spearImageButtonSmithyText_1_MagPanel;
+    [SerializeField] private TextMeshProUGUI _spearImageButtonSmithyText_2_MagPanel;
+    [SerializeField] private TextMeshProUGUI _spearImageButtonSmithyText_3_MagPanel;
+
+    [Space(5)]
+    [SerializeField] private TextMeshProUGUI _spearDamageImageButtonSmithyText_1_MagPanel;
+    [SerializeField] private TextMeshProUGUI _spearDamageImageButtonSmithyText_2_MagPanel;
+    [SerializeField] private TextMeshProUGUI _spearDamageImageButtonSmithyText_3_MagPanel;
+
+    [Space(5)]
+    [SerializeField] private TextMeshProUGUI _swordImageButtonSmithyText_1_MagPanel;
+    [SerializeField] private TextMeshProUGUI _swordImageButtonSmithyText_2_MagPanel;
+    [SerializeField] private TextMeshProUGUI _swordImageButtonSmithyText_3_MagPanel;
+
+    [Space(5)]
+    [SerializeField] private TextMeshProUGUI _exitSmithyButtonSmithyTextMagPanel;
+
+    [Header("--------- ЗВУК ---------")]
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip dorClip;
 
 
-    private String[] noSneilLevelHistoryText = new String[]
+    private String[] noSneilLevelHistoryTextRu = new String[]
     {
     HistoryTextRu.ORSIC_MEET_SNEIL_1_RU, HistoryTextRu.PLAYER_MEET_SNEIL_1_RU,
     HistoryTextRu.ORSIC_MEET_SNEIL_2_RU, HistoryTextRu.PLAYER_MEET_SNEIL_2_RU,
@@ -38,7 +65,19 @@ public class MagController : MonoBehaviour {
     HistoryTextRu.ORSIC_MEET_SNEIL_8_RU
     }; // 14 елементов
 
-    private String[] YesSneilLevelHistoryText = new String[]
+    private String[] noSneilLevelHistoryTextEng = new String[]
+    {
+    HistoryTextEng.ORSIC_MEET_SNEIL_1_ENG, HistoryTextEng.PLAYER_MEET_SNEIL_1_ENG,
+    HistoryTextEng.ORSIC_MEET_SNEIL_2_ENG, HistoryTextEng.PLAYER_MEET_SNEIL_2_ENG,
+    HistoryTextEng.ORSIC_MEET_SNEIL_3_ENG, HistoryTextEng.PLAYER_MEET_SNEIL_3_ENG,
+    HistoryTextEng.ORSIC_MEET_SNEIL_4_ENG, HistoryTextEng.PLAYER_MEET_SNEIL_4_ENG,
+    HistoryTextEng.ORSIC_MEET_SNEIL_5_ENG, HistoryTextEng.PLAYER_MEET_SNEIL_5_ENG,
+    HistoryTextEng.ORSIC_MEET_SNEIL_6_ENG, HistoryTextEng.PLAYER_MEET_SNEIL_6_ENG,
+    HistoryTextEng.ORSIC_MEET_SNEIL_7_ENG, HistoryTextEng.PLAYER_MEET_SNEIL_7_ENG,
+    HistoryTextEng.ORSIC_MEET_SNEIL_8_ENG
+    };
+
+    private String[] YesSneilLevelHistoryTextRu = new String[]
     {
     HistoryTextRu.PLAYER_MEET_SNEIL_END_1_RU, HistoryTextRu.ORSIC_MEET_SNEIL_END_1_RU,
     HistoryTextRu.PLAYER_MEET_SNEIL_END_2_RU, HistoryTextRu.ORSIC_MEET_SNEIL_END_2_RU,
@@ -61,11 +100,34 @@ public class MagController : MonoBehaviour {
     HistoryTextRu.PLAYER_MEET_SNEIL_END_19_RU
     };
 
+    private String[] YesSneilLevelHistoryTextEng = new String[]
+    {
+    HistoryTextEng.PLAYER_MEET_SNEIL_END_1_ENG, HistoryTextEng.ORSIC_MEET_SNEIL_END_1_ENG,
+    HistoryTextEng.PLAYER_MEET_SNEIL_END_2_ENG, HistoryTextEng.ORSIC_MEET_SNEIL_END_2_ENG,
+    HistoryTextEng.PLAYER_MEET_SNEIL_END_3_ENG, HistoryTextEng.ORSIC_MEET_SNEIL_END_3_ENG,
+    HistoryTextEng.PLAYER_MEET_SNEIL_END_4_ENG, HistoryTextEng.ORSIC_MEET_SNEIL_END_4_ENG,
+    HistoryTextEng.PLAYER_MEET_SNEIL_END_5_ENG, HistoryTextEng.ORSIC_MEET_SNEIL_END_5_ENG,
+    HistoryTextEng.PLAYER_MEET_SNEIL_END_6_ENG, HistoryTextEng.ORSIC_MEET_SNEIL_END_6_ENG,
+    HistoryTextEng.PLAYER_MEET_SNEIL_END_7_ENG, HistoryTextEng.ORSIC_MEET_SNEIL_END_7_ENG,
+    HistoryTextEng.PLAYER_MEET_SNEIL_END_8_ENG, HistoryTextEng.ORSIC_MEET_SNEIL_END_8_ENG,
+    HistoryTextEng.PLAYER_MEET_SNEIL_END_9_ENG, HistoryTextEng.ORSIC_MEET_SNEIL_END_9_ENG,
+    HistoryTextEng.PLAYER_MEET_SNEIL_END_10_ENG, HistoryTextEng.ORSIC_MEET_SNEIL_END_10_ENG,
+    HistoryTextEng.PLAYER_MEET_SNEIL_END_11_ENG, HistoryTextEng.ORSIC_MEET_SNEIL_END_11_ENG,
+    HistoryTextEng.PLAYER_MEET_SNEIL_END_12_ENG, HistoryTextEng.ORSIC_MEET_SNEIL_END_12_ENG,
+    HistoryTextEng.PLAYER_MEET_SNEIL_END_13_ENG, HistoryTextEng.ORSIC_MEET_SNEIL_END_13_ENG,
+    HistoryTextEng.PLAYER_MEET_SNEIL_END_14_ENG, HistoryTextEng.ORSIC_MEET_SNEIL_END_14_ENG,
+    HistoryTextEng.PLAYER_MEET_SNEIL_END_15_ENG, HistoryTextEng.ORSIC_MEET_SNEIL_END_15_ENG,
+    HistoryTextEng.PLAYER_MEET_SNEIL_END_16_ENG, HistoryTextEng.ORSIC_MEET_SNEIL_END_16_ENG,
+    HistoryTextEng.PLAYER_MEET_SNEIL_END_17_ENG, HistoryTextEng.ORSIC_MEET_SNEIL_END_17_ENG,
+    HistoryTextEng.PLAYER_MEET_SNEIL_END_18_ENG, HistoryTextEng.ORSIC_MEET_SNEIL_END_18_ENG,
+    HistoryTextEng.PLAYER_MEET_SNEIL_END_19_ENG
+    };
+
     //private String[] playerSneilHistoryText = new String[] { };
 
     private int startHistory = 0; // переменна отвечает за текст истории. | 0 = начало игры | 1 = Пройден уровень с улитками ||||
     private int indexHistoryText = 0;
-    //private int indexPlayerSneilHistoryText = 0;
+    private Language language;
 
     //События
     public static Action onEventClickSwordImageButton;
@@ -96,10 +158,62 @@ public class MagController : MonoBehaviour {
                 audioSource.PlayOneShot(dorClip);
                 magPanel.SetActive(true);
 
+                CheckLanguage();
                 CheckStartHistory();
             }
 
 
+        }
+    }
+
+    private void CheckLanguage() {
+        if(Language.Russian == language) {
+            // buttonText.text = "начать игру";
+            Debug.Log($"Язык игры - Русский");
+            _nextDialogButtonTextMagPanel.text = HistoryTextRu.NEXT_DIALOG_BUTTON_TEXT_MAG_PANEL_RU;
+            _exitMagButtonTextMagPanel.text = HistoryTextRu.EXIT_MAG_BUTTON_TEXT_MAG_PANEL_RU;
+            _smithyButtonTextMagPanel.text = HistoryTextRu.SMITHY_BUTTON_TEXT_MAG_PANEL_RU;
+            _sneilLevelStartButtonTextMagPanel.text = HistoryTextRu.SNEIL_LEVEL_START_BUTTON_TEXT_MAG_PANEL_RU;
+
+            _spearImageButtonSmithyText_1_MagPanel.text = HistoryTextRu.SPEAR_IMAGE_BUTTON_SMITHY_TEXT_1_MAG_PANEL_RU;
+            _spearImageButtonSmithyText_2_MagPanel.text = HistoryTextRu.SPEAR_IMAGE_BUTTON_SMITHY_TEXT_2_MAG_PANEL_RU;
+            _spearImageButtonSmithyText_3_MagPanel.text = HistoryTextRu.SPEAR_IMAGE_BUTTON_SMITHY_TEXT_3_MAG_PANEL_RU;
+
+            _spearDamageImageButtonSmithyText_1_MagPanel.text = HistoryTextRu.SPEAR_DAMAGE_IMAGE_BUTTON_SMITHY_TEXT_1_MAG_PANEL_RU;
+            _spearDamageImageButtonSmithyText_2_MagPanel.text = HistoryTextRu.SPEAR_DAMAGE_IMAGE_BUTTON_SMITHY_TEXT_2_MAG_PANEL_RU;
+            _spearDamageImageButtonSmithyText_3_MagPanel.text = HistoryTextRu.SPEAR_DAMAGE_IMAGE_BUTTON_SMITHY_TEXT_3_MAG_PANEL_RU;
+
+            _swordImageButtonSmithyText_1_MagPanel.text = HistoryTextRu.SWORD_IMAGE_BUTTON_SMITHY_TEXT_1_MAG_PANEL_RU;
+            _swordImageButtonSmithyText_2_MagPanel.text = HistoryTextRu.SWORD_IMAGE_BUTTON_SMITHY_TEXT_2_MAG_PANEL_RU;
+            _swordImageButtonSmithyText_3_MagPanel.text = HistoryTextRu.SWORD_IMAGE_BUTTON_SMITHY_TEXT_3_MAG_PANEL_RU;
+
+            _exitSmithyButtonSmithyTextMagPanel.text = HistoryTextRu.EXIT_SMITHY_BUTTON_SMITHY_TEXT_MAG_PANEL_RU;
+        } else if(Language.English == language) {
+            Debug.Log($"Язык игры - Английский");
+            _nextDialogButtonTextMagPanel.text = HistoryTextEng.NEXT_DIALOG_BUTTON_TEXT_MAG_PANEL_ENG;
+            _exitMagButtonTextMagPanel.text = HistoryTextEng.EXIT_MAG_BUTTON_TEXT_MAG_PANEL_ENG;
+            _smithyButtonTextMagPanel.text = HistoryTextEng.SMITHY_BUTTON_TEXT_MAG_PANEL_ENG;
+            _sneilLevelStartButtonTextMagPanel.text = HistoryTextEng.SNEIL_LEVEL_START_BUTTON_TEXT_MAG_PANEL_ENG;
+            
+            _spearImageButtonSmithyText_1_MagPanel.text = HistoryTextEng.SPEAR_IMAGE_BUTTON_SMITHY_TEXT_1_MAG_PANEL_ENG;
+            _spearImageButtonSmithyText_2_MagPanel.text = HistoryTextEng.SPEAR_IMAGE_BUTTON_SMITHY_TEXT_2_MAG_PANEL_ENG;
+            _spearImageButtonSmithyText_3_MagPanel.text = HistoryTextEng.SPEAR_IMAGE_BUTTON_SMITHY_TEXT_3_MAG_PANEL_ENG;
+
+            _spearDamageImageButtonSmithyText_1_MagPanel.text = HistoryTextEng.SPEAR_DAMAGE_IMAGE_BUTTON_SMITHY_TEXT_1_MAG_PANEL_ENG;
+            _spearDamageImageButtonSmithyText_2_MagPanel.text = HistoryTextEng.SPEAR_DAMAGE_IMAGE_BUTTON_SMITHY_TEXT_2_MAG_PANEL_ENG;
+            _spearDamageImageButtonSmithyText_3_MagPanel.text = HistoryTextEng.SPEAR_DAMAGE_IMAGE_BUTTON_SMITHY_TEXT_3_MAG_PANEL_ENG;
+
+            _swordImageButtonSmithyText_1_MagPanel.text = HistoryTextEng.SWORD_IMAGE_BUTTON_SMITHY_TEXT_1_MAG_PANEL_ENG;
+            _swordImageButtonSmithyText_2_MagPanel.text = HistoryTextEng.SWORD_IMAGE_BUTTON_SMITHY_TEXT_2_MAG_PANEL_ENG;
+            _swordImageButtonSmithyText_3_MagPanel.text = HistoryTextEng.SWORD_IMAGE_BUTTON_SMITHY_TEXT_3_MAG_PANEL_ENG;
+
+            _exitSmithyButtonSmithyTextMagPanel.text = HistoryTextEng.EXIT_SMITHY_BUTTON_SMITHY_TEXT_MAG_PANEL_ENG;
+        } else if(Language.Turkish == language) {
+            Debug.Log($"Язык игры - Турецкий");
+        } else if(Language.German == language) {
+            Debug.Log($"Язык игры - Немецкий");
+        } else if(Language.Spanish == language) {
+            Debug.Log($"Язык игры - Испанский");
         }
     }
 
@@ -110,6 +224,7 @@ public class MagController : MonoBehaviour {
                 audioSource.PlayOneShot(dorClip);
                 magPanel.SetActive(true);
 
+                CheckLanguage();
                 CheckStartHistory();
             }
 
@@ -130,16 +245,17 @@ public class MagController : MonoBehaviour {
 
     private void historyText() {
         if(startHistory == 0 && magPanel.activeSelf == true) {
-            //smithyButton.interactable = false;
-            //sneilLevelStartButton.interactable = false;
-
             smithyButton.gameObject.SetActive(false);
             sneilLevelStartButton.gameObject.SetActive(false);
 
             nextTextButton.gameObject.SetActive(true);
             nextTextButton.interactable = true;
 
-            textHistory.text = noSneilLevelHistoryText[indexHistoryText];
+            if(Language.Russian == language) {
+                textHistory.text = noSneilLevelHistoryTextRu[indexHistoryText];
+            } else {
+                textHistory.text = noSneilLevelHistoryTextEng[indexHistoryText];
+            }
 
             if(indexHistoryText % 2 != 0) {
                 arrowPlayerImage.SetActive(true);
@@ -165,7 +281,11 @@ public class MagController : MonoBehaviour {
             nextTextButton.gameObject.SetActive(true);
             nextTextButton.interactable = true;
 
-            textHistory.text = YesSneilLevelHistoryText[indexHistoryText];
+            if(Language.Russian == language) {
+                textHistory.text = YesSneilLevelHistoryTextRu[indexHistoryText];
+            } else {
+                textHistory.text = YesSneilLevelHistoryTextEng[indexHistoryText];
+            }
 
             if(indexHistoryText % 2 == 0) {
                 arrowPlayerImage.SetActive(true);
@@ -213,6 +333,8 @@ public class MagController : MonoBehaviour {
 
     public void onClickSmithybutton() {
         smithy.SetActive(true);
+        CheckLanguage();
+        
         textMagHistoryPanel.SetActive(false);
 
         smithyButton.interactable = false;
@@ -227,6 +349,7 @@ public class MagController : MonoBehaviour {
         smithyButton.interactable = true;
         exitButton.interactable = true;
         sneilLevelStartButton.interactable = true;
+        CheckLanguage();
     }
 
     public void onClickSwordImageButton() {

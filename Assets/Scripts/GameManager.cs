@@ -1,26 +1,51 @@
+using GamePush;
+using Texts;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 public class GameManager : MonoBehaviour {
-    [Header("Текстовые поля")]
-    [SerializeField] private Text damageSwordText;
-    [SerializeField] private Text damageSpearText;
-    [SerializeField] private Text valueSpearOnPlayerText;
-    [SerializeField] private Text valueCoinText;
+    [FormerlySerializedAs("damageSwordText")]
+    [Header("---------- ТЕКСТОВЫЕ ПОЛЯ GAME INFO PANEL ----------")]
+    [SerializeField] private TextMeshProUGUI countDamageSwordText;
+    [SerializeField] private TextMeshProUGUI _damageSwordText;
+    
+    [Space(5)]
+    [FormerlySerializedAs("damageSpearText")]
+    [SerializeField] private TextMeshProUGUI CountDamageSpearText;
+    [SerializeField] private TextMeshProUGUI _damageSpearText;
+    
+    [Space(5)]
+    [FormerlySerializedAs("valueSpearOnPlayerText")]
+    [SerializeField] private TextMeshProUGUI countValueSpearOnPlayerText;
+    [SerializeField] private TextMeshProUGUI _valueSpearOnPlayerText;
+    
+    [Space(5)]
+    [FormerlySerializedAs("valueCoinText")]
+    [SerializeField] private TextMeshProUGUI countValueCoinText;
+    [SerializeField] private TextMeshProUGUI _valueCoinText;
+    
+    [Space(5)]
+    [SerializeField] private TextMeshProUGUI _pausedBattonText;
 
-    [Header("Стартавые параметры")]
+    [Space(20)]
+    [Header("---------- СТАРТАВЫЕ ПАРАМЕТРЫ ----------")]
     [SerializeField] private int StartCoin = 200;
     [SerializeField] private int startSpearDamage = 5;
     [SerializeField] private int startvalueSpearDamage = 30;
     [SerializeField] private int startSwordDamage = 4;
 
-    [Header("Ссылка на позицию игрока")]
+    [Space(20)]
+    [Header("---------- ССЫЛКА НА ПОЗИЦИЮ ИГРОКА ----------")]
     [SerializeField] private Transform playerPosition;
 
-    [Header("Звук")]
+    [Space(20)]
+    [Header("---------- ЗВУК ----------")]
     [SerializeField] private AudioSource source;
 
-    [Header("Клипы")]
+    [Space(20)]
+    [Header("---------- КЛИПЫ ----------")]
     [SerializeField] private AudioClip coinClip;
     [SerializeField] private AudioClip spearDamageClip;
     [SerializeField] private AudioClip buyMagTruyClip;
@@ -44,11 +69,38 @@ public class GameManager : MonoBehaviour {
 
     private int currentCoin;
 
-    private int
-    startGameOneTap; // переменная отвечающая за то, что игра запускается в первый раз или нет. (0 = в первый раз. 1 = повторно и нужно подтянуть сохранения)
+    private int startGameOneTap; // переменная отвечающая за то, что игра запускается в первый раз или нет. (0 = в первый раз. 1 = повторно и нужно подтянуть сохранения)
+    
+    private Language language;
 
 
     private void Start() {
+        language = GP_Language.Current();
+        if(null != _damageSwordText && null != _damageSpearText && null != _valueSpearOnPlayerText && null != _valueCoinText && null != _pausedBattonText) {
+            if(Language.Russian == language) {
+                Debug.Log($"Язык игры - Русский");
+                _damageSwordText.text = HistoryTextRu.SWORD_DAMAGE_TEXT_RU;
+                _valueSpearOnPlayerText.text = HistoryTextRu.NUMBER_OF_COPIES_TEXT_RU;
+                _damageSpearText.text = HistoryTextRu.DAMAGE_OF_COPIES_RU;
+                _valueCoinText.text = HistoryTextRu.COIN_TEXT_RU;
+                _pausedBattonText.text = HistoryTextRu.PAUSED_BATTON_RU;
+
+
+            } else if(Language.English == language) {
+                Debug.Log($"Язык игры - Английский");
+                _damageSwordText.text = HistoryTextEng.SWORD_DAMAGE_TEXT_ENG;
+                _valueSpearOnPlayerText.text = HistoryTextEng.NUMBER_OF_COPIES_TEXT_ENG;
+                _damageSpearText.text = HistoryTextEng.DAMAGE_OF_COPIES_ENG;
+                _valueCoinText.text = HistoryTextEng.COIN_TEXT_ENG;
+                _pausedBattonText.text = HistoryTextEng.PAUSED_BATTON_ENG;
+            } else if(Language.Turkish == language) {
+                Debug.Log($"Язык игры - Турецкий");
+            } else if(Language.German == language) {
+                Debug.Log($"Язык игры - Немецкий");
+            } else if(Language.Spanish == language) {
+                Debug.Log($"Язык игры - Испанский");
+            }
+        }
 
         if(PlayerPrefs.HasKey("startGameTap")) {
             startGameOneTap = PlayerPrefs.GetInt("startGameTap");
@@ -84,9 +136,9 @@ public class GameManager : MonoBehaviour {
 
 
     private void Update() {
-        damageSwordText.text = currentDamageSwordText.ToString();
-        damageSpearText.text = currentDamageSpearText.ToString();
-        valueSpearOnPlayerText.text = currentvalueSpearOnPlayerText.ToString();
+        countDamageSwordText.text = currentDamageSwordText.ToString();
+        CountDamageSpearText.text = currentDamageSpearText.ToString();
+        countValueSpearOnPlayerText.text = currentvalueSpearOnPlayerText.ToString();
         UpdateCoinText();
     }
 
@@ -186,7 +238,7 @@ public class GameManager : MonoBehaviour {
     }
 
     private void UpdateCoinText() {
-        valueCoinText.text = currentCoin.ToString();
+        countValueCoinText.text = currentCoin.ToString();
     }
 
     public int GetCurrentDamageSwordText() {
@@ -227,7 +279,7 @@ public class GameManager : MonoBehaviour {
 
         SaveGame();
 
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(2);
     }
 
     private void StartSneilCnene() {
@@ -243,7 +295,7 @@ public class GameManager : MonoBehaviour {
         PlayerPrefs.Save();
 
         SaveGame();
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene(3);
     }
 
     private void StartBossScene() {
@@ -259,7 +311,7 @@ public class GameManager : MonoBehaviour {
         PlayerPrefs.Save();
 
         SaveGame();
-        SceneManager.LoadScene(3);
+        SceneManager.LoadScene(4);
     }
 
 

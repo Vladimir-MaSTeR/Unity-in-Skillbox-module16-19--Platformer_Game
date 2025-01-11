@@ -1,21 +1,27 @@
+using GamePush;
+using Texts;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMovement : MonoBehaviour {
     // Этот Класс работает с физикой
-
-
+    
     [Header("Movement vars")]
     [SerializeField] private float spped = 3;
     [SerializeField] private float jumpForce = 6;
     [SerializeField] private bool isGrounded = false;
 
-    [Header("Weapons on Player")]
+    [Space(10)]
+    [Header("--------- WEAPONS ON PLAYER ---------")]
     //[SerializeField] private GameObject weapons;
-    [Header("Radius collider")]
+    
+    [Space(10)]
+    [Header("--------- RADIUS COLLIDER ---------")]
     [SerializeField] private float jumpOffset;
 
-    [Header("Settings")]
+    [Space(20)]
+    [Header("--------- SETTINGS ---------")]
     [SerializeField] private Transform groundColliderTransform;
     [SerializeField] private LayerMask groundLayerMask;
     [SerializeField] private Animator animator;
@@ -24,15 +30,24 @@ public class PlayerMovement : MonoBehaviour {
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private GameObject animObject;
 
-    [Header("Управление Канвасами")]
+    [Space(20)]
+    [Header("--------- УПРАВЛЕНИЕ КАНВАСАМИ ---------")]
     [SerializeField] private GameObject deathPanel;
     [SerializeField] private Canvas dialogCanvas;
-    [SerializeField] private Text dialogText;
+    // [SerializeField] private Text dialogText;
+    [SerializeField] private TextMeshProUGUI dialogText;
     [SerializeField] private float timeVisionDialogTextMax = 3;
 
     [SerializeField] private GameObject magPanel; // если эта панель активна значит мы в магазине и не дожны двигаться.
+    
+    [Space(20)]
+    [Header("---------- ТЕКСТОВЫЕ ПОЛЯ PAUSE PANEL ----------")]
+    [SerializeField] private TextMeshProUGUI _mainDeathPanelText;
+    [SerializeField] private TextMeshProUGUI _restartButtonDeathPanelText;
+    [SerializeField] private TextMeshProUGUI _mainMenuButtonDeathPanelText;
 
-    [Header("Управление звуками")]
+    [Space(20)]
+    [Header("--------- УПРАВЛЕНИЕ ЗВУКАМИ ---------")]
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip fire1Clip;
     [SerializeField] private AudioClip jumpClip;
@@ -46,7 +61,7 @@ public class PlayerMovement : MonoBehaviour {
     private float currentTimeVisionDialogText;
 
     private bool currentActiveMagPanel;
-
+    private Language language;
 
     private void OnEnable() {
         DragonLevelController.onEventDragonLEvel += DialogCanvasInDragonStage;
@@ -107,6 +122,25 @@ public class PlayerMovement : MonoBehaviour {
         if(checkEndAnim.GetEndAnim() == true) {
             Time.timeScale = 0;
             deathPanel.SetActive(true);
+            
+            if(Language.Russian == language) {
+                // buttonText.text = "начать игру";
+                Debug.Log($"Язык игры - Русский");
+                _mainDeathPanelText.text = HistoryTextRu.MAIN_DEATH_PANEL_TEXT_RU;
+                _restartButtonDeathPanelText.text = HistoryTextRu.RESTART_BUTTON_DEATH_PANEL_TEXT_RU;
+                _mainMenuButtonDeathPanelText.text = HistoryTextRu.MAIN_MENU_BUTTON_DEATH_PANEL_TEXT_RU;
+            } else if(Language.English == language) {
+                Debug.Log($"Язык игры - Английский");
+                _mainDeathPanelText.text = HistoryTextEng.MAIN_DEATH_PANEL_TEXT_ENG;
+                _restartButtonDeathPanelText.text = HistoryTextEng.RESTART_BUTTON_DEATH_PANEL_TEXT_ENG;
+                _mainMenuButtonDeathPanelText.text = HistoryTextEng.MAIN_MENU_BUTTON_DEATH_PANEL_TEXT_ENG;
+            } else if(Language.Turkish == language) {
+                Debug.Log($"Язык игры - Турецкий");
+            } else if(Language.German == language) {
+                Debug.Log($"Язык игры - Немецкий");
+            } else if(Language.Spanish == language) {
+                Debug.Log($"Язык игры - Испанский");
+            }
         }
     }
 

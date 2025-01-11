@@ -72,12 +72,14 @@ public class Enemy : MonoBehaviour {
     }
 
     private void CheckPlayerDetected() {
-        if(detectedTriger.getPlayerDetected() == true) {
-            animator.SetBool("detected", true);
-            // currentState = IDLE_STATE;
-        } else {
-            animator.SetBool("detected", false);
-            //currentState = WALC_STATE;
+        if(detectedTriger) {
+            if(detectedTriger.getPlayerDetected() == true) {
+                animator.SetBool("detected", true);
+                // currentState = IDLE_STATE;
+            } else {
+                animator.SetBool("detected", false);
+                //currentState = WALC_STATE;
+            }
         }
     }
 
