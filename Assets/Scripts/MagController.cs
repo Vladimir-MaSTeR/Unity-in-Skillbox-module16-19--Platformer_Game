@@ -167,6 +167,7 @@ public class MagController : MonoBehaviour {
     }
 
     private void CheckLanguage() {
+        language = GP_Language.Current();
         if(Language.Russian == language) {
             // buttonText.text = "начать игру";
             Debug.Log($"Язык игры - Русский");
@@ -244,6 +245,7 @@ public class MagController : MonoBehaviour {
     }
 
     private void historyText() {
+        language = GP_Language.Current();
         if(startHistory == 0 && magPanel.activeSelf == true) {
             smithyButton.gameObject.SetActive(false);
             sneilLevelStartButton.gameObject.SetActive(false);
@@ -305,9 +307,7 @@ public class MagController : MonoBehaviour {
 
         } else {
             smithyButton.gameObject.SetActive(true);
-
             sneilLevelStartButton.gameObject.SetActive(true);
-
             nextTextButton.gameObject.SetActive(false);
 
         }

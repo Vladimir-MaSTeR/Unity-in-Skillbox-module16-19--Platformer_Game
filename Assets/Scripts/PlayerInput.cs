@@ -27,7 +27,6 @@ public class PlayerInput : MonoBehaviour {
         bool isFire1ButtonPresed = Input.GetButtonDown(GlobalConstants.FIRE_1);
         bool isFire2ButtonPresed = Input.GetButtonDown(GlobalConstants.FIRE_2);
 
-
         if(Input.GetButtonDown(GlobalConstants.FIRE_2)) {
             shooter.Shoot(horizontalDirection);
             shooter.SetCurrentValueBuletInPlayer(shooter.GetCurrentValueBuletInPlayer() - 1);

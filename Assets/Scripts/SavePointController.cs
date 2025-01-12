@@ -6,7 +6,7 @@ using UnityEngine;
 public class SavePointController : MonoBehaviour {
     [SerializeField] private GameObject[] needToShowObject;
     [SerializeField] private GameObject[] needToFalseShowObject;
-    
+
     [Space(20)]
     [Header("---------- КАНВАС ---------")]
     [SerializeField] private Canvas pressECanvas;
@@ -32,7 +32,7 @@ public class SavePointController : MonoBehaviour {
         if(collision.CompareTag("Player")) {
             pressECanvas.gameObject.SetActive(true);
             ChechLanguage();
-            
+
             // if(Input.GetKeyDown(KeyCode.E)) {
             if(Input.GetKey(KeyCode.E)) {
                 onTapSavePoint?.Invoke();
@@ -41,14 +41,6 @@ public class SavePointController : MonoBehaviour {
                 }
             }
         }
-        
-        
-        // if(collision.CompareTag("Player") && Input.GetKeyDown(KeyCode.E)) {
-        //     onTapSavePoint?.Invoke();
-        //     foreach(var item in needToShowObject) {
-        //         item.SetActive(true);
-        //     }
-        // }
     }
 
     private void OnTriggerStay2D(Collider2D collision) {
@@ -61,22 +53,16 @@ public class SavePointController : MonoBehaviour {
                 }
             }
         }
-        
-        // if(collision.CompareTag("Player") && Input.GetKeyDown(KeyCode.E)) {
-        //     onTapSavePoint?.Invoke();
-        //     foreach(var item in needToShowObject) {
-        //         item.SetActive(true);
-        //     }
-        // }
     }
-    
+
     private void OnTriggerExit2D(Collider2D collision) {
         if(collision.CompareTag("Player")) {
             pressECanvas.gameObject.SetActive(false);
         }
     }
-    
+
     private void ChechLanguage() {
+        language = GP_Language.Current();
         if(Language.Russian == language) {
             Debug.Log($"Язык игры - Русский");
             if(null != _text) {

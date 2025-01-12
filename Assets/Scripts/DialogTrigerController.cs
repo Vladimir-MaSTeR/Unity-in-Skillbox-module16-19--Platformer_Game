@@ -10,10 +10,7 @@ public class DialogTrigerController : MonoBehaviour {
     private string currentDialogText;
 
     private void Start() {
-        // if(dialogTextRu.Length != 0) {
-        //     currentDialogText = dialogTextRu[0];
-        // }
-        
+        language = GP_Language.Current();
         if(Language.Russian == language) {
             // buttonText.text = "начать игру";
             Debug.Log($"язык игры - –усский");

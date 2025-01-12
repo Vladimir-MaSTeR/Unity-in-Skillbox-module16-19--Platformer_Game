@@ -47,21 +47,6 @@ public class HistoryTextRu {
     public const string SWORD_IMAGE_BUTTON_SMITHY_TEXT_3_MAG_PANEL_RU = "30\nмонет";
 
     public const string EXIT_SMITHY_BUTTON_SMITHY_TEXT_MAG_PANEL_RU = "Закрыть";
-
-    
-    // _spearImageButtonSmithyText_1_MagPanel;
-    // _spearImageButtonSmithyText_2_MagPanel;
-    // _spearImageButtonSmithyText_3_MagPanel;
-    //
-    // _spearDamageImageButtonSmithyText_1_MagPanel;
-    // _spearDamageImageButtonSmithyText_2_MagPanel;
-    // _spearDamageImageButtonSmithyText_3_MagPanel;
-    //
-    // _swordImageButtonSmithyText_1_MagPanel;
-    // _swordImageButtonSmithyText_2_MagPanel;
-    // _swordImageButtonSmithyText_3_MagPanel;
-
-
     
     // чаша сохранения
     public const string SAVE_TEXT_RU = "Сохраниться";

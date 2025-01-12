@@ -29,6 +29,7 @@ public class PressETriger : MonoBehaviour {
     }
 
     private void ChechLanguage() {
+        language = GP_Language.Current();
         if(Language.Russian == language) {
             Debug.Log($"язык игры - –усский");
             if(null != _text) {

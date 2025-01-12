@@ -4,28 +4,27 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
-using UnityEngine.UI;
 public class GameManager : MonoBehaviour {
     [FormerlySerializedAs("damageSwordText")]
     [Header("---------- ТЕКСТОВЫЕ ПОЛЯ GAME INFO PANEL ----------")]
     [SerializeField] private TextMeshProUGUI countDamageSwordText;
     [SerializeField] private TextMeshProUGUI _damageSwordText;
-    
+
     [Space(5)]
     [FormerlySerializedAs("damageSpearText")]
     [SerializeField] private TextMeshProUGUI CountDamageSpearText;
     [SerializeField] private TextMeshProUGUI _damageSpearText;
-    
+
     [Space(5)]
     [FormerlySerializedAs("valueSpearOnPlayerText")]
     [SerializeField] private TextMeshProUGUI countValueSpearOnPlayerText;
     [SerializeField] private TextMeshProUGUI _valueSpearOnPlayerText;
-    
+
     [Space(5)]
     [FormerlySerializedAs("valueCoinText")]
     [SerializeField] private TextMeshProUGUI countValueCoinText;
     [SerializeField] private TextMeshProUGUI _valueCoinText;
-    
+
     [Space(5)]
     [SerializeField] private TextMeshProUGUI _pausedBattonText;
 
@@ -69,14 +68,15 @@ public class GameManager : MonoBehaviour {
 
     private int currentCoin;
 
-    private int startGameOneTap; // переменная отвечающая за то, что игра запускается в первый раз или нет. (0 = в первый раз. 1 = повторно и нужно подтянуть сохранения)
-    
+    private int startGameOneTap; // переменная отвечающая за то, что игра запускается в первый раз или нет.
+                                 // (0 = в первый раз. 1 = повторно и нужно подтянуть сохранения)
     private Language language;
 
 
     private void Start() {
         language = GP_Language.Current();
         if(null != _damageSwordText && null != _damageSpearText && null != _valueSpearOnPlayerText && null != _valueCoinText && null != _pausedBattonText) {
+            language = GP_Language.Current();
             if(Language.Russian == language) {
                 Debug.Log($"Язык игры - Русский");
                 _damageSwordText.text = HistoryTextRu.SWORD_DAMAGE_TEXT_RU;
@@ -84,8 +84,6 @@ public class GameManager : MonoBehaviour {
                 _damageSpearText.text = HistoryTextRu.DAMAGE_OF_COPIES_RU;
                 _valueCoinText.text = HistoryTextRu.COIN_TEXT_RU;
                 _pausedBattonText.text = HistoryTextRu.PAUSED_BATTON_RU;
-
-
             } else if(Language.English == language) {
                 Debug.Log($"Язык игры - Английский");
                 _damageSwordText.text = HistoryTextEng.SWORD_DAMAGE_TEXT_ENG;
@@ -113,8 +111,7 @@ public class GameManager : MonoBehaviour {
 
             }
         }
-
-
+        
         Debug.Log($"Значение пременной startGameOneTap = {startGameOneTap}");
         if(startGameOneTap == 0) {
             currentDamageSwordText = startSwordDamage;
@@ -128,7 +125,6 @@ public class GameManager : MonoBehaviour {
             } else {
                 Debug.Log("startHistory  не найдена в сохранениях");
             }
-
         } else {
             LoadGame();
         }
@@ -177,15 +173,12 @@ public class GameManager : MonoBehaviour {
         SavePointController.onTapSavePoint -= SaveGameAndPlayer;
         MainCanvasController.onClicLoadLastSave -= ResstartLevelAndStats;
         FinishStage.onfinishStage -= EndRound;
-
-
+        
         MagController.onEventClickSwordImageButton -= buyInShopSwordDamage;
         MagController.onEventSpearDamageImageButton -= buyInShopSpearDamage;
         MagController.onEventSpearImageButton -= buyInShopSpear;
         MagController.onEventClickSneilLevelButton -= StartSneilCnene;
         DragonLevelController.onEventStartDragonLevel -= StartBossScene;
-
-
     }
 
     public void buyInShopSpear() {
@@ -206,7 +199,6 @@ public class GameManager : MonoBehaviour {
         } else {
             source.PlayOneShot(buyMagfalseClip);
         }
-
     }
 
     public void buyInShopSwordDamage() {
@@ -408,5 +400,4 @@ public class GameManager : MonoBehaviour {
         PlayerPrefs.DeleteKey("PlayerPositionY");
         PlayerPrefs.DeleteKey("startHistory");
     }
-
 }

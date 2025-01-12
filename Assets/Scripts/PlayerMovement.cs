@@ -123,6 +123,7 @@ public class PlayerMovement : MonoBehaviour {
             Time.timeScale = 0;
             deathPanel.SetActive(true);
             
+            language = GP_Language.Current();
             if(Language.Russian == language) {
                 // buttonText.text = "начать игру";
                 Debug.Log($"Язык игры - Русский");

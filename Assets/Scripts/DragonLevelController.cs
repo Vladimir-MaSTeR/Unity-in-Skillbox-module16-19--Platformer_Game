@@ -36,6 +36,7 @@ public class DragonLevelController : MonoBehaviour {
 
 
                 if(endSneilLevel == 0) {
+                    language = GP_Language.Current();
                     if(Language.Russian == language) {
                         onEventDragonLEvel?.Invoke(str1Ru);
                     } else {
