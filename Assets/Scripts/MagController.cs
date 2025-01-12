@@ -195,7 +195,7 @@ public class MagController : MonoBehaviour {
             _exitMagButtonTextMagPanel.text = HistoryTextEng.EXIT_MAG_BUTTON_TEXT_MAG_PANEL_ENG;
             _smithyButtonTextMagPanel.text = HistoryTextEng.SMITHY_BUTTON_TEXT_MAG_PANEL_ENG;
             _sneilLevelStartButtonTextMagPanel.text = HistoryTextEng.SNEIL_LEVEL_START_BUTTON_TEXT_MAG_PANEL_ENG;
-            
+
             _spearImageButtonSmithyText_1_MagPanel.text = HistoryTextEng.SPEAR_IMAGE_BUTTON_SMITHY_TEXT_1_MAG_PANEL_ENG;
             _spearImageButtonSmithyText_2_MagPanel.text = HistoryTextEng.SPEAR_IMAGE_BUTTON_SMITHY_TEXT_2_MAG_PANEL_ENG;
             _spearImageButtonSmithyText_3_MagPanel.text = HistoryTextEng.SPEAR_IMAGE_BUTTON_SMITHY_TEXT_3_MAG_PANEL_ENG;
@@ -334,7 +334,7 @@ public class MagController : MonoBehaviour {
     public void onClickSmithybutton() {
         smithy.SetActive(true);
         CheckLanguage();
-        
+
         textMagHistoryPanel.SetActive(false);
 
         smithyButton.interactable = false;
@@ -369,5 +369,18 @@ public class MagController : MonoBehaviour {
         magPanel.SetActive(false);
     }
 
+    public void ShowFullscreen() => GP_Ads.ShowFullscreen(OnFullscreenStart, OnFullscreenClose);
 
+    // Начался показ
+    private void OnFullscreenStart() {
+        Debug.Log("ON FULLSCREEN START");
+        Time.timeScale = 0;
+    }
+    // Закончился показ
+    private void OnFullscreenClose(bool success) {
+        Debug.Log("ON FULLSCREEN CLOSE");
+        Time.timeScale = 1;
+#if !UNITY_EDITOR && UNITY_WEBGL
+#endif
+    }
 }

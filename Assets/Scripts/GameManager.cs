@@ -69,7 +69,7 @@ public class GameManager : MonoBehaviour {
     private int currentCoin;
 
     private int startGameOneTap; // переменная отвечающая за то, что игра запускается в первый раз или нет.
-                                 // (0 = в первый раз. 1 = повторно и нужно подтянуть сохранения)
+    // (0 = в первый раз. 1 = повторно и нужно подтянуть сохранения)
     private Language language;
 
 
@@ -111,7 +111,7 @@ public class GameManager : MonoBehaviour {
 
             }
         }
-        
+
         Debug.Log($"Значение пременной startGameOneTap = {startGameOneTap}");
         if(startGameOneTap == 0) {
             currentDamageSwordText = startSwordDamage;
@@ -128,8 +128,9 @@ public class GameManager : MonoBehaviour {
         } else {
             LoadGame();
         }
-    }
 
+        ShowFullscreen();
+    }
 
     private void Update() {
         countDamageSwordText.text = currentDamageSwordText.ToString();
@@ -173,7 +174,7 @@ public class GameManager : MonoBehaviour {
         SavePointController.onTapSavePoint -= SaveGameAndPlayer;
         MainCanvasController.onClicLoadLastSave -= ResstartLevelAndStats;
         FinishStage.onfinishStage -= EndRound;
-        
+
         MagController.onEventClickSwordImageButton -= buyInShopSwordDamage;
         MagController.onEventSpearDamageImageButton -= buyInShopSpearDamage;
         MagController.onEventSpearImageButton -= buyInShopSpear;
@@ -399,5 +400,21 @@ public class GameManager : MonoBehaviour {
         PlayerPrefs.DeleteKey("PlayerPositionX");
         PlayerPrefs.DeleteKey("PlayerPositionY");
         PlayerPrefs.DeleteKey("startHistory");
+    }
+
+    public void ShowFullscreen() => GP_Ads.ShowFullscreen(OnFullscreenStart, OnFullscreenClose);
+
+    // Начался показ
+    private void OnFullscreenStart() {
+        Debug.Log("ON FULLSCREEN START");
+        Time.timeScale = 0;
+    }
+    // Закончился показ
+    private void OnFullscreenClose(bool success) {
+        Debug.Log("ON FULLSCREEN CLOSE");
+        Time.timeScale = 1;
+#if !UNITY_EDITOR && UNITY_WEBGL
+
+#endif
     }
 }
