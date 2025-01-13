@@ -408,13 +408,12 @@ public class GameManager : MonoBehaviour {
     private void OnFullscreenStart() {
         Debug.Log("ON FULLSCREEN START");
         Time.timeScale = 0;
+        FonMusicController.onPausedOffSounds?.Invoke();
     }
     // Закончился показ
     private void OnFullscreenClose(bool success) {
         Debug.Log("ON FULLSCREEN CLOSE");
         Time.timeScale = 1;
-#if !UNITY_EDITOR && UNITY_WEBGL
-
-#endif
+        FonMusicController.onPausedOnSounds?.Invoke();
     }
 }

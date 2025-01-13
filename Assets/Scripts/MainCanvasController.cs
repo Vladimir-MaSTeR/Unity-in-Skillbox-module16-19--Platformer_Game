@@ -40,7 +40,7 @@ public class MainCanvasController : MonoBehaviour {
     [Space(20)]
     [Header("---------- ПАНЕЛЬ ИГРЫ ----------")]
     [SerializeField] private GameObject pausePanel;
-    
+
     [Space(20)]
     [Header("---------- ТЕКСТОВЫЕ ПОЛЯ PAUSE PANEL ----------")]
     [Space(5)]
@@ -137,9 +137,9 @@ public class MainCanvasController : MonoBehaviour {
 
     public void onClickStartGame() {
         // показываем рекламу
-        ShowFullscreen();
+        // ShowFullscreen();
 
-#if UNITY_EDITOR
+// #if UNITY_EDITOR
         mainCanvas.gameObject.SetActive(false);
         historyCanvas.gameObject.SetActive(true);
 
@@ -147,7 +147,7 @@ public class MainCanvasController : MonoBehaviour {
         textHistory.text = historyText[0];
         indexHistoryText = 0;
         imagesIndex = 0;
-#endif
+// #endif
     }
 
     //-------History Canvas Methods-----------
@@ -210,7 +210,7 @@ public class MainCanvasController : MonoBehaviour {
     public void onClickPauseStart() {
         Time.timeScale = 0;
         pausePanel.SetActive(true);
-        
+
         if(Language.Russian == language) {
             // buttonText.text = "начать игру";
             Debug.Log($"Язык игры - Русский");
@@ -254,15 +254,14 @@ public class MainCanvasController : MonoBehaviour {
     private void OnFullscreenClose(bool success) {
         Debug.Log("ON FULLSCREEN CLOSE");
         Time.timeScale = 1;
-#if !UNITY_EDITOR && UNITY_WEBGL
-        mainCanvas.gameObject.SetActive(false);
-        historyCanvas.gameObject.SetActive(true);
-
-        currentImageHistory.sprite = imagesHistory[0];
-        textHistory.text = historyText[0];
-        indexHistoryText = 0;
-        imagesIndex = 0;
-#endif
+// #if !UNITY_EDITOR && UNITY_WEBGL
+//         mainCanvas.gameObject.SetActive(false);
+//         historyCanvas.gameObject.SetActive(true);
+//
+//         currentImageHistory.sprite = imagesHistory[0];
+//         textHistory.text = historyText[0];
+//         indexHistoryText = 0;
+//         imagesIndex = 0;
+// #endif
     }
-
 }

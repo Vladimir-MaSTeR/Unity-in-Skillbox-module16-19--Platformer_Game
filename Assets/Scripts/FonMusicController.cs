@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 public class FonMusicController : MonoBehaviour {
@@ -7,9 +8,23 @@ public class FonMusicController : MonoBehaviour {
 
     private int currentIndexScene;
 
+    public static Action onPausedOffSounds;
+    public static Action onPausedOnSounds;
+
+
     private void Start() {
         currentIndexScene = SceneManager.GetActiveScene().buildIndex;
         SelectMainScene();
+    }
+
+    private void OnEnable() {
+        onPausedOffSounds += PausedOffSounds;
+        onPausedOnSounds += PausedOnSounds;
+    }
+
+    private void OnDisable() {
+        onPausedOffSounds -= PausedOffSounds;
+        onPausedOnSounds -= PausedOnSounds;
     }
 
 
@@ -31,5 +46,11 @@ public class FonMusicController : MonoBehaviour {
         audioSource.loop = true;
     }
 
+    private void PausedOffSounds() {
+        audioSource.Pause();
+    }
 
+    private void PausedOnSounds() {
+        audioSource.Play();
+    }
 }
